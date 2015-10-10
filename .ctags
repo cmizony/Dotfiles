@@ -1,0 +1,36 @@
+--exclude=.git
+--exclude=node_modules
+--exclude=bower_cache
+--exclude=bower_components
+--exclude=target
+--exclude=build
+--exclude=dist
+--exclude=doc
+--exclude=tmp
+
+--langdef=JavaScript
+--langmap=JavaScript:.js
+--regex-JavaScript=/.*[.][\s]*controller\(['"]([a-zA-Z0-9_.]+)['"]/\1/C,controller/
+--regex-JavaScript=/.*[.][\s]*directive\(['"]([a-zA-Z0-9_.]+)['"]/\1/D,directive/
+--regex-JavaScript=/.*[.][\s]*decorator\(['"]([a-zA-Z0-9_.]+)['"]/\1/E,decorator/
+--regex-JavaScript=/.*[.][\s]*filter\(['"]([a-zA-Z0-9_.]+)['"]/\1/I,filter/
+--regex-JavaScript=/.*[.][\s]*service\(['"]([a-zA-Z0-9_.]+)['"]/\1/S,service/
+--regex-JavaScript=/.*[.][\s]*factory\(['"]([a-zA-Z0-9_.]+)['"]/\1/F,factory/
+--regex-JavaScript=/.*[.][\s]*module\(['"]([a-zA-Z0-9_\.]+)['"]/\1/M,module/
+--regex-JavaScript=/[.]when\(['"]([a-zA-Z0-9_\/:]+)['"]/\1/r,ngRoute/
+--regex-JavaScript=/\$?scope\.([A-Za-z0-9._\$]+)[ \t]*[:=][ \t]*(function)/\1/u,scopeFunctions/
+--regex-JavaScript=/\$?scope\.([A-Za-z0-9._\$]+)[ \t]*[:=][ \t]*((!function).)*/\1/v,scopeVariables/
+--regex-JavaScript=/\$rootScope\.([A-Za-z0-9._\$]+)[ \t]*[:=][ \t]*((!function).)*/\1/x,rootScope/
+--regex-JavaScript=/model\.([A-Za-z0-9._\$]+)[ \t]*[:=][ \t]*(function)/\1/o,model/
+--regex-JavaScript=/this\.([A-Za-z0-9._\$]+)[ \t]*[:=][ \t]*(function)/\1/t,this/
+--regex-JavaScript=/[ \t]*([A-Za-z0-9_]+)[ \t]*:[ \t]*(function\()/\1/m,method/
+
+--langdef=html
+--langmap=html:.htm.html
+--regex-html=/<\/([a-zA-Z0-9]+-[a-zA-Z0-9-]+)>/\1/d,directive/
+--regex-html=/<([a-zA-Z][a-zA-Z0-9]*)[^>]*[ \t]+id[ \t]*=[ \t]*'([^']+)'/\1#\2/o,id/
+--regex-html=/<([a-zA-Z][a-zA-Z0-9]*)[^>]*[ \t]+id[ \t]*=[ \t]*"([^"]+)"/\1#\2/o,id/
+--regex-html=/<([a-zA-Z][a-zA-Z0-9]*)[^>]*[ \t]+id[ \t]*=[ \t]*([A-Za-z][A-Za-z0-9_:.-]*)[ \t>]/\1#\2/o,id/
+--regex-html=/<([a-zA-Z][a-zA-Z0-9]*)[^>]*[ \t]+class[ \t]*=[ \t]*'([^']+)'/\1.\2/c,class/
+--regex-html=/<([a-zA-Z][a-zA-Z0-9]*)[^>]*[ \t]+class[ \t]*=[ \t]*"([^"]+)"/\1.\2/c,class/
+--regex-html=/<([a-zA-Z][a-zA-Z0-9]*)[^>]*[ \t]+class[ \t]*=[ \t]*([A-Za-z][A-Za-z0-9_:.-]*)[ \t>]/\1.\2/c,class/ ] ] ] ]"" ] ] ]'' ] ] ] ] ] ] ]"" ] ] ]'' ] ] ] ] ] ] ] ] ] ] ] ] ] ] ] ]"']"']"']"']"']"']"']"']
