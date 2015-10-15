@@ -43,118 +43,56 @@
   " set the runtime path to include Vundle and initialize
   set rtp+=~/.vim/bundle/Vundle.vim
   call vundle#begin()
+  " let Vundle manage Vundle, required
+  Plugin 'gmarik/Vundle.vim'
 
   " --------------------
-  " PluginWithoutConfig {
+  " Language {
   " --------------------
-    " let Vundle manage Vundle, required
-    Plugin 'gmarik/Vundle.vim'
-    " http://vimawesome.com/plugin/unimpaired-vim
-    Plugin 'tpope/vim-unimpaired'
-    " http://vimawesome.com/plugin/vim-gitgutter
-    Plugin 'airblade/vim-gitgutter'
-    " http://vimawesome.com/plugin/javascript-indent
-    Plugin 'JavaScript-Indent'
-    " http://vimawesome.com/plugin/editorconfig-vim
-    Plugin 'editorconfig/editorconfig-vim'
-    " http://vimawesome.com/plugin/surround-vim
-    Plugin 'tpope/vim-surround'
-    " http://vimawesome.com/plugin/tcomment
-    Plugin 'tomtom/tcomment_vim'
-    " http://vimawesome.com/plugin/vim-less-safe-and-sound
-    Plugin 'groenewege/vim-less'
-    " http://vimawesome.com/plugin/vim-css-color-the-story-of-us
-    Plugin 'ap/vim-css-color'
-    " http://vimawesome.com/plugin/neosnippet-snippets
-    Plugin 'Shougo/neosnippet-snippets'
-    " http://vimawesome.com/plugin/indent-guides
-    Plugin 'nathanaelkane/vim-indent-guides'
-    " http://vimawesome.com/plugin/vim-autoclose-sparks-fly
-    Plugin 'Townk/vim-autoclose'
-    " http://vimawesome.com/plugin/vim-signature
-    Plugin 'kshenoy/vim-signature'
-    " http://vimawesome.com/plugin/searchcomplete
-    Plugin 'SearchComplete'
-    " http://vimawesome.com/plugin/matchit-zip
-    Plugin 'matchit.zip'
-    " http://vimawesome.com/plugin/emmet-vim
-    Plugin 'mattn/emmet-vim'
     " http://vimawesome.com/plugin/vim-exchange
     Plugin 'tommcdo/vim-exchange'
-    " http://vimawesome.com/plugin/repeat-vim
-    Plugin 'tpope/vim-repeat'
-    " http://vimawesome.com/plugin/fugitive-vim
-    Plugin 'tpope/vim-fugitive'
-    " http://vimawesome.com/plugin/tabular
-    Plugin 'godlygeek/tabular'
-    " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
-    Plugin 'easymotion/vim-easymotion'
-    " http://vimawesome.com/plugin/gitv
-    let g:Gitv_OpenHorizontal = 1
-    Plugin 'gregsexton/gitv'
-    " http://vimawesome.com/plugin/indentwise
-    Plugin 'jeetsukumaran/vim-indentwise'
-    " http://vimawesome.com/plugin/numbers-vim
-    Plugin 'myusuf3/numbers.vim'
-    " http://vimawesome.com/plugin/nerdtree-git-plugin
-    Plugin 'Xuyuanp/nerdtree-git-plugin'
-    " http://vimawesome.com/plugin/unite-vim-back-to-december
-    Plugin 'Shougo/unite.vim'
-  " }
+    " http://vimawesome.com/plugin/emmet-vim
+    Plugin 'mattn/emmet-vim'
+    " http://vimawesome.com/plugin/vim-less-safe-and-sound
+    Plugin 'groenewege/vim-less'
+    " http://vimawesome.com/plugin/javascript-indent
+    Plugin 'JavaScript-Indent'
+    " http://vimawesome.com/plugin/surround-vim
+    Plugin 'tpope/vim-surround'
 
-  " -----------------
-  " PluginWithConfig {
-  " -----------------
     " http://vimawesome.com/plugin/javascript-libraries-syntax {
       Plugin 'othree/javascript-libraries-syntax.vim'
       let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jasmine,jquery'
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/sessionman-vim {
-      Plugin 'sessionman.vim'
-      set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
+    " http://vimawesome.com/plugin/syntastic {
+      Plugin 'scrooloose/syntastic'
+      let g:syntastic_always_populate_loc_list = 1
+      " TODO sudo npm install -g jscs jshint
+      let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+      let g:syntastic_error_symbol = '✗'
+      let g:syntastic_warning_symbol = '!'
+      " TODO sudo apt-get install tidy
+      " html5 support https://github.com/htacg/tidy-html5
+      let g:syntastic_html_tidy_exec = 'tidy'
+      " Config to make it work better with AngularJS
+      let g:syntastic_html_tidy_ignore_errors=["proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/vimshell-vim {
-      Plugin 'Shougo/vimshell.vim'
-      let g:vimshell_user_prompt=''
-      let g:vimshell_prompt_expr =
-      \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-      let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
+    " http://vimawesome.com/plugin/instant-markdown-vim {
+      Plugin 'suan/vim-instant-markdown'
+      " TODO sudo npm -g install instant-markdown-d
+      " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
+      autocmd BufNewFile,BufReadPost *.md set filetype=markdown
     " } Config Plugin End
-
-    " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
-      Plugin 'kien/ctrlp.vim'
-      let g:ctrlp_map = '<c-p>'
-      let g:ctrlp_cmd = 'CtrlP'
-      let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage)'}
-      let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/vimtips-fortune {
-      Plugin 'hobbestigrou/vimtips-fortune'
-      let g:fortune_vimtips_auto_display=0
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/the-nerd-tree {
-      Plugin 'scrooloose/nerdtree'
-      let NERDTreeWinSize=30
-      let NERDTreeShowHidden=1
-      let NERDTreeKeepTreeInNewTab=1
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/vim-nerdtree-tabs {
-      Plugin 'jistr/vim-nerdtree-tabs'
-      let g:nerdtree_tabs_open_on_console_startup=1
-      " let g:nerdtree_tabs_autofind=1
-      let g:nerdtree_tabs_open_on_new_tab=0
-      let g:nerdtree_tabs_smart_startup_focus=2
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/gundo {
-      Plugin 'sjl/gundo.vim'
-      let g:undotree_SetFocusWhenToggle=1
-    " } Config Plugin End
+  " }
+  " --------------------
+  " Completion {
+  " --------------------
+    " http://vimawesome.com/plugin/vim-autoclose-sparks-fly
+    Plugin 'Townk/vim-autoclose'
+    " http://vimawesome.com/plugin/neosnippet-snippets
+    Plugin 'Shougo/neosnippet-snippets'
 
     " http://vimawesome.com/plugin/neosnippet-vim {
       Plugin 'Shougo/neosnippet.vim'
@@ -173,29 +111,6 @@
       if has('conceal')
         set conceallevel=2 concealcursor=niv
       endif
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/indentline {
-      Plugin 'Yggdroot/indentLine'
-      let g:indentLine_char = '¦'
-      let g:indentLine_enabled = 0
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/vim-multiple-cursors {
-      Plugin 'terryma/vim-multiple-cursors'
-      " Prevent Neocomplete conflicts
-      " Called once right before you start selecting multiple cursors
-      function! Multiple_cursors_before()
-        if exists(':NeoCompleteLock')==2
-          exe 'NeoCompleteLock'
-        endif
-      endfunction
-      " Called once only when the multiple selection is canceled (default <Esc>)
-      function! Multiple_cursors_after()
-        if exists(':NeoCompleteUnlock')==2
-          exe 'NeoCompleteUnlock'
-        endif
-      endfunction
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/neocomplete-vim {
@@ -254,35 +169,52 @@
       "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
     " } Config Plugin End
   " }
+  " --------------------
+  " Code Display {
+  " --------------------
+    " http://vimawesome.com/plugin/indent-guides
+    Plugin 'nathanaelkane/vim-indent-guides'
+    " http://vimawesome.com/plugin/vim-css-color-the-story-of-us
+    Plugin 'ap/vim-css-color'
+    " http://vimawesome.com/plugin/solarized 
+    Plugin 'altercation/solarized'
 
-  " -------------------------
-  " PluginWithExternalConfig {
-  " -------------------------
-    " http://vimawesome.com/plugin/vimproc-vim {
-      Plugin 'Shougo/vimproc.vim'
-      " TODO cd ~/.vim/bundle/vimproc.vim && make
+    " http://vimawesome.com/plugin/indentline {
+      Plugin 'Yggdroot/indentLine'
+      let g:indentLine_char = '¦'
+      let g:indentLine_enabled = 0
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/syntastic {
-      Plugin 'scrooloose/syntastic'
-      let g:syntastic_always_populate_loc_list = 1
-      " TODO sudo npm install -g jscs jshint
-      let g:syntastic_javascript_checkers = ['jshint', 'jscs']
-      let g:syntastic_error_symbol = '✗'
-      let g:syntastic_warning_symbol = '!'
-      " TODO sudo apt-get install tidy
-      " html5 support https://github.com/htacg/tidy-html5
-      let g:syntastic_html_tidy_exec = 'tidy'
-      " Config to make it work better with AngularJS
-      let g:syntastic_html_tidy_ignore_errors=["proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+    " http://vimawesome.com/plugin/vim-colorschemes-sweeter-than-fiction {
+      Plugin 'flazz/vim-colorschemes'
+      " TODO mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
+      " colorscheme ir_black " black
+      " colorscheme mango " black
+      " colorscheme xoria256 " grey
+      " colorscheme mustang " grey
+      " colorscheme molokai " grey
+      " autocmd ColorScheme * highlight DiffAdd ctermbg=242
+      " autocmd ColorScheme * highlight DiffDelete ctermbg=242
+      " autocmd ColorScheme * highlight DiffChange ctermbg=242
+      " autocmd ColorScheme * highlight DiffText cterm=italic ctermbg=darkgray
     " } Config Plugin End
-
-    " http://vimawesome.com/plugin/vim-startify {
-      Plugin 'mhinz/vim-startify'
-      " TODO sudo apt-get install fortune-mod cowsay
-      " TODO cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
-      let g:startify_custom_header =
-        \ map(split(system('fortune ~/.vim/bundle/vimtips-fortune/fortunes/vimtips | cowsay'), '\n'), '"   ". v:val') + ['','']
+  " }
+  " --------------------
+  " Integrations {
+  " --------------------
+    " http://vimawesome.com/plugin/fugitive-vim
+    Plugin 'tpope/vim-fugitive'
+    " http://vimawesome.com/plugin/vim-gitgutter
+    Plugin 'airblade/vim-gitgutter'
+    " http://vimawesome.com/plugin/gitv
+    let g:Gitv_OpenHorizontal = 1
+    Plugin 'gregsexton/gitv'
+    " http://vimawesome.com/plugin/vimshell-vim {
+      Plugin 'Shougo/vimshell.vim'
+      let g:vimshell_user_prompt=''
+      let g:vimshell_prompt_expr =
+      \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+      let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/tagbar {
@@ -321,17 +253,6 @@
       \ }
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/vim-airline-sad-beautiful-tragic {
-      Plugin 'bling/vim-airline'
-      set laststatus=2
-      " TODO # Install desired patched font (for powerline)
-      " git clone https://github.com/powerline/fonts
-      " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
-      " fc-cache -vf ~/.fonts/
-      let g:airline_powerline_fonts = 1
-      let g:airline#extensions#tabline#enabled = 1
-    " } Config Plugin End
-
     " http://vimawesome.com/plugin/gist-vim {
       Plugin 'mattn/webapi-vim'
       Plugin 'mattn/gist-vim'
@@ -339,41 +260,6 @@
       let g:gist_post_private = 1
       let g:gist_show_privates = 1
       let g:gist_open_browser_after_post = 1
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/solarized {
-      Plugin 'altercation/solarized'
-    " }
-
-    "http://vimawesome.com/plugin/vim-colorschemes-sweeter-than-fiction {
-      Plugin 'flazz/vim-colorschemes'
-      " TODO mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
-      " colorscheme ir_black " black
-      " colorscheme mango " black
-      " colorscheme xoria256 " grey
-      " colorscheme mustang " grey
-      " colorscheme molokai " grey
-      " autocmd ColorScheme * highlight DiffAdd ctermbg=242
-      " autocmd ColorScheme * highlight DiffDelete ctermbg=242
-      " autocmd ColorScheme * highlight DiffChange ctermbg=242
-      " autocmd ColorScheme * highlight DiffText cterm=italic ctermbg=darkgray
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/instant-markdown-vim {
-      Plugin 'suan/vim-instant-markdown'
-      " TODO sudo npm -g install instant-markdown-d
-      " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
-      autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/vim-devicons-holy-gound {
-      Plugin 'ryanoasis/vim-devicons'
-      let g:webdevicons_conceal_nerdtree_brackets = 1
-      let g:webdevicons_enable_nerdtree = 1
-      " TODO # Install desired patched font (for devicons)
-      " git clone https://github.com/ryanoasis/nerd-fonts.git
-      " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
-      " Update font cache: fc-cache -fv
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/tern-for-vim {
@@ -393,6 +279,133 @@
       " bind -n C-k if-shell "$is_vim" "send-keys C-k" "select-pane -U"
       " bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
       " bind -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"'
+    " } Config Plugin End
+  " }
+  " --------------------
+  " Interface {
+  " --------------------
+    " http://vimawesome.com/plugin/numbers-vim
+    Plugin 'myusuf3/numbers.vim'
+    " http://vimawesome.com/plugin/nerdtree-git-plugin
+    Plugin 'Xuyuanp/nerdtree-git-plugin'
+    " http://vimawesome.com/plugin/unite-vim-back-to-december
+    Plugin 'Shougo/unite.vim'
+
+    " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
+      Plugin 'kien/ctrlp.vim'
+      let g:ctrlp_map = '<c-p>'
+      let g:ctrlp_cmd = 'CtrlP'
+      let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage)'}
+      let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/the-nerd-tree {
+      Plugin 'scrooloose/nerdtree'
+      let NERDTreeWinSize=30
+      let NERDTreeShowHidden=1
+      let NERDTreeKeepTreeInNewTab=1
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vim-nerdtree-tabs {
+      Plugin 'jistr/vim-nerdtree-tabs'
+      let g:nerdtree_tabs_open_on_console_startup=1
+      " let g:nerdtree_tabs_autofind=1
+      let g:nerdtree_tabs_open_on_new_tab=0
+      let g:nerdtree_tabs_smart_startup_focus=2
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/gundo {
+      Plugin 'sjl/gundo.vim'
+      let g:undotree_SetFocusWhenToggle=1
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vim-startify {
+      Plugin 'mhinz/vim-startify'
+      " TODO sudo apt-get install fortune-mod cowsay
+      " TODO cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
+      let g:startify_custom_header =
+        \ map(split(system('fortune ~/.vim/bundle/vimtips-fortune/fortunes/vimtips | cowsay'), '\n'), '"   ". v:val') + ['','']
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vim-airline-sad-beautiful-tragic {
+      Plugin 'bling/vim-airline'
+      set laststatus=2
+      " TODO # Install desired patched font (for powerline)
+      " git clone https://github.com/powerline/fonts
+      " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
+      " fc-cache -vf ~/.fonts/
+      let g:airline_powerline_fonts = 1
+      let g:airline#extensions#tabline#enabled = 1
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vim-devicons-holy-gound {
+      Plugin 'ryanoasis/vim-devicons'
+      let g:webdevicons_conceal_nerdtree_brackets = 1
+      let g:webdevicons_enable_nerdtree = 1
+      " TODO # Install desired patched font (for devicons)
+      " git clone https://github.com/ryanoasis/nerd-fonts.git
+      " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
+      " Update font cache: fc-cache -fv
+    " } Config Plugin End
+  " }
+  " --------------------
+  " Commands {
+  " --------------------
+    " http://vimawesome.com/plugin/tabular
+    Plugin 'godlygeek/tabular'
+    " http://vimawesome.com/plugin/repeat-vim
+    Plugin 'tpope/vim-repeat'
+    " http://vimawesome.com/plugin/matchit-zip
+    Plugin 'matchit.zip'
+    " http://vimawesome.com/plugin/unimpaired-vim
+    Plugin 'tpope/vim-unimpaired'
+    " http://vimawesome.com/plugin/tcomment
+    Plugin 'tomtom/tcomment_vim'
+
+    " htp://vimawesome.com/plugin/sessionman-vim {
+      Plugin 'sessionman.vim'
+      set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vim-multiple-cursors {
+      Plugin 'terryma/vim-multiple-cursors'
+      " Prevent Neocomplete conflicts
+      " Called once right before you start selecting multiple cursors
+      function! Multiple_cursors_before()
+        if exists(':NeoCompleteLock')==2
+          exe 'NeoCompleteLock'
+        endif
+      endfunction
+      " Called once only when the multiple selection is canceled (default <Esc>)
+      function! Multiple_cursors_after()
+        if exists(':NeoCompleteUnlock')==2
+          exe 'NeoCompleteUnlock'
+        endif
+      endfunction
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vimproc-vim {
+      Plugin 'Shougo/vimproc.vim'
+      " TODO cd ~/.vim/bundle/vimproc.vim && make
+    " } Config Plugin End
+  " }
+  " --------------------
+  " Others {
+  " --------------------
+    " http://vimawesome.com/plugin/indentwise
+    Plugin 'jeetsukumaran/vim-indentwise'
+    " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
+    Plugin 'easymotion/vim-easymotion'
+    " http://vimawesome.com/plugin/searchcomplete
+    Plugin 'SearchComplete'
+    " http://vimawesome.com/plugin/vim-signature
+    Plugin 'kshenoy/vim-signature'
+    " http://vimawesome.com/plugin/editorconfig-vim
+    Plugin 'editorconfig/editorconfig-vim'
+
+    " http://vimawesome.com/plugin/vimtips-fortune {
+      Plugin 'hobbestigrou/vimtips-fortune'
+      let g:fortune_vimtips_auto_display=0
     " } Config Plugin End
   " }
 
