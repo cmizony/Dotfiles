@@ -50,9 +50,16 @@ DEFAULT_USER="cmizony"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z tmux bower brew npm cp gem github grunt heroku man sudo vi-mode)
+plugins=(git z tmux bower npm cp)
 
 # User configuration
+
+# Git/github stuff
+eval "$(hub alias -s)"
+# Include BASH completions
+zstyle ':completion:*:*:git:*' script /usr/local/etc/bash_completion.d/git-completion.bash
+# Now zsh specific completions
+fpath=(/usr/local/share/zsh/site-functions $fpath)
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -84,6 +91,5 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vi='vim'
-alias git='hub'
 export EDITOR='vim'
 export TODO_DB_PATH=$HOME/.todo.json
