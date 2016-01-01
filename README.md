@@ -6,11 +6,12 @@ __     _____ __  __           ____  _             _
    \_/  |___|_|  |_|         |_|   |_|\__,_|\__, |_|_| |_|___/
                                             |___/             
 ```
+
+[![Project Overview](gallery/overview.png)](gallery/)
+
 ## Text editor configuration
 
 The following sections contain a descriptive list of most of the plugings I use in my `.vimrc` configuration to make vim even more awesome.
-
-_Any cool plugin I am missing? Feel free to let me know._
 
 ### Language
 
