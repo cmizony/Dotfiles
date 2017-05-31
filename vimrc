@@ -20,7 +20,7 @@
 "   cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
 "   mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
 "   sudo apt-get install exuberant-ctags fortune-mod cowsay tidy vim-gtk xdg-utils
-"   sudo npm -g install instant-markdown-d jscs jshint
+"   sudo npm -g install instant-markdown-d eslint
 "
 " Update the list with following command:
 "   grep "DO" ~/.vimrc | grep -v "grep" | sed 's/[[:space:]]\+" TODO//' | sort
@@ -67,16 +67,31 @@
 
     " http://vimawesome.com/plugin/syntastic {
       Plugin 'scrooloose/syntastic'
-      let g:syntastic_always_populate_loc_list = 1
-      " TODO sudo npm install -g jscs jshint
-      let g:syntastic_javascript_checkers = ['jshint', 'jscs']
+      scriptencoding utf-8
+      let g:syntastic_always_populate_loc_list = 1 " Always add any detected errors into the location list
+      " Don’t auto-open it when errors/warnings are detected, but auto-close when no
+      " more errors/warnings are detected.
+      let g:syntastic_auto_loc_list = 2
+      " Highlight syntax errors where possible
+      let g:syntastic_enable_highlighting = 1
+      " Show this many errors/warnings at a time in the location list
+      let g:syntastic_loc_list_height = 5
+      " Don’t run checkers when saving and quitting--only on saving
+      let g:syntastic_check_on_wq = 0
+
       let g:syntastic_error_symbol = '✗'
-      let g:syntastic_warning_symbol = '!'
-      " TODO sudo apt-get install tidy
-      " html5 support https://github.com/htacg/tidy-html5
-      let g:syntastic_html_tidy_exec = 'tidy'
-      " Config to make it work better with AngularJS
-      let g:syntastic_html_tidy_ignore_errors=["proprietary attribute " ,"trimming empty <", "unescaped &" , "lacks \"action", "is not recognized!", "discarding unexpected"]
+      let g:syntastic_warning_symbol       = '⚠'
+      let g:syntastic_style_error_symbol   = '⚠'
+      let g:syntastic_style_warning_symbol = '⚠'
+
+      let g:syntastic_javascript_checkers    = ['eslint']
+      let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
+      let g:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
+      let g:syntastic_json_checkers          = ['jsonlint']
+      let g:syntastic_ruby_checkers          = ['rubocop']
+      let g:syntastic_ruby_rubocop_args      = "--config .rubocop.yml"
+      let g:syntastic_scss_checkers          = ['scss_lint']
+      let g:syntastic_vim_checkers           = ['vint']
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/instant-markdown-vim {
@@ -84,6 +99,7 @@
       " TODO sudo npm -g install instant-markdown-d
       " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
       autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
     " } Config Plugin End
   " }
   " --------------------
@@ -172,11 +188,13 @@
   " --------------------
   " Code Display {
   " --------------------
+    " http://vimawesome.com/plugin/vim-jsx
+    Plugin 'mxw/vim-jsx'
     " http://vimawesome.com/plugin/indent-guides
     Plugin 'nathanaelkane/vim-indent-guides'
     " http://vimawesome.com/plugin/vim-css-color-the-story-of-us
     Plugin 'ap/vim-css-color'
-    " http://vimawesome.com/plugin/solarized 
+    " http://vimawesome.com/plugin/solarized
     Plugin 'altercation/solarized'
 
     " http://vimawesome.com/plugin/indentline {
@@ -202,8 +220,13 @@
   " --------------------
   " Integrations {
   " --------------------
+    " http://vimawesome.com/plugin/vim-rhubarb
+    Plugin 'tpope/vim-rhubarb' " Needed for Fugitive Gbrowse
     " http://vimawesome.com/plugin/fugitive-vim
     Plugin 'tpope/vim-fugitive'
+    let g:fugitive_github_domains = ['github.com', 'git.musta.ch']
+    let g:github_enterprise_urls = ['https://git.musta.ch']
+    set diffopt+=iwhite
     " http://vimawesome.com/plugin/vim-gitgutter
     Plugin 'airblade/vim-gitgutter'
     " http://vimawesome.com/plugin/gitv
@@ -223,7 +246,7 @@
       " http://ctags.sourceforge.net/
       let g:tagbar_width=30
       " let g:tagbar_autofocus=1
-      autocmd Filetype * nested :call tagbar#autoopen(0)
+      " autocmd Filetype * nested :call tagbar#autoopen(0)
       " Angular html
       let g:tagbar_type_html = {
           \ 'csagstype' : 'html',
@@ -293,6 +316,7 @@
 
     " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
       Plugin 'kien/ctrlp.vim'
+      let g:ctrlp_max_files=0
       let g:ctrlp_map = '<c-p>'
       let g:ctrlp_cmd = 'CtrlP'
       let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage)'}
@@ -334,14 +358,14 @@
       " git clone https://github.com/powerline/fonts
       " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
       " fc-cache -vf ~/.fonts/
-      let g:airline_powerline_fonts = 1
+      " let g:airline_powerline_fonts = 1
       let g:airline#extensions#tabline#enabled = 1
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-devicons-holy-gound {
-      Plugin 'ryanoasis/vim-devicons'
-      let g:webdevicons_conceal_nerdtree_brackets = 1
-      let g:webdevicons_enable_nerdtree = 1
+      " Plugin 'ryanoasis/vim-devicons'
+      " let g:webdevicons_conceal_nerdtree_brackets = 1
+      " let g:webdevicons_enable_nerdtree = 1
       " TODO # Install desired patched font (for devicons)
       " git clone https://github.com/ryanoasis/nerd-fonts.git
       " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
@@ -361,11 +385,10 @@
     Plugin 'tpope/vim-unimpaired'
     " http://vimawesome.com/plugin/tcomment
     Plugin 'tomtom/tcomment_vim'
-
-    " htp://vimawesome.com/plugin/sessionman-vim {
-      Plugin 'sessionman.vim'
-      set sessionoptions=blank,buffers,curdir,folds,tabpages,winsize
-    " } Config Plugin End
+    " http://vimawesome.com/plugin/obsession-vim
+    " Use :Obsess (with optional file/directory name) to start recording to a
+    " session file and :Obsess!
+    Plugin 'tpope/vim-obsession'
 
     " http://vimawesome.com/plugin/vim-multiple-cursors {
       Plugin 'terryma/vim-multiple-cursors'
@@ -433,7 +456,7 @@
     " TODO sudo apt-get install vim-gtk
     set autoindent                 " text indenting
     set backspace=indent,eol,start " allow backspace in insert mode
-    set clipboard+=unnamed         " Require vim-gtk to paste OS clipboard
+    set clipboard=unnamed         " Require vim-gtk to paste OS clipboard
     set cursorline                 " Highlight current line
     set colorcolumn=100            " Set gray bar at 100 character
     set encoding=utf8              " Set utf8 as standard encoding and en_US as the standard language
@@ -463,17 +486,13 @@
     set tabstop=2                  " number of spaces in a tab
     set mouse=a                    " Allow mouse usage
     "set autowrite                  Automatically write a file when leaving a modified buffer
+    set list " show whitespace
+    set listchars=nbsp:¬,tab:>-,extends:»,precedes:«,trail:• " Show whitespace
   " }
 
   " ---------------
   " ShortCut config {
   " ---------------
-
-    " <Leader>s Session manipulation {
-      nmap <leader>sl :SessionList<CR>
-      nmap <leader>ss :SSave<CR>
-      nmap <leader>sc :SessionClose<CR>
-    " } Config ShortCut End
 
     " <Leader>p Ctrl-P & paste {
       nmap <Leader>pw <C-P><C-\>w
@@ -615,7 +634,7 @@
     highlight ColorColumn ctermbg=16
 
     " Auto limit text width
-    autocmd FileType text setlocal textwidth=72
+    autocmd FileType text setlocal textwidth=80
     autocmd Filetype gitcommit setlocal spell textwidth=72
 
     set background=dark         " Assume a dark background
