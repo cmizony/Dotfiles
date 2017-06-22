@@ -254,7 +254,7 @@
               \ 'd:directive'
           \ ]
       \ }
-      " Angular javascript
+      " Javascript es6
       let g:tagbar_type_javascript = {
           \ 'csagstype' : 'JavaScript',
           \ 'kinds'     : [
@@ -319,7 +319,7 @@
       let g:ctrlp_max_files=0
       let g:ctrlp_map = '<c-p>'
       let g:ctrlp_cmd = 'CtrlP'
-      let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage)'}
+      let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage|webpack|vendor|tmp|private)'}
       let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
     " } Config Plugin End
 
@@ -345,10 +345,6 @@
 
     " http://vimawesome.com/plugin/vim-startify {
       Plugin 'mhinz/vim-startify'
-      " TODO sudo apt-get install fortune-mod cowsay
-      " TODO cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
-      let g:startify_custom_header =
-        \ map(split(system('fortune ~/.vim/bundle/vimtips-fortune/fortunes/vimtips | cowsay'), '\n'), '"   ". v:val') + ['','']
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-airline-sad-beautiful-tragic {
@@ -360,6 +356,7 @@
       " fc-cache -vf ~/.fonts/
       " let g:airline_powerline_fonts = 1
       let g:airline#extensions#tabline#enabled = 1
+      let g:airline#extensions#obsession#enabled = 1
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-devicons-holy-gound {
@@ -375,6 +372,8 @@
   " --------------------
   " Commands {
   " --------------------
+    " http://vimawesome.com/plugin/copypath-vim
+    Plugin 'copypath.vim'
     " http://vimawesome.com/plugin/tabular
     Plugin 'godlygeek/tabular'
     " http://vimawesome.com/plugin/repeat-vim
@@ -473,6 +472,7 @@
     set nojoinspaces               " Prevents inserting two spaces after punctuation on a join (J)
     set noswapfile
     set number                     " display current line number
+    set relativenumber
     set scrolloff=3                " Scroll when cursor gets within 3 characters of top/bottom edge
     set shiftwidth=2               " as above
     set showcmd                    " show incomplete commands
@@ -485,6 +485,7 @@
     set tabpagemax=15              " Only show 15 tabs
     set tabstop=2                  " number of spaces in a tab
     set mouse=a                    " Allow mouse usage
+    set tags=./tags;/              " Search tags from current to root directory
     "set autowrite                  Automatically write a file when leaving a modified buffer
     set list " show whitespace
     set listchars=nbsp:¬,tab:>-,extends:»,precedes:«,trail:• " Show whitespace
@@ -553,6 +554,11 @@
       nmap <leader>vp :VimShellPop<CR>
     " } Config ShortCut End
 
+    " <Leader>c CopyPath {
+      nmap <leader>cp :CopyPath<CR>
+      nmap <leader>cf :CopyFileName<CR>
+    " }
+
     " <Leader>a Tabularize ShortCuts {
       nmap <leader>a= :Tabularize /^[^=]*\zs=<CR>
       nmap <leader>a: :Tabularize /:<CR>
@@ -583,18 +589,18 @@
       command! -bang Qa qa<bang>
     " } Config ShortCut End
 
-    " <Leader>f Code folding options {
-      nmap <leader>f0 :set foldlevel=0<CR>
-      nmap <leader>f1 :set foldlevel=1<CR>
-      nmap <leader>f2 :set foldlevel=2<CR>
-      nmap <leader>f3 :set foldlevel=3<CR>
-      nmap <leader>f4 :set foldlevel=4<CR>
-      nmap <leader>f5 :set foldlevel=5<CR>
-      nmap <leader>f6 :set foldlevel=6<CR>
-      nmap <leader>f7 :set foldlevel=7<CR>
-      nmap <leader>f8 :set foldlevel=8<CR>
-      nmap <leader>f9 :set foldlevel=9<CR>
-      nmap <leader>fa :set foldlevel=100<CR>
+    " <Leader>d Code folding options {
+      nmap <leader>d0 :set foldlevel=0<CR>
+      nmap <leader>d1 :set foldlevel=1<CR>
+      nmap <leader>d2 :set foldlevel=2<CR>
+      nmap <leader>d3 :set foldlevel=3<CR>
+      nmap <leader>d4 :set foldlevel=4<CR>
+      nmap <leader>d5 :set foldlevel=5<CR>
+      nmap <leader>d6 :set foldlevel=6<CR>
+      nmap <leader>d7 :set foldlevel=7<CR>
+      nmap <leader>d8 :set foldlevel=8<CR>
+      nmap <leader>d9 :set foldlevel=9<CR>
+      nmap <leader>da :set foldlevel=100<CR>
     " } Config ShortCut End
 
     " <Leader>n Nerd tree {
@@ -609,6 +615,18 @@
       nnoremap <F8> :NumbersToggle<CR>
       nmap <silent> <F9> :set number!<CR>
     " } Config ShortCut End
+
+    " <Leader>f MacBook FN keys {
+      nmap <Leader>f1 <F1>
+      nmap <Leader>f2 <F2>
+      nmap <Leader>f3 <F3>
+      nmap <Leader>f4 <F4>
+      nmap <Leader>f5 <F5>
+      nmap <Leader>f6 <F6>
+      nmap <Leader>f7 <F7>
+      nmap <Leader>f8 <F8>
+      nmap <Leader>f9 <F9>
+    " }
 
     " <Leader> - Others {
       " Allow using the repeat operator with a visual selection (!)
@@ -638,6 +656,34 @@
     autocmd Filetype gitcommit setlocal spell textwidth=72
 
     set background=dark         " Assume a dark background
+
+    " Vim diff current windo
+    function! s:VimDiff() abort
+      if exists('t:vimdiff') && t:vimdiff
+        :windo diffoff
+        let t:vimdiff = 0
+      else
+        :windo diffthis
+        let t:vimdiff = 1
+      endif
+    endfunction
+    command! VimDiff call s:VimDiff()
+    nmap <leader>vd :VimDiff<CR>
+
+    " Zoom / Restore window.
+    function! s:ZoomToggle() abort
+      if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+      else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+      endif
+    endfunction
+    command! ZoomToggle call s:ZoomToggle()
+    nmap <leader>zt :ZoomToggle<CR>
 
     " Allow to trigger background
     function! ToggleBG()
@@ -688,4 +734,18 @@
     if filereadable(expand("~/.vimrc.local"))
         source ~/.vimrc.local
     endif
+
+    " Lookup keyword on http://devdocs.io
+    " Use ':DD' without argument to lookup the word under the cursor, scoped with the current filetype:
+    "     :DD
+    " Use ':DD' with one argument to lookup the argument, scoped with the current filetype:
+    "     :DD Map
+    " Use ':DD' with two arguments to do the scoping yourself:
+    "    :DD scss @mixin
+    " Use ':DD' for keyword lookup with the built-in 'K':
+    "    setlocal keywordprg=:DD
+    let stub = "open 'http://devdocs.io/?q="
+    command! -nargs=* DD silent! call system(len(split(<q-args>, ' ')) == 0 ?
+                \ stub . &ft . ' ' . expand('<cword>') . "'" : len(split(<q-args>, ' ')) == 1 ?
+                \ stub . &ft . ' ' . <q-args> . "'" : stub . <q-args> . "'")
   " }
