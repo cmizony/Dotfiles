@@ -316,7 +316,13 @@
 
     " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
       Plugin 'kien/ctrlp.vim'
-      let g:ctrlp_max_files=0
+      " Load sub folder in buffer: `argadd app/sub/directory/**/*.js`
+      let g:ctrlp_max_files=10000
+      let g:ctrlp_max_depth = 40
+      let g:ctrlp_lazy_update = 1
+      let g:ctrlp_use_caching = 1
+      let g:ctrlp_clear_cache_on_exit = 1
+      let g:ctrlp_cache_dir = $HOME.'/.vim/ctrlp'
       let g:ctrlp_map = '<c-p>'
       let g:ctrlp_cmd = 'CtrlP'
       let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage|webpack|vendor|tmp|private)'}
@@ -501,6 +507,7 @@
       nmap <Leader>pf :CtrlP<CR>
       nmap <Leader>pm :CtrlPMRUFiles<CR>
       nmap <Leader>pb :CtrlPBuffer<CR>
+      nmap <Leader>px :CtrlPMixed<CR>
       nmap <Leader>pt :set invpaste paste?<CR>
     " } Config ShortCut End
 
@@ -652,7 +659,7 @@
     highlight ColorColumn ctermbg=16
 
     " Auto limit text width
-    autocmd FileType text setlocal textwidth=80
+    autocmd FileType text setlocal textwidth=100
     autocmd Filetype gitcommit setlocal spell textwidth=72
 
     set background=dark         " Assume a dark background
