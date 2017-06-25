@@ -15,12 +15,14 @@
 " Summary list of external dependencies:
 "   # Install desired patched font (for devicons and powerline)
 "   git config --global github.user <username>
+"   git config --global alias.tree "log --oneline --decorate --all --graph" # $git tree
 "   cd ~/.vim/bundle/tern_for_vim && npm install
 "   cd ~/.vim/bundle/vimproc.vim && make
 "   cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
 "   mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
 "   sudo apt-get install exuberant-ctags fortune-mod cowsay tidy vim-gtk xdg-utils
 "   sudo npm -g install instant-markdown-d eslint
+"   brew install ack
 "
 " Update the list with following command:
 "   grep "DO" ~/.vimrc | grep -v "grep" | sed 's/[[:space:]]\+" TODO//' | sort
@@ -313,6 +315,9 @@
     Plugin 'Xuyuanp/nerdtree-git-plugin'
     " http://vimawesome.com/plugin/unite-vim-back-to-december
     Plugin 'Shougo/unite.vim'
+    " http://vimawesome.com/plugin/ack-vim
+    " TODO `brew install ack`
+    Plugin 'mileszs/ack.vim'
 
     " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
       Plugin 'kien/ctrlp.vim'
@@ -425,7 +430,7 @@
     " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
     Plugin 'easymotion/vim-easymotion'
     " http://vimawesome.com/plugin/searchcomplete
-    Plugin 'SearchComplete'
+    " Plugin 'SearchComplete'
     " http://vimawesome.com/plugin/vim-signature
     Plugin 'kshenoy/vim-signature'
     " http://vimawesome.com/plugin/editorconfig-vim
@@ -459,9 +464,11 @@
   " BasicConfig {
   " ------------
     " TODO sudo apt-get install vim-gtk
+    set autoread                   " When a file is changed from the outside
     set autoindent                 " text indenting
     set backspace=indent,eol,start " allow backspace in insert mode
-    set clipboard=unnamed         " Require vim-gtk to paste OS clipboard
+    set clipboard=unnamed          " Require vim-gtk to paste OS clipboard
+    set lazyredraw                 " No redraw while executing macros (good performance config)
     set cursorline                 " Highlight current line
     set colorcolumn=100            " Set gray bar at 100 character
     set encoding=utf8              " Set utf8 as standard encoding and en_US as the standard language
@@ -492,8 +499,9 @@
     set tabstop=2                  " number of spaces in a tab
     set mouse=a                    " Allow mouse usage
     set tags=./tags;/              " Search tags from current to root directory
-    "set autowrite                  Automatically write a file when leaving a modified buffer
-    set list " show whitespace
+    set wildmenu                   " Turn on the WiLd menu
+    set autowrite                  " Automatically write a file when leaving a modified buffer
+    set list                       " show whitespace
     set listchars=nbsp:¬,tab:>-,extends:»,precedes:«,trail:• " Show whitespace
   " }
 
@@ -646,6 +654,8 @@
       nmap <silent> <leader>sp :set spell!<CR>
       " Dispaly tip
       nmap <leader>fo :Fortune<CR>
+      " Quick save
+      nmap <leader>w :w!<cr>
     " } Config ShortCut End
   " }
 
@@ -736,6 +746,20 @@
         silent execute 'bwipeout' buf
       endfor
     endfunction
+
+    " Visual mode pressing * searches for the current selection
+    vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+
+    " Surround the visual selection in parenthesis/brackets/etc.:
+    vnoremap s( <esc>`>a)<esc>`<i(<esc>
+    vnoremap s) <esc>`>a)<esc>`<i(<esc>
+    vnoremap s[ <esc>`>a]<esc>`<i[<esc>
+    vnoremap s] <esc>`>a]<esc>`<i[<esc>
+    vnoremap s{ <esc>`>a}<esc>`<i{<esc>
+    vnoremap s} <esc>`>a}<esc>`<i{<esc>
+    vnoremap s" <esc>`>a"<esc>`<i"<esc>
+    vnoremap s' <esc>`>a'<esc>`<i'<esc>
+    vnoremap s` <esc>`>a`<esc>`<i`<esc>
 
     " Use local vimrc if available
     if filereadable(expand("~/.vimrc.local"))
