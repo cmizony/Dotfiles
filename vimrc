@@ -318,6 +318,8 @@
     " http://vimawesome.com/plugin/ack-vim
     " TODO `brew install ack`
     Plugin 'mileszs/ack.vim'
+    " http://vimawesome.com/plugin/buffergator
+    Plugin 'jeetsukumaran/vim-buffergator'
 
     " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
       Plugin 'kien/ctrlp.vim'
@@ -425,6 +427,8 @@
   " --------------------
   " Others {
   " --------------------
+    " http://vimawesome.com/plugin/largefile
+    Plugin 'LargeFile'
     " http://vimawesome.com/plugin/indentwise
     Plugin 'jeetsukumaran/vim-indentwise'
     " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
@@ -564,14 +568,19 @@
     " } Config ShortCut End
 
     " <Leader>v VimShell {
-      nmap <leader>vs :VimShell<CR>
+      nmap <leader>vs :VimShellPop<CR>
       nmap <leader>vt :VimShellTab<CR>
-      nmap <leader>vp :VimShellPop<CR>
     " } Config ShortCut End
 
     " <Leader>c CopyPath {
       nmap <leader>cp :CopyPath<CR>
       nmap <leader>cf :CopyFileName<CR>
+    " }
+
+    " <Leader>b Buffergator {
+      nmap <leader>bo :BuffergatorOpen<CR>
+      nmap <leader>bc :BuffergatorClose<CR>
+      nmap <leader>bt :BuffergatorToggle<CR>
     " }
 
     " <Leader>a Tabularize ShortCuts {
