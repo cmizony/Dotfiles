@@ -26,6 +26,8 @@
 "
 " Update the list with following command:
 "   grep "DO" ~/.vimrc | grep -v "grep" | sed 's/[[:space:]]\+" TODO//' | sort
+" Script to find merged local merged branches (you can pipe to remove them)
+"   comm -12  <(git branch --merged|awk '{print($1)}') <(git branch -r --merged|awk '{print($1)}'|awk -F \/ '{print($2)}')
 
 
 "  ___    __     ___             ____  _             _
@@ -321,15 +323,17 @@
     " http://vimawesome.com/plugin/buffergator
     Plugin 'jeetsukumaran/vim-buffergator'
 
+    " http://vimawesome.com/plugin/taboo-vim
+    Plugin 'gcmt/taboo.vim'
+    " Use TabooRename <tabname> && TabooReset
+    let g:taboo_tabline=0
+    set sessionoptions+=tabpages,globals
+
     " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
       Plugin 'kien/ctrlp.vim'
       " Load sub folder in buffer: `argadd app/sub/directory/**/*.js`
-      let g:ctrlp_max_files=10000
-      let g:ctrlp_max_depth = 40
+      let g:ctrlp_max_files=0
       let g:ctrlp_lazy_update = 1
-      let g:ctrlp_use_caching = 1
-      let g:ctrlp_clear_cache_on_exit = 1
-      let g:ctrlp_cache_dir = $HOME.'/.vim/ctrlp'
       let g:ctrlp_map = '<c-p>'
       let g:ctrlp_cmd = 'CtrlP'
       let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage|webpack|vendor|tmp|private)'}
@@ -427,8 +431,6 @@
   " --------------------
   " Others {
   " --------------------
-    " http://vimawesome.com/plugin/largefile
-    Plugin 'LargeFile'
     " http://vimawesome.com/plugin/indentwise
     Plugin 'jeetsukumaran/vim-indentwise'
     " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
@@ -443,6 +445,10 @@
     " http://vimawesome.com/plugin/vimtips-fortune {
       Plugin 'hobbestigrou/vimtips-fortune'
       let g:fortune_vimtips_auto_display=0
+
+    " http://vimawesome.com/plugin/largefile
+      Plugin 'LargeFile'
+      let g:LargeFile=10
     " } Config Plugin End
   " }
 
@@ -499,6 +505,7 @@
     set softtabstop=2              " as above
     set splitbelow                 " Puts new split windows to the bottom of the current
     set splitright                 " Puts new vsplit windows to the right of the current
+    set synmaxcol=900              " Turn off syntax highlighting for long lines
     set tabpagemax=15              " Only show 15 tabs
     set tabstop=2                  " number of spaces in a tab
     set mouse=a                    " Allow mouse usage
