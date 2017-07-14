@@ -10,6 +10,7 @@
 "   Use <Leader>ig to view indentation guides
 "   Use <Leader>f0 or f1 to navigate between summary folds
 "   Use <gx> to open plugin url links
+"   Use <F12> to get some help for some commands
 "
 "
 " Summary list of external dependencies:
@@ -233,95 +234,132 @@
     set diffopt+=iwhite
     " http://vimawesome.com/plugin/vim-gitgutter
     Plugin 'airblade/vim-gitgutter'
-    " http://vimawesome.com/plugin/gitv
-    let g:Gitv_OpenHorizontal = 1
-    Plugin 'gregsexton/gitv'
-    " http://vimawesome.com/plugin/vimshell-vim {
-      Plugin 'Shougo/vimshell.vim'
-      let g:vimshell_user_prompt=''
-      let g:vimshell_prompt_expr =
-      \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-      let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
-    " } Config Plugin End
+  " http://vimawesome.com/plugin/gitv
+  let g:Gitv_OpenHorizontal = 1
+  Plugin 'gregsexton/gitv'
+  " http://vimawesome.com/plugin/vimshell-vim {
+    Plugin 'Shougo/vimshell.vim'
+    let g:vimshell_user_prompt=''
+    let g:vimshell_prompt_expr =
+    \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+    let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/tagbar {
-      Plugin 'majutsushi/tagbar'
-      " TODO sudo apt-get install exuberant-ctags
-      " http://ctags.sourceforge.net/
-      let g:tagbar_width=30
-      " let g:tagbar_autofocus=1
-      " autocmd Filetype * nested :call tagbar#autoopen(0)
-      " Angular html
-      let g:tagbar_type_html = {
-          \ 'csagstype' : 'html',
-          \ 'kinds'     : [
-              \ 'd:directive'
-          \ ]
-      \ }
-      " Javascript es6
-      let g:tagbar_type_javascript = {
-          \ 'csagstype' : 'JavaScript',
-          \ 'kinds'     : [
-              \ 'M:module',
-              \ 'C:controller',
-              \ 'D:directive',
-              \ 'E:decorator',
-              \ 'I:filter',
-              \ 'S:service',
-              \ 'r:ngRoute',
-              \ 'F:factory',
-              \ 'd:delegate',
-              \ 'c:class',
-              \ 'm:method',
-              \ 'v:scopeVariables',
-              \ 't:this',
-              \ 'o:model'
-          \ ]
-      \ }
-    " } Config Plugin End
+  " http://vimawesome.com/plugin/tagbar {
+    Plugin 'majutsushi/tagbar'
+    " TODO sudo apt-get install exuberant-ctags
+    " http://ctags.sourceforge.net/
+    let g:tagbar_width=30
+    " let g:tagbar_autofocus=1
+    " autocmd Filetype * nested :call tagbar#autoopen(0)
+    " Angular html
+    let g:tagbar_type_html = {
+        \ 'csagstype' : 'html',
+        \ 'kinds'     : [
+            \ 'd:directive'
+        \ ]
+    \ }
+    " Javascript es6
+    let g:tagbar_type_javascript = {
+        \ 'csagstype' : 'JavaScript',
+        \ 'kinds'     : [
+            \ 'M:module',
+            \ 'C:controller',
+            \ 'D:directive',
+            \ 'E:decorator',
+            \ 'I:filter',
+            \ 'S:service',
+            \ 'r:ngRoute',
+            \ 'F:factory',
+            \ 'd:delegate',
+            \ 'c:class',
+            \ 'm:method',
+            \ 'v:scopeVariables',
+            \ 't:this',
+            \ 'o:model'
+        \ ]
+    \ }
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/gist-vim {
-      Plugin 'mattn/webapi-vim'
-      Plugin 'mattn/gist-vim'
-      " TODO git config --global github.user <username>
-      let g:gist_post_private = 1
-      let g:gist_show_privates = 1
-      let g:gist_open_browser_after_post = 1
-    " } Config Plugin End
+  " http://vimawesome.com/plugin/gist-vim {
+    Plugin 'mattn/webapi-vim'
+    Plugin 'mattn/gist-vim'
+    " TODO git config --global github.user <username>
+    let g:gist_post_private = 1
+    let g:gist_show_privates = 1
+    let g:gist_open_browser_after_post = 1
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/tern-for-vim {
-      Plugin 'marijnh/tern_for_vim'
-      " TODO cd ~/.vim/bundle/tern_for_vim && npm install
-      " http://ternjs.net/doc/manual.html
-      let tern_show_signature_in_pum=1
-    " } Config Plugin End
+  " http://vimawesome.com/plugin/tern-for-vim {
+    Plugin 'marijnh/tern_for_vim'
+    " TODO cd ~/.vim/bundle/tern_for_vim && npm install
+    " http://ternjs.net/doc/manual.html
+    let tern_show_signature_in_pum=1
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/vim-tmux-navigator {
-      Plugin 'christoomey/vim-tmux-navigator'
-      " TODO Add tmux navigator config in .tmux.conf
-      " is_vim='echo "#{pane_current_command}" | grep -iqE
-      " "(^|\/)g?(view|n?vim?)(diff)?$"'
-      " bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
-      " bind -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"
-      " bind -n C-k if-shell "$is_vim" "send-keys C-k" "select-pane -U"
-      " bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
-      " bind -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"'
-    " } Config Plugin End
-  " }
-  " --------------------
-  " Interface {
-  " --------------------
-    " http://vimawesome.com/plugin/numbers-vim
-    Plugin 'myusuf3/numbers.vim'
-    " http://vimawesome.com/plugin/nerdtree-git-plugin
-    Plugin 'Xuyuanp/nerdtree-git-plugin'
-    " http://vimawesome.com/plugin/unite-vim-back-to-december
-    Plugin 'Shougo/unite.vim'
-    " http://vimawesome.com/plugin/ack-vim
-    " TODO `brew install ack`
-    Plugin 'mileszs/ack.vim'
-    " http://vimawesome.com/plugin/buffergator
-    Plugin 'jeetsukumaran/vim-buffergator'
+  " http://vimawesome.com/plugin/vim-tmux-navigator {
+    Plugin 'christoomey/vim-tmux-navigator'
+    " TODO Add tmux navigator config in .tmux.conf
+    " is_vim='echo "#{pane_current_command}" | grep -iqE
+    " "(^|\/)g?(view|n?vim?)(diff)?$"'
+    " bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
+    " bind -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"
+    " bind -n C-k if-shell "$is_vim" "send-keys C-k" "select-pane -U"
+    " bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
+    " bind -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"'
+  " } Config Plugin End
+" }
+" --------------------
+" Interface {
+" --------------------
+  " http://vimawesome.com/plugin/numbers-vim
+  Plugin 'myusuf3/numbers.vim'
+  " http://vimawesome.com/plugin/nerdtree-git-plugin
+  Plugin 'Xuyuanp/nerdtree-git-plugin'
+  " http://vimawesome.com/plugin/unite-vim-back-to-december
+  Plugin 'Shougo/unite.vim'
+  " http://vimawesome.com/plugin/ack-vim
+  " TODO `brew install ack`
+  Plugin 'mileszs/ack.vim'
+  " http://vimawesome.com/plugin/buffergator
+  Plugin 'jeetsukumaran/vim-buffergator'
+  " http://vimawesome.com/plugin/quickmenu
+  Plugin 'skywind3000/quickmenu.vim'
+  let g:quickmenu_options = "HL"
+  let g:quickmenu_disable_nofile=0
+  function! CreateMenu()
+    call g:quickmenu#reset()
+
+    " section 1
+    call g:quickmenu#append('# <FN> Shortcuts', '')
+    call g:quickmenu#append('<F5> Gundo', '<F5>')
+    call g:quickmenu#append('<F6> Tagbar', '<F6>')
+    call g:quickmenu#append('<F7> Git Tree', '<F7>')
+    call g:quickmenu#append('<F8> Buffergator', '<F8>')
+    call g:quickmenu#append('<F12> Quickmenu', '<F12>')
+
+    " section 2
+    call g:quickmenu#append('# <Leader> Shortcuts', '')
+    call g:quickmenu#append('<Leader>il Indent Line', '<leader>il')
+    call g:quickmenu#append('<Leader>sn Toggle Numbers', '<leader>sn')
+    call g:quickmenu#append('<Leader>vs VimShellPop', '<leader>vs')
+    call g:quickmenu#append('<Leader>gg GitGutterSigns', '<leader>gg')
+    call g:quickmenu#append('<Leader><Leader>a EasyMotion', '<leader><leader>a')
+    call g:quickmenu#append('<Leader>pw CtrlP W', '<Leader>pw', 'Open fuzzy file finding bsased on current work')
+    call g:quickmenu#append('<Leader>vd VimDiff', '<Leader>vd', 'Diff the content of current openned buffers')
+    call g:quickmenu#append('<Leader>zt ZoomToggle', '<Leader>zt', 'Zoom on the current buffer')
+    call g:quickmenu#append('<Leader>sp Spell Check', '<Leader>sp', 'Togggle spell checking on and off')
+
+    " section 3
+    call g:quickmenu#append('# :Commands', '')
+    call g:quickmenu#append('set scrollbind', 'set scrollbind', 'Good to coombine with vertical split to view large files')
+    call g:quickmenu#append('windo set noscrollbind', ':windo set noscrollbind', 'Free scroll of all windows in current tab')
+    call g:quickmenu#append('TabooRename <tabname>','echo "RTFM"','Renames the current tab with the name provided')
+    call g:quickmenu#append(':Ack [Opt] {Pattern} [{Dir}]','echo "RTFM"', 'Search recursively in {directories} (which defaults to the current directory) for the {pattern}.')
+
+    " Toggle window
+    call quickmenu#toggle(0)
+  endfunction
 
     " http://vimawesome.com/plugin/taboo-vim
     Plugin 'gcmt/taboo.vim'
@@ -358,6 +396,7 @@
     " http://vimawesome.com/plugin/gundo {
       Plugin 'sjl/gundo.vim'
       let g:undotree_SetFocusWhenToggle=1
+      let g:gundo_width=40
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-startify {
@@ -639,12 +678,12 @@
       nmap <leader>nf :NERDTreeTabsFind<CR>
     " } Config ShortCut End
 
-    " <F> Map F5 to F9 keys {
+    " <F> Map function keys {
       nnoremap <F5> :GundoToggle<CR>
       nmap <F6> :TagbarToggle<CR>
       nnoremap <F7> :Gitv<CR>
-      nnoremap <F8> :NumbersToggle<CR>
-      nmap <silent> <F9> :set number!<CR>
+      nnoremap <F8> :BuffergatorToggle<CR>
+			noremap <silent><F12> :call CreateMenu()<cr>
     " } Config ShortCut End
 
     " <Leader>f MacBook FN keys {
@@ -672,6 +711,8 @@
       nmap <leader>fo :Fortune<CR>
       " Quick save
       nmap <leader>w :w!<cr>
+			" Toggle numbers
+      nmap <Leader>sn:set number!<CR>
     " } Config ShortCut End
   " }
 
