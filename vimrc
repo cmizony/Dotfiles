@@ -312,60 +312,62 @@
 " --------------------
 " Interface {
 " --------------------
-  " http://vimawesome.com/plugin/numbers-vim
-  Plugin 'myusuf3/numbers.vim'
-  " http://vimawesome.com/plugin/nerdtree-git-plugin
-  Plugin 'Xuyuanp/nerdtree-git-plugin'
-  " http://vimawesome.com/plugin/unite-vim-back-to-december
-  Plugin 'Shougo/unite.vim'
-  " http://vimawesome.com/plugin/ack-vim
-  " TODO `brew install ack`
-  Plugin 'mileszs/ack.vim'
-  " http://vimawesome.com/plugin/buffergator
-  Plugin 'jeetsukumaran/vim-buffergator'
-  " http://vimawesome.com/plugin/quickmenu
-  Plugin 'skywind3000/quickmenu.vim'
-  let g:quickmenu_options = "HL"
-  let g:quickmenu_disable_nofile=0
-  function! CreateMenu()
-    call g:quickmenu#reset()
+    " http://vimawesome.com/plugin/numbers-vim
+    Plugin 'myusuf3/numbers.vim'
+    " http://vimawesome.com/plugin/nerdtree-git-plugin
+    Plugin 'Xuyuanp/nerdtree-git-plugin'
+    " http://vimawesome.com/plugin/unite-vim-back-to-december
+    Plugin 'Shougo/unite.vim'
+    " http://vimawesome.com/plugin/ack-vim
+    " TODO `brew install ack`
+    Plugin 'mileszs/ack.vim'
+    " http://vimawesome.com/plugin/buffergator
+    Plugin 'jeetsukumaran/vim-buffergator'
+    " http://vimawesome.com/plugin/quickmenu {
+      Plugin 'skywind3000/quickmenu.vim'
+      let g:quickmenu_options = "HL"
+      let g:quickmenu_disable_nofile=0
+      function! CreateMenu()
+        call g:quickmenu#reset()
 
-    " section 1
-    call g:quickmenu#append('# <FN> Shortcuts', '')
-    call g:quickmenu#append('<F5> Gundo', '<F5>')
-    call g:quickmenu#append('<F6> Tagbar', '<F6>')
-    call g:quickmenu#append('<F7> Git Tree', '<F7>')
-    call g:quickmenu#append('<F8> Buffergator', '<F8>')
-    call g:quickmenu#append('<F12> Quickmenu', '<F12>')
+        " section 1
+        call g:quickmenu#append('# <FN> Shortcuts', '')
+        call g:quickmenu#append('<F5> Gundo', '<F5>')
+        call g:quickmenu#append('<F6> Tagbar', '<F6>')
+        call g:quickmenu#append('<F7> Git Tree', '<F7>')
+        call g:quickmenu#append('<F8> Buffergator', '<F8>')
+        call g:quickmenu#append('<F12> Quickmenu', '<F12>')
 
-    " section 2
-    call g:quickmenu#append('# <Leader> Shortcuts', '')
-    call g:quickmenu#append('<Leader>il Indent Line', '<leader>il')
-    call g:quickmenu#append('<Leader>sn Toggle Numbers', '<leader>sn')
-    call g:quickmenu#append('<Leader>vs VimShellPop', '<leader>vs')
-    call g:quickmenu#append('<Leader>gg GitGutterSigns', '<leader>gg')
-    call g:quickmenu#append('<Leader><Leader>a EasyMotion', '<leader><leader>a')
-    call g:quickmenu#append('<Leader>pw CtrlP W', '<Leader>pw', 'Open fuzzy file finding bsased on current work')
-    call g:quickmenu#append('<Leader>vd VimDiff', '<Leader>vd', 'Diff the content of current openned buffers')
-    call g:quickmenu#append('<Leader>zt ZoomToggle', '<Leader>zt', 'Zoom on the current buffer')
-    call g:quickmenu#append('<Leader>sp Spell Check', '<Leader>sp', 'Togggle spell checking on and off')
+        " section 2
+        call g:quickmenu#append('# <Leader> Shortcuts', '')
+        call g:quickmenu#append('<Leader>il Indent Line', '<leader>il')
+        call g:quickmenu#append('<Leader>sn Toggle Numbers', '<leader>sn')
+        call g:quickmenu#append('<Leader>vs VimShellPop', '<leader>vs')
+        call g:quickmenu#append('<Leader>gg GitGutterSigns', '<leader>gg')
+        call g:quickmenu#append('<Leader><Leader>a EasyMotion', '<leader><leader>a')
+        call g:quickmenu#append('<Leader>pw CtrlP W', '<Leader>pw', 'Open fuzzy file finding bsased on current work')
+        call g:quickmenu#append('<Leader>vd VimDiff', '<Leader>vd', 'Diff the content of current openned buffers')
+        call g:quickmenu#append('<Leader>zt ZoomToggle', '<Leader>zt', 'Zoom on the current buffer')
+        call g:quickmenu#append('<Leader>sp Spell Check', '<Leader>sp', 'Togggle spell checking on and off')
 
-    " section 3
-    call g:quickmenu#append('# :Commands', '')
-    call g:quickmenu#append('set scrollbind', 'set scrollbind', 'Good to coombine with vertical split to view large files')
-    call g:quickmenu#append('windo set noscrollbind', ':windo set noscrollbind', 'Free scroll of all windows in current tab')
-    call g:quickmenu#append('TabooRename <tabname>','echo "RTFM"','Renames the current tab with the name provided')
-    call g:quickmenu#append(':Ack [Opt] {Pattern} [{Dir}]','echo "RTFM"', 'Search recursively in {directories} (which defaults to the current directory) for the {pattern}.')
+        " section 3
+        call g:quickmenu#append('# :Commands', '')
+        call g:quickmenu#append('set scrollbind', 'set scrollbind', 'Good to coombine with vertical split to view large files')
+        call g:quickmenu#append('windo set noscrollbind', ':windo set noscrollbind', 'Free scroll of all windows in current tab')
+        call g:quickmenu#append('TabooRename <tabname>','echo "RTFM"','Renames the current tab with the name provided')
+        call g:quickmenu#append(':Ack [Opt] {Pattern} [{Dir}]','echo "RTFM"', 'Search recursively in {directories} (which defaults to the current directory) for the {pattern}.')
 
-    " Toggle window
-    call quickmenu#toggle(0)
-  endfunction
+        " Toggle window
+        call quickmenu#toggle(0)
+      endfunction
+    " }
 
-    " http://vimawesome.com/plugin/taboo-vim
-    Plugin 'gcmt/taboo.vim'
-    " Use TabooRename <tabname> && TabooReset
-    let g:taboo_tabline=0
-    set sessionoptions+=tabpages,globals
+    " http://vimawesome.com/plugin/taboo-vim {
+      Plugin 'gcmt/taboo.vim'
+      " Use TabooRename <tabname> && TabooReset
+      let g:taboo_tabline=0
+      set sessionoptions+=tabpages,globals
+    " }
 
     " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace {
       Plugin 'kien/ctrlp.vim'
@@ -683,7 +685,7 @@
       nmap <F6> :TagbarToggle<CR>
       nnoremap <F7> :Gitv<CR>
       nnoremap <F8> :BuffergatorToggle<CR>
-			noremap <silent><F12> :call CreateMenu()<cr>
+      noremap <silent><F12> :call CreateMenu()<cr>
     " } Config ShortCut End
 
     " <Leader>f MacBook FN keys {
@@ -711,7 +713,7 @@
       nmap <leader>fo :Fortune<CR>
       " Quick save
       nmap <leader>w :w!<cr>
-			" Toggle numbers
+      " Toggle numbers
       nmap <Leader>sn:set number!<CR>
     " } Config ShortCut End
   " }
