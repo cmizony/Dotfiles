@@ -56,6 +56,8 @@
   " --------------------
     " http://vimawesome.com/plugin/vim-exchange
     Plugin 'tommcdo/vim-exchange'
+    " http://vimawesome.com/plugin/typescript-vim
+    Plugin 'leafgarland/typescript-vim'
     " http://vimawesome.com/plugin/emmet-vim
     Plugin 'mattn/emmet-vim'
     " http://vimawesome.com/plugin/vim-less-safe-and-sound
@@ -278,6 +280,21 @@
             \ 't:this',
             \ 'o:model'
         \ ]
+    \ }
+    " Typescript
+    let g:tagbar_type_typescript = {
+      \ 'ctagstype': 'typescript',
+      \ 'kinds': [
+        \ 'c:classes',
+        \ 'n:modules',
+        \ 'f:functions',
+        \ 'v:variables',
+        \ 'v:varlambdas',
+        \ 'm:members',
+        \ 'i:interfaces',
+        \ 'e:enums',
+        \ 'I:imports',
+      \ ]
     \ }
   " } Config Plugin End
 
