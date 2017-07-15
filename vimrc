@@ -234,12 +234,14 @@
     let g:fugitive_github_domains = ['github.com', 'git.musta.ch']
     let g:github_enterprise_urls = ['https://git.musta.ch']
     set diffopt+=iwhite
+    " http://vimawesome.com/plugin/vim-peekaboo
+    Plugin 'junegunn/vim-peekaboo'
     " http://vimawesome.com/plugin/vim-gitgutter
     Plugin 'airblade/vim-gitgutter'
-  " http://vimawesome.com/plugin/gitv
-  let g:Gitv_OpenHorizontal = 1
-  Plugin 'gregsexton/gitv'
-  " http://vimawesome.com/plugin/vimshell-vim {
+    " http://vimawesome.com/plugin/gitv
+    let g:Gitv_OpenHorizontal = 1
+    Plugin 'gregsexton/gitv'
+    " http://vimawesome.com/plugin/vimshell-vim {
     Plugin 'Shougo/vimshell.vim'
     let g:vimshell_user_prompt=''
     let g:vimshell_prompt_expr =
