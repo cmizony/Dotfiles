@@ -22,7 +22,7 @@
 "   cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
 "   mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
 "   sudo apt-get install exuberant-ctags fortune-mod cowsay tidy vim-gtk xdg-utils
-"   sudo npm -g install instant-markdown-d eslint
+"   sudo npm -g install instant-markdown-d eslint vint jsonlint
 "   brew install ack
 "
 " Update the list with following command:
@@ -92,13 +92,15 @@
       let g:syntastic_style_warning_symbol = '⚠'
 
       let g:syntastic_javascript_checkers    = ['eslint']
-      let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
+      let s:eslint_path                      = system('PATH=$(npm bin):$PATH && which eslint')
       let g:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
       let g:syntastic_json_checkers          = ['jsonlint']
       let g:syntastic_ruby_checkers          = ['rubocop']
       let g:syntastic_ruby_rubocop_args      = "--config .rubocop.yml"
       let g:syntastic_scss_checkers          = ['scss_lint']
       let g:syntastic_vim_checkers           = ['vint']
+      let g:syntastic_typescript_checkers    = ['tslint']
+      let g:syntastic_mode_map               = { 'passive_filetypes': ['html'] }
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/instant-markdown-vim {
