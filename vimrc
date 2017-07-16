@@ -6,14 +6,13 @@
 "   \_____|_|  |_|_____/_____\____/|_| \_|  |_|               \_/ |_|_| |_| |_|_|  \___|
 "
 "
-" Easy navigation in .vimrc:
+" 1. Easy navigation in .vimrc:
 "   Use <Leader>ig to view indentation guides
-"   Use <Leader>f0 or f1 to navigate between summary folds
+"   Use <Leader>d0 or d1 to navigate between summary folds
 "   Use <gx> to open plugin url links
 "   Use <F12> to get some help for some commands
 "
-"
-" Summary list of external dependencies:
+" 2 Summary list of external dependencies:
 "   # Install desired patched font (for devicons and powerline)
 "   git config --global github.user <username>
 "   git config --global alias.tree "log --oneline --decorate --all --graph" # $git tree
@@ -25,9 +24,10 @@
 "   sudo npm -g install instant-markdown-d eslint vint jsonlint
 "   brew install ack
 "
-" Update the list with following command:
+" 3. Other scripts
+"   Update the list with following command:
 "   grep "DO" ~/.vimrc | grep -v "grep" | sed 's/[[:space:]]\+" TODO//' | sort
-" Script to find merged local merged branches (you can pipe to remove them)
+"   Find merged local merged branches (you can pipe to remove them):
 "   comm -12  <(git branch --merged|awk '{print($1)}') <(git branch -r --merged|awk '{print($1)}'|awk -F \/ '{print($2)}')
 
 
@@ -237,6 +237,7 @@
     let g:github_enterprise_urls = ['https://git.musta.ch']
     set diffopt+=iwhite
     " http://vimawesome.com/plugin/vim-peekaboo
+    let g:peekaboo_prefix = '<Leader>'
     Plugin 'junegunn/vim-peekaboo'
     " http://vimawesome.com/plugin/vim-gitgutter
     Plugin 'airblade/vim-gitgutter'
@@ -329,10 +330,10 @@
     " bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
     " bind -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"'
   " } Config Plugin End
-" }
-" --------------------
-" Interface {
-" --------------------
+
+  " --------------------
+  " Interface {
+  " --------------------
     " http://vimawesome.com/plugin/numbers-vim
     Plugin 'myusuf3/numbers.vim'
     " http://vimawesome.com/plugin/nerdtree-git-plugin
@@ -353,30 +354,44 @@
 
         " section 1
         call g:quickmenu#append('# <FN> Shortcuts', '')
-        call g:quickmenu#append('<F5> Gundo', '<F5>')
-        call g:quickmenu#append('<F6> Tagbar', '<F6>')
-        call g:quickmenu#append('<F7> Git Tree', '<F7>')
-        call g:quickmenu#append('<F8> Buffergator', '<F8>')
-        call g:quickmenu#append('<F12> Quickmenu', '<F12>')
+        call g:quickmenu#append('<F5> Registers', ':tabnew +/"\ <FN> ~/.vimrc', 'Open content of copy registers')
+        call g:quickmenu#append('<F6> Gundo', ':tabnew +/"\ <FN> ~/.vimrc', 'Open file change history tree')
+        call g:quickmenu#append('<F7> Tagbar', ':tabnew +/"\ <FN> ~/.vimrc', 'Open result of ctags')
+        call g:quickmenu#append('<F8> Git Tree', ':tabnew +/"\ <FN> ~/.vimrc', 'Open Git tre graph view')
+        call g:quickmenu#append('<F9> Buffergator', ':tabnew +/"\ <FN> ~/.vimrc', 'Open Vim buffers')
+        call g:quickmenu#append('<F10> QuickFix', ':tabnew +/"\ <FN> ~/.vimrc', 'Quickfix special window')
+        call g:quickmenu#append('<F11> Startify', ':tabnew +/"\ <FN> ~/.vimrc', 'Open startify page')
+        call g:quickmenu#append('<F12> Quickmenu', ':tabnew +/"\ <FN> ~/.vimrc', 'Open this menu')
 
         " section 2
-        call g:quickmenu#append('# <Leader> Shortcuts', '')
-        call g:quickmenu#append('<Leader>il Indent Line', '<leader>il')
-        call g:quickmenu#append('<Leader>sn Toggle Numbers', '<leader>sn')
-        call g:quickmenu#append('<Leader>vs VimShellPop', '<leader>vs')
-        call g:quickmenu#append('<Leader>gg GitGutterSigns', '<leader>gg')
-        call g:quickmenu#append('<Leader><Leader>a EasyMotion', '<leader><leader>a')
-        call g:quickmenu#append('<Leader>pw CtrlP W', '<Leader>pw', 'Open fuzzy file finding bsased on current work')
-        call g:quickmenu#append('<Leader>vd VimDiff', '<Leader>vd', 'Diff the content of current openned buffers')
-        call g:quickmenu#append('<Leader>zt ZoomToggle', '<Leader>zt', 'Zoom on the current buffer')
-        call g:quickmenu#append('<Leader>sp Spell Check', '<Leader>sp', 'Togggle spell checking on and off')
+        call g:quickmenu#append('# <Leader> Prefix', '')
+        call g:quickmenu#append('<Leader>a Tabularize', ':tabnew +/"\ <Leader>a ~/.vimrc', 'Tabularize')
+        call g:quickmenu#append('<Leader>b Buffergator', ':tabnew +/"\ <Leader>b ~/.vimrc', 'Buffergator')
+        call g:quickmenu#append('<Leader>c CopyPath', ':tabnew +/"\ <Leader>c ~/.vimrc', 'CopyPath')
+        call g:quickmenu#append('<Leader>d Folding', ':tabnew +/"\ <Leader>d ~/.vimrc', 'Code folding')
+        call g:quickmenu#append('<Leader>e Edit help', ':tabnew +/"\ <Leader>e ~/.vimrc', 'Edit Helpers')
+        call g:quickmenu#append('<Leader>f FN keys', ':tabnew +/"\ <Leader>f ~/.vimrc', 'Function Keys')
+        call g:quickmenu#append('<Leader>g Git', ':tabnew +/"\ <Leader>g ~/.vimrc', 'Git')
+        call g:quickmenu#append('<Leader>i Indents', ':tabnew +/"\ <Leader>i ~/.vimrc', 'Indents')
+        call g:quickmenu#append('<Leader>m Bookmarks', ':tabnew +/"\ <Leader>m ~/.vimrc', 'Bookmarks')
+        call g:quickmenu#append('<Leader>n Nerd Tree', ':tabnew +/"\ <Leader>n ~/.vimrc', 'Nerd tree')
+        call g:quickmenu#append('<Leader>o Others', ':tabnew +/"\ <Leader>o ~/.vimrc', 'Others')
+        call g:quickmenu#append('<Leader>p Ctrl-P', ':tabnew +/"\ <Leader>p ~/.vimrc', 'Ctrl-P')
+        call g:quickmenu#append('<Leader>r Signature', ':tabnew +/"\ <Leader>r ~/.vimrc', 'Signature')
+        call g:quickmenu#append('<Leader>s otion', ':tabnew +/"\ <Leader>s ~/.vimrc', 'Easy motion')
+        call g:quickmenu#append('<Leader>t Tern', ':tabnew +/"\ <Leader>t ~/.vimrc', 'Tern Javascript')
+        call g:quickmenu#append('<Leader>v VimShell', ':tabnew +/"\ <Leader>v ~/.vimrc', 'VimShell')
 
         " section 3
-        call g:quickmenu#append('# :Commands', '')
-        call g:quickmenu#append('set scrollbind', 'set scrollbind', 'Good to coombine with vertical split to view large files')
-        call g:quickmenu#append('windo set noscrollbind', ':windo set noscrollbind', 'Free scroll of all windows in current tab')
-        call g:quickmenu#append('TabooRename <tabname>','echo "RTFM"','Renames the current tab with the name provided')
-        call g:quickmenu#append(':Ack [Opt] {Pattern} [{Dir}]','echo "RTFM"', 'Search recursively in {directories} (which defaults to the current directory) for the {pattern}.')
+        call g:quickmenu#append('# How To', '')
+        call g:quickmenu#append('Window Swap', 'tabnew +/Plugin.*windowswap.$ ~/.vimrc', 'Navigate window you want to move then the one you want to swap with')
+        call g:quickmenu#append('Tab Rename','tabnew +/Plugin.*taboo\.vim.$ ~/.vimrc', 'Renames the current tab with the name provided')
+        call g:quickmenu#append('Grep Search', 'tabnew +/Plugin.*ack\.vim.$ ~/.vimrc', ':Ack [Options] {Pattern} [{Directories}]')
+        call g:quickmenu#append('Multiple cursors', 'tabnew +/Plugin.*multiple-cursors.$ ~/.vimrc', 'Use multiple cursors')
+        call g:quickmenu#append('Use Sessions', 'tabnew +/Plugin.*obsession.$ ~/.vimrc', 'Remember sessions')
+        call g:quickmenu#append('Trim Space', ':tabnew +/TrimWhiteSpace() ~/.vimrc', 'Function to Trim white space in current file')
+        call g:quickmenu#append('Delete Buffers', ':tabnew +/DeleteHiddenBuffers() ~/.vimrc', 'Function to delete hidden buffers')
+        call g:quickmenu#append('Dev Docs', ':tabnew +/"\ DevDocs ~/.vimrc', 'Get dev documentation')
 
         " Toggle window
         call quickmenu#toggle(0)
@@ -493,6 +508,8 @@
   " --------------------
   " Others {
   " --------------------
+    " http://vimawesome.com/plugin/vim-windowswap
+    Plugin 'wesq3/vim-windowswap'
     " http://vimawesome.com/plugin/indentwise
     Plugin 'jeetsukumaran/vim-indentwise'
     " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
@@ -501,6 +518,13 @@
     " Plugin 'SearchComplete'
     " http://vimawesome.com/plugin/vim-signature
     Plugin 'kshenoy/vim-signature'
+    let g:SignatureMarkTextHLDynamic = 1
+
+    " http://vimawesome.com/plugin/vim-bookmarks {
+      Plugin 'mattesgroeger/vim-bookmarks'
+      let g:bookmark_no_default_key_mappings = 1
+    " } Config Plugin End
+
     " http://vimawesome.com/plugin/editorconfig-vim
     Plugin 'editorconfig/editorconfig-vim'
 
@@ -557,7 +581,7 @@
     set nojoinspaces               " Prevents inserting two spaces after punctuation on a join (J)
     set noswapfile
     set number                     " display current line number
-    set relativenumber
+    set relativenumber nonu
     set scrolloff=3                " Scroll when cursor gets within 3 characters of top/bottom edge
     set shiftwidth=2               " as above
     set showcmd                    " show incomplete commands
@@ -583,6 +607,7 @@
   " ---------------
 
     " <Leader>p Ctrl-P & paste {
+      " http://vimawesome.com/plugin/ctrlp-vim-state-of-grace
       nmap <Leader>pw <C-P><C-\>w
       nmap <Leader>ps <C-P><C-\>s
       nmap <Leader>pf :CtrlP<CR>
@@ -592,14 +617,17 @@
       nmap <Leader>pt :set invpaste paste?<CR>
     " } Config ShortCut End
 
-    " <Leader>i Indent lines {
+    " <Leader>i Indents {
+      " http://vimawesome.com/plugin/javascript-indent
       nmap <Leader>il :IndentLinesToggle<CR>
+      " Note: <Leader> ig = Indent guides 
       " Use tidy to indent html attribute on selected line (visual mode)
       nmap <silent> <Leader>ic :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
       vmap <silent> <Leader>ic :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
     " } Config ShortCut End
 
     " <Leader>t Tern Javascript {
+      " http://vimawesome.com/plugin/tern-for-vim
       nmap <Leader>td :TernDoc<CR>
       nmap <Leader>tb :TernDocBrowse<CR>
       nmap <Leader>tt :TernType<CR>
@@ -611,7 +639,10 @@
       nmap <Leader>tR :TernRename<CR>
     " } Config ShortCut End
 
-    " <Leader>g Git shorcuts {
+    " <Leader>g Git {
+      " http://vimawesome.com/plugin/fugitive-vim
+      " http://vimawesome.com/plugin/gitv
+      " http://vimawesome.com/plugin/vim-gitgutter
       nnoremap <silent> <leader>gs :Gstatus<CR>
       nnoremap <silent> <leader>gd :Gdiff<CR>
       nnoremap <silent> <leader>gc :Gcommit<CR>
@@ -631,28 +662,33 @@
     " } Config ShortCut End
 
     " <Leader><Leader> Easy motion search {
-      nmap <leader><leader>a <Plug>(easymotion-bd-w)
-      nmap <leader><leader>A <Plug>(easymotion-bd-W)
-      nmap <leader><leader>l <Plug>(easymotion-bd-jk)
+      " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
+      nmap <leader>sa <Plug>(easymotion-bd-w)
+      nmap <leader>sA <Plug>(easymotion-bd-W)
+      nmap <leader>sl <Plug>(easymotion-bd-jk)
     " } Config ShortCut End
 
     " <Leader>v VimShell {
+      " http://vimawesome.com/plugin/vimshell-vim
       nmap <leader>vs :VimShellPop<CR>
       nmap <leader>vt :VimShellTab<CR>
     " } Config ShortCut End
 
     " <Leader>c CopyPath {
+      " http://vimawesome.com/plugin/copypath-vim
       nmap <leader>cp :CopyPath<CR>
       nmap <leader>cf :CopyFileName<CR>
     " }
 
     " <Leader>b Buffergator {
+      " http://vimawesome.com/plugin/buffergator
       nmap <leader>bo :BuffergatorOpen<CR>
       nmap <leader>bc :BuffergatorClose<CR>
       nmap <leader>bt :BuffergatorToggle<CR>
     " }
 
     " <Leader>a Tabularize ShortCuts {
+      " http://vimawesome.com/plugin/tabular
       nmap <leader>a= :Tabularize /^[^=]*\zs=<CR>
       nmap <leader>a: :Tabularize /:<CR>
       nmap <leader>a:: :Tabularize /:\zs<CR>
@@ -661,7 +697,7 @@
       nmap <leader>a<Bar> :Tabularize /<Bar><CR>
     " } Config ShortCut End
 
-    " <Leader>e Helpers to edit mode {
+    " <Leader>e Edit Helpers {
       " http://vimcasts.org/e/14
       cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
       map <leader>ew :e %%
@@ -670,19 +706,8 @@
       map <leader>et :tabe %%
     " } Config ShortCut End
 
-    " Commands - shift key fixes {
-      command! -bang -nargs=* -complete=file E e<bang> <args>
-      command! -bang -nargs=* -complete=file W w<bang> <args>
-      command! -bang -nargs=* -complete=file Wq wq<bang> <args>
-      command! -bang -nargs=* -complete=file WQ wq<bang> <args>
-      command! -bang Wa wa<bang>
-      command! -bang WA wa<bang>
-      command! -bang Q q<bang>
-      command! -bang QA qa<bang>
-      command! -bang Qa qa<bang>
-    " } Config ShortCut End
-
     " <Leader>d Code folding options {
+      " http://vim.wikia.com/wiki/Folding
       nmap <leader>d0 :set foldlevel=0<CR>
       nmap <leader>d1 :set foldlevel=1<CR>
       nmap <leader>d2 :set foldlevel=2<CR>
@@ -697,19 +722,52 @@
     " } Config ShortCut End
 
     " <Leader>n Nerd tree {
+      " http://vimawesome.com/plugin/the-nerd-tree
       nmap <leader>nt :NERDTreeTabsToggle<CR>
       nmap <leader>nf :NERDTreeTabsFind<CR>
     " } Config ShortCut End
 
-    " <F> Map function keys {
-      nnoremap <F5> :GundoToggle<CR>
-      nmap <F6> :TagbarToggle<CR>
-      nnoremap <F7> :Gitv<CR>
-      nnoremap <F8> :BuffergatorToggle<CR>
-      noremap <silent><F12> :call CreateMenu()<cr>
+    " <Leader>r Signature {
+      " http://vimawesome.com/plugin/vim-signature
+      nmap <leader>rl :SignatureListMarks<CR>
+      nmap <leader>rr :SignatureRefresh<CR>
+      nmap <leader>rt :SignatureToggleSigns<CR>
+    " }
+
+    " <Leader>m Bookmarks {
+      " http://vimawesome.com/plugin/vim-bookmarks
+      nmap <Leader>mt <Plug>BookmarkToggle
+      nmap <Leader>mi <Plug>BookmarkAnnotate
+      nmap <Leader>ma <Plug>BookmarkShowAll
+      nmap <Leader>mj <Plug>BookmarkNext
+      nmap <Leader>mk <Plug>BookmarkPrev
+      nmap <Leader>mc <Plug>BookmarkClear
+      nmap <Leader>mx <Plug>BookmarkClearAll
+      nmap <Leader>mkk <Plug>BookmarkMoveUp
+      nmap <Leader>mjj <Plug>BookmarkMoveDown
+      nmap <Leader>mg <Plug>BookmarkMoveToLine
+    " } Config Bookmarks End
+
+    " <Leader>o Others {
+      " Find merge conflict markers
+      map <leader>oc /\v^[<\|=>]{7}( .*\|$)<CR>
+      " Display all lines with keyword under cursor and ask which one to jump to
+      nmap <Leader>of [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+      " Toggle spell checking on and off with <leader>s
+      nmap <silent> <leader>os :set spell!<CR>
+      " Dispaly tip
+      nmap <leader>ot :Fortune<CR>
+      " Quick save
+      nmap <leader>ow :w!<cr>
+      " Toggle numbers
+      nmap <Leader>on :set relativenumber! nonu<CR>
+      " Custom fn ShortCut 
+      noremap <leader>ob :call ToggleBG()<CR>
+      nmap <leader>oz :ZoomToggle<CR>
+      nmap <leader>od :VimDiff<CR>
     " } Config ShortCut End
 
-    " <Leader>f MacBook FN keys {
+    " <Leader>f FN keys {
       nmap <Leader>f1 <F1>
       nmap <Leader>f2 <F2>
       nmap <Leader>f3 <F3>
@@ -721,27 +779,36 @@
       nmap <Leader>f9 <F9>
     " }
 
-    " <Leader> - Others {
-      " Allow using the repeat operator with a visual selection (!)
-      vnoremap . :normal .<CR>
-      " Find merge conflict markers
-      map <leader>fc /\v^[<\|=>]{7}( .*\|$)<CR>
-      " Display all lines with keyword under cursor and ask which one to jump to
-      nmap <Leader>ff [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-      " Togggle spell checking on and off with <leader>s
-      nmap <silent> <leader>sp :set spell!<CR>
-      " Dispaly tip
-      nmap <leader>fo :Fortune<CR>
-      " Quick save
-      nmap <leader>w :w!<cr>
-      " Toggle numbers
-      nmap <Leader>sn:set number!<CR>
-    " } Config ShortCut End
+    " <FN> Map function keys {
+      nmap <F5> <Leader>"
+      nnoremap <F6> :GundoToggle<CR>
+      nmap <F7> :TagbarToggle<CR>
+      nnoremap <F8> :Gitv<CR>
+      nnoremap <F9> :BuffergatorToggle<CR>
+      nnoremap <F10> :copen<CR>
+      nnoremap <F11> :Startify<CR>
+      noremap <silent><F12> :call CreateMenu()<cr>
+    " } Config Function Keys End
   " }
 
   " -------------
   " Other config {
   " -------------
+    " Commands - shift key fixes {
+      command! -bang -nargs=* -complete=file E e<bang> <args>
+      command! -bang -nargs=* -complete=file W w<bang> <args>
+      command! -bang -nargs=* -complete=file Wq wq<bang> <args>
+      command! -bang -nargs=* -complete=file WQ wq<bang> <args>
+      command! -bang Wa wa<bang>
+      command! -bang WA wa<bang>
+      command! -bang Q q<bang>
+      command! -bang QA qa<bang>
+      command! -bang Qa qa<bang>
+    " } Config ShortCut End
+
+    " Allow using the repeat operator with a visual selection (!)
+    vnoremap . :normal .<CR>
+
     syntax on " active the syntaxic coloration
     let mywinfont="Monospace:h8:cANSI"
 
@@ -765,7 +832,6 @@
       endif
     endfunction
     command! VimDiff call s:VimDiff()
-    nmap <leader>vd :VimDiff<CR>
 
     " Zoom / Restore window.
     function! s:ZoomToggle() abort
@@ -780,7 +846,6 @@
       endif
     endfunction
     command! ZoomToggle call s:ZoomToggle()
-    nmap <leader>zt :ZoomToggle<CR>
 
     " Allow to trigger background
     function! ToggleBG()
@@ -792,7 +857,6 @@
             set background=dark
         endif
     endfunction
-    noremap <leader>bg :call ToggleBG()<CR>
 
     " always jump to last edit position when opening a file
     autocmd BufReadPost *
@@ -814,11 +878,13 @@
     augroup END
 
     " Removes trailing spaces
+    " :call TrimWhiteSpace()
     function! TrimWhiteSpace()
         %s/\s\+$//e
     endfunction
 
-    " Delete hidden buffers `:call DeleteHiddenBuffers()`
+    " Delete hidden buffers
+    " :call DeleteHiddenBuffers()
     function! DeleteHiddenBuffers()
       let tpbl=[]
       call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
@@ -846,7 +912,7 @@
         source ~/.vimrc.local
     endif
 
-    " Lookup keyword on http://devdocs.io
+    " DevDocs keyworks on http://devdocs.io 
     " Use ':DD' without argument to lookup the word under the cursor, scoped with the current filetype:
     "     :DD
     " Use ':DD' with one argument to lookup the argument, scoped with the current filetype:
