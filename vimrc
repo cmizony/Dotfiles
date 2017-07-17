@@ -335,7 +335,7 @@
   " Interface {
   " --------------------
     " http://vimawesome.com/plugin/numbers-vim
-    Plugin 'myusuf3/numbers.vim'
+    " Plugin 'myusuf3/numbers.vim'
     " http://vimawesome.com/plugin/nerdtree-git-plugin
     Plugin 'Xuyuanp/nerdtree-git-plugin'
     " http://vimawesome.com/plugin/unite-vim-back-to-december
@@ -768,6 +768,11 @@
       noremap <leader>ob :call ToggleBG()<CR>
       nmap <leader>oz :ZoomToggle<CR>
       nmap <leader>od :VimDiff<CR>
+      " Last active tab
+      let g:lasttab = 1
+      nmap <Leader>ol :exe "tabn ".g:lasttab<CR>
+      au TabLeave * let g:lasttab = tabpagenr()
+
     " } Config ShortCut End
 
     " <Leader>f FN keys {
