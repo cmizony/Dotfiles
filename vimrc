@@ -392,6 +392,8 @@
         call g:quickmenu#append('Trim Space', ':tabnew +/TrimWhiteSpace() ~/.vimrc', 'Function to Trim white space in current file')
         call g:quickmenu#append('Delete Buffers', ':tabnew +/DeleteHiddenBuffers() ~/.vimrc', 'Function to delete hidden buffers')
         call g:quickmenu#append('Dev Docs', ':tabnew +/"\ DevDocs ~/.vimrc', 'Get dev documentation')
+        call g:quickmenu#append('Text Objects', ':help text-objects', 'Vim text objects doc')
+        call g:quickmenu#append('Record', ':help record', 'Vim record doc')
 
         " Toggle window
         call quickmenu#toggle(0)
@@ -412,7 +414,7 @@
       let g:ctrlp_lazy_update = 1
       let g:ctrlp_map = '<c-p>'
       let g:ctrlp_cmd = 'CtrlP'
-      let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|bower|bower_components|node_modules|coverage|webpack|vendor|tmp|private)'}
+      let g:ctrlp_custom_ignore = {'dir': '\v[\/](dist|plugins|platforms|bower|bower_components|node_modules|coverage|webpack|vendor|tmp|private)'}
       let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
     " } Config Plugin End
 
@@ -614,6 +616,7 @@
       nmap <Leader>pm :CtrlPMRUFiles<CR>
       nmap <Leader>pb :CtrlPBuffer<CR>
       nmap <Leader>px :CtrlPMixed<CR>
+      nmap <Leader>pk :CtrlPBookmark<CR>
       nmap <Leader>pt :set invpaste paste?<CR>
     " } Config ShortCut End
 
