@@ -278,18 +278,22 @@
           \ ]
       \ }
       " Javascript es6
+      " https://github.com/romainl/ctags-patterns-for-javascript
+      " Debug using ctags -f - [filename]
       let g:tagbar_type_javascript = {
-          \ 'csagstype' : 'JavaScript',
+          \ 'csagstype' : 'javascript',
           \ 'kinds'     : [
-            \ 'c:classes',
-            \ 'n:modules',
-            \ 'f:functions',
-            \ 'v:variables',
-            \ 'v:varlambdas',
-            \ 'm:members',
-            \ 'i:interfaces',
-            \ 'e:enums',
-            \ 'i:imports',
+            \ 'T:todos',
+            \ 'I:imports',
+            \ 'E:exports',
+            \ 'C:classes',
+            \ 'F:functions',
+            \ 'M:methods',
+            \ 'V:variables',
+            \ 'A:arrays',
+            \ 'O:objects',
+            \ 'G:generators',
+            \ 'P:properties',
           \ ]
       \ }
       " Typescript
