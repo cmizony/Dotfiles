@@ -76,6 +76,7 @@
     " http://vimawesome.com/plugin/tsuquyomi {
       Plugin 'quramy/tsuquyomi'
       let g:tsuquyomi_disable_quickfix = 1
+      let g:tsuquyomi_completion_detail = 1
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/javascript-libraries-syntax {
@@ -119,7 +120,6 @@
       " TODO sudo npm -g install instant-markdown-d
       " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
       autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-
     " } Config Plugin End
   " }
   " --------------------
@@ -242,25 +242,35 @@
   " --------------------
     " http://vimawesome.com/plugin/vim-rhubarb
     Plugin 'tpope/vim-rhubarb' " Needed for Fugitive Gbrowse
-    " http://vimawesome.com/plugin/fugitive-vim
-    Plugin 'tpope/vim-fugitive'
-    let g:fugitive_github_domains = ['github.com', 'git.musta.ch']
-    let g:github_enterprise_urls = ['https://git.musta.ch']
-    set diffopt+=iwhite
-    " http://vimawesome.com/plugin/vim-peekaboo
-    let g:peekaboo_prefix = '<Leader>'
-    Plugin 'junegunn/vim-peekaboo'
+
+    " http://vimawesome.com/plugin/fugitive-vim {
+      Plugin 'tpope/vim-fugitive'
+      let g:fugitive_github_domains = ['github.com', 'git.musta.ch']
+      let g:github_enterprise_urls = ['https://git.musta.ch']
+      set diffopt+=iwhite
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vim-peekaboo {
+      Plugin 'junegunn/vim-peekaboo'
+      let g:peekaboo_prefix = '<Leader>'
+    " } Config Plugin End
+
+    " http://vimawesome.com/plugin/vim-test-all-too-well
+    Plugin 'janko-m/vim-test'
     " http://vimawesome.com/plugin/vim-gitgutter
     Plugin 'airblade/vim-gitgutter'
-    " http://vimawesome.com/plugin/gitv
-    let g:Gitv_OpenHorizontal = 1
-    Plugin 'gregsexton/gitv'
+
+    " http://vimawesome.com/plugin/gitv {
+      Plugin 'gregsexton/gitv'
+      let g:Gitv_OpenHorizontal = 1
+    " } Config Plugin End
+
     " http://vimawesome.com/plugin/vimshell-vim {
-    Plugin 'Shougo/vimshell.vim'
-    let g:vimshell_user_prompt=''
-    let g:vimshell_prompt_expr =
-    \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
-    let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
+      Plugin 'Shougo/vimshell.vim'
+      let g:vimshell_user_prompt=''
+      let g:vimshell_prompt_expr =
+      \ 'escape(fnamemodify(getcwd(), ":~").">", "\\[]()?! ")." "'
+      let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/tagbar {
@@ -269,7 +279,7 @@
       " http://ctags.sourceforge.net/
       let g:tagbar_width=30
       " let g:tagbar_autofocus=1
-      autocmd Filetype * nested :call tagbar#autoopen(0)
+      " autocmd Filetype * nested :call tagbar#autoopen(0)
       " Angular html
       let g:tagbar_type_html = {
           \ 'csagstype' : 'html',
@@ -373,6 +383,7 @@
     Plugin 'mileszs/ack.vim'
     " http://vimawesome.com/plugin/buffergator
     Plugin 'jeetsukumaran/vim-buffergator'
+
     " http://vimawesome.com/plugin/quickmenu {
       Plugin 'skywind3000/quickmenu.vim'
       let g:quickmenu_options = "HL"
@@ -546,9 +557,11 @@
     Plugin 'easymotion/vim-easymotion'
     " http://vimawesome.com/plugin/searchcomplete
     " Plugin 'SearchComplete'
-    " http://vimawesome.com/plugin/vim-signature
-    Plugin 'kshenoy/vim-signature'
-    let g:SignatureMarkTextHLDynamic = 1
+
+    " http://vimawesome.com/plugin/vim-signature {
+      Plugin 'kshenoy/vim-signature'
+      let g:SignatureMarkTextHLDynamic = 1
+    " } Config Plugin End
 
     " http://vimawesome.com/plugin/indentwise {
       " [- : Move to previous line of lesser indent than the current line.
@@ -569,7 +582,7 @@
       Plugin 'hobbestigrou/vimtips-fortune'
       let g:fortune_vimtips_auto_display=0
 
-    " http://vimawesome.com/plugin/largefile
+    " http://vimawesome.com/plugin/largefile {
       Plugin 'LargeFile'
       let g:LargeFile=10
     " } Config Plugin End
@@ -658,6 +671,8 @@
     " <Leader>i Indents {
       " http://vimawesome.com/plugin/javascript-indent
       nmap <Leader>il :IndentLinesToggle<CR>
+      nmap <Leader>in <Plug>(IndentWiseNextEqualIndent)
+      nmap <Leader>ip <Plug>(IndentWisePreviousEqualIndent)
       " Note: <Leader> ig = Indent guides
       " Use tidy to indent html attribute on selected line (visual mode)
       nmap <silent> <Leader>ic :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
@@ -798,7 +813,7 @@
       nmap <Leader>uo :Unite -start-insert outline<CR>
       nmap <Leader>uq :Unite -start-insert quickfix<CR>
       nmap <Leader>us :Unite -start-insert neosnippet/runtime<CR>
-      nmap <Leader>ut :Unite -start-insert tab<CR>
+      nmap <Leader>ua :Unite -start-insert tab<CR>
       nmap <Leader>ut :Unite -start-insert tag:%<CR>
       nmap <Leader>uw :Unite -start-insert<CR>
       nmap <Leader>uy :Unite -start-insert history/yank<CR>
