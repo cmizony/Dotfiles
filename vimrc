@@ -77,6 +77,7 @@
       Plugin 'quramy/tsuquyomi'
       let g:tsuquyomi_disable_quickfix = 1
       let g:tsuquyomi_completion_detail = 1
+      let g:tsuquyomi_single_quote_import = 1
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/javascript-libraries-syntax {
@@ -111,7 +112,7 @@
       let g:syntastic_ruby_rubocop_args      = "--config .rubocop.yml"
       let g:syntastic_scss_checkers          = ['scss_lint']
       let g:syntastic_vim_checkers           = ['vint']
-      let g:syntastic_typescript_checkers    = ['tsuquyomi']
+      let g:syntastic_typescript_checkers    = ['tsuquyomi', 'tslint']
       let g:syntastic_mode_map               = { 'passive_filetypes': ['html'] }
     " } Config Plugin End
 
@@ -418,10 +419,11 @@
         call g:quickmenu#append('<Leader>o Others',       ':tabnew +/"\ <Leader>o ~/.vimrc',  'Others')
         call g:quickmenu#append('<Leader>p Ctrl-P',       ':tabnew +/"\ <Leader>p ~/.vimrc',  'Ctrl-P')
         call g:quickmenu#append('<Leader>r Signature',    ':tabnew +/"\ <Leader>r ~/.vimrc',  'Signature')
-        call g:quickmenu#append('<Leader>s otion',        ':tabnew +/"\ <Leader>s ~/.vimrc',  'Easy motion')
+        call g:quickmenu#append('<Leader>s Motion',       ':tabnew +/"\ <Leader>s ~/.vimrc',  'Easy motion')
         call g:quickmenu#append('<Leader>t Tern',         ':tabnew +/"\ <Leader>t ~/.vimrc',  'Tern Javascript')
         call g:quickmenu#append('<Leader>u Unite',        ':tabnew +/"\ <Leader>u ~/.vimrc',  'Unite')
         call g:quickmenu#append('<Leader>v VimShell',     ':tabnew +/"\ <Leader>v ~/.vimrc',  'VimShell')
+        call g:quickmenu#append('<Leader>y tsuquyomi',    ':tabnew +/"\ <Leader>y ~/.vimrc',  'Typescript')
 
         " section 3
         call g:quickmenu#append('# How To',          '')
@@ -841,6 +843,17 @@
       nmap <Leader>ol :exe "tabn ".g:lasttab<CR>
       au TabLeave * let g:lasttab = tabpagenr()
 
+    " } Config ShortCut End
+
+    " <Leader>y Typescript {
+      nmap <leader>yb :TsuquyomiGoBack<CR>
+      nmap <leader>yd :TsuquyomiDefinition<CR>
+      nmap <leader>ye :TsuquyomiGeterr<CR>
+      nmap <leader>yh :TsuquyomiSignatureHelp<CR>
+      nmap <leader>yi :TsuquyomiImplementation<CR>
+      nmap <leader>yr :TsuquyomiReferences<CR>
+      nmap <leader>ys :TsuquyomiSearch<CR>
+      nmap <leader>yt :TsuquyomiTypeDefinition<CR>
     " } Config ShortCut End
 
     " <Leader>f FN keys {
