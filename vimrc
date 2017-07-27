@@ -251,6 +251,16 @@
       set diffopt+=iwhite
     " } Config Plugin End
 
+    " https://github.com/yaasita/edit-slack.vim {
+      " TODO DL  https://github.com/yaasita/edit-slack/releases/download/v0.2.0/darwin-amd64-edit-slack
+      " mv ~/Downloads/darwin-amd64-edit-slack ~/.vim/bundle/edit-slack.vim/edit-slack
+      " chmod +x ~/.vim/bundle/edit-slack.vim/edit-slack
+      " Generate token using https://api.slack.com/custom-integrations/legacy-tokens
+      " SECURITY: Write token in a local config file ~/.vimrc.local
+      " let g:yaasita_slack_token = "xoxp-xxxxxxxxxx-xxxxxxxxxx-xxxxxxxxxx-xxxxxx"
+      Plugin 'yaasita/edit-slack.vim'
+    " }
+
     " http://vimawesome.com/plugin/vim-peekaboo {
       Plugin 'junegunn/vim-peekaboo'
       let g:peekaboo_prefix = '<Leader>'
@@ -424,6 +434,7 @@
         call g:quickmenu#append('<Leader>u Unite',        ':tabnew +/"\ <Leader>u ~/.vimrc',  'Unite')
         call g:quickmenu#append('<Leader>v VimShell',     ':tabnew +/"\ <Leader>v ~/.vimrc',  'VimShell')
         call g:quickmenu#append('<Leader>y tsuquyomi',    ':tabnew +/"\ <Leader>y ~/.vimrc',  'Typescript')
+        call g:quickmenu#append('<Leader>z Slack',        ':tabnew +/"\ <Leader>z ~/.vimrc',  'Slack')
 
         " section 3
         call g:quickmenu#append('# How To',          '')
@@ -620,6 +631,7 @@
     set cursorline                 " Highlight current line
     set colorcolumn=100            " Set gray bar at 100 character
     set encoding=utf8              " Set utf8 as standard encoding and en_US as the standard language
+    set fileencodings+=utf-8
     set expandtab
     set ffs=unix,dos,mac           " Use Unix as the standard file type
     set foldlevelstart=20
@@ -844,6 +856,15 @@
       au TabLeave * let g:lasttab = tabpagenr()
 
     " } Config ShortCut End
+
+    " <Leader>z Slack {
+      " Channels & gf to open :e to refresh :w to send
+      nmap <Leader>zc :e slack://ch<CR>
+      " Private group
+      nmap <Leader>zg :e slack://pg<CR>
+      " Users list
+      nmap <Leader>zu :e slack://dm<CR>
+    " } Config Slack End
 
     " <Leader>y Typescript {
       nmap <leader>yb :TsuquyomiGoBack<CR>
