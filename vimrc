@@ -14,15 +14,20 @@
 "
 " 2 Summary list of external dependencies:
 "   # Install desired patched font (for devicons and powerline)
-"   git config --global github.user <username>
+"   git config --global user.email <email@example.com>
+"   git config --global user.name <username>
 "   git config --global alias.tree "log --oneline --decorate --all --graph" # $git tree
+"   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"   vim # :PluginInstall
 "   cd ~/.vim/bundle/tern_for_vim && npm install
 "   cd ~/.vim/bundle/vimproc.vim && make
-"   cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
 "   mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
 "   sudo apt-get install exuberant-ctags fortune-mod cowsay tidy vim-gtk xdg-utils
-"   sudo npm -g install instant-markdown-d eslint vint jsonlint
-"   brew install ack
+"   sudo npm -g install instant-markdownd eslint vint jsonlint
+"
+"   # Older version - Not needed:
+"   # cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
+"   # brew install ack
 "
 " 3. Other scripts
 "   Update the list with following command:
