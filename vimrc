@@ -20,11 +20,6 @@
 "   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "   vim # :PluginInstall
 "   cd ~/.vim/bundle/tern_for_vim && npm install
-"   cd ~/.vim/bundle/vimproc.vim && make
-"   mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
-"   sudo apt-get install exuberant-ctags fortune-mod cowsay tidy vim-gtk xdg-utils
-"   sudo npm -g install instant-markdownd eslint vint jsonlint
-"
 "   # Older version - Not needed:
 "   # cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
 "   # brew install ack
@@ -74,8 +69,8 @@
 
     " http://vimawesome.com/plugin/vim-js-pretty-template {
       Plugin 'quramy/vim-js-pretty-template'
-      autocmd FileType javascript JsPreTmpl html
-      autocmd FileType typescript JsPreTmpl html
+      " autocmd FileType javascript JsPreTmpl html
+      " autocmd FileType typescript JsPreTmpl html
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/tsuquyomi {
