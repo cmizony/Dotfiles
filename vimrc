@@ -14,15 +14,18 @@
 "
 " 2 Summary list of external dependencies:
 "   # Install desired patched font (for devicons and powerline)
-"   git config --global user.email <email@example.com>
-"   git config --global user.name <username>
+"   git config --global github.user <username>
 "   git config --global alias.tree "log --oneline --decorate --all --graph" # $git tree
 "   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "   vim # :PluginInstall
 "   cd ~/.vim/bundle/tern_for_vim && npm install
-"   # Older version - Not needed:
-"   # cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
-"   # brew install ack
+"   cd ~/.vim/bundle/vimproc.vim && make
+"   cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
+"   mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
+"   sudo apt-get install exuberant-ctags fortune-mod cowsay tidy vim-gtk xdg-utils
+"   sudo npm -g install instant-markdown-d eslint vint jsonlint
+"   brew install ack
+"   npm install -g prettier
 "
 " 3. Other scripts
 "   Update the list with following command:
@@ -54,6 +57,11 @@
   " --------------------
   " Language {
   " --------------------
+    " https://vimawesome.com/plugin/vim-prettier-who-speaks
+    Plugin 'prettier/vim-prettier'
+    let g:prettier#autoformat = 0
+    autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+
     " http://vimawesome.com/plugin/vim-exchange
     Plugin 'tommcdo/vim-exchange'
     " http://vimawesome.com/plugin/typescript-vim
@@ -63,7 +71,7 @@
     " http://vimawesome.com/plugin/vim-less-safe-and-sound
     Plugin 'groenewege/vim-less'
     " http://vimawesome.com/plugin/javascript-indent
-    Plugin 'JavaScript-Indent'
+    " Plugin 'JavaScript-Indent'
     " http://vimawesome.com/plugin/surround-vim
     Plugin 'tpope/vim-surround'
 
@@ -81,39 +89,23 @@
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/javascript-libraries-syntax {
-      Plugin 'othree/javascript-libraries-syntax.vim'
-      let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jasmine,jquery'
+      " Plugin 'othree/javascript-libraries-syntax.vim'
+      " let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter'
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/syntastic {
-      Plugin 'scrooloose/syntastic'
-      scriptencoding utf-8
-      let g:syntastic_always_populate_loc_list = 1 " Always add any detected errors into the location list
-      " Don’t auto-open it when errors/warnings are detected, but auto-close when no
-      " more errors/warnings are detected.
-      let g:syntastic_auto_loc_list = 2
-      " Highlight syntax errors where possible
-      let g:syntastic_enable_highlighting = 1
-      " Show this many errors/warnings at a time in the location list
-      let g:syntastic_loc_list_height = 5
-      " Don’t run checkers when saving and quitting--only on saving
-      let g:syntastic_check_on_wq = 0
-
-      let g:syntastic_error_symbol = '✗'
-      let g:syntastic_warning_symbol       = '⚠'
-      let g:syntastic_style_error_symbol   = '⚠'
-      let g:syntastic_style_warning_symbol = '⚠'
-
-      let g:syntastic_javascript_checkers    = ['eslint']
-      let s:eslint_path                      = system('PATH=$(npm bin):$PATH && which eslint')
-      let g:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
-      let g:syntastic_json_checkers          = ['jsonlint']
-      let g:syntastic_ruby_checkers          = ['rubocop']
-      let g:syntastic_ruby_rubocop_args      = "--config .rubocop.yml"
-      let g:syntastic_scss_checkers          = ['scss_lint']
-      let g:syntastic_vim_checkers           = ['vint']
-      let g:syntastic_typescript_checkers    = ['tsuquyomi', 'tslint']
-      let g:syntastic_mode_map               = { 'passive_filetypes': ['html'] }
+    " https://vimawesome.com/plugin/ale-be-who-we-are
+      Plugin 'dense-analysis/ale'
+      let g:airline#extensions#ale#enabled = 1
+      let b:ale_linters = {'javascript': ['eslint']}
+      let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
+      let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+      let g:ale_lint_on_text_changed = 'never'
+      let g:ale_lint_on_insert_leave = 0
+      let g:ale_lint_on_enter = 0
+      let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+      let g:ale_sign_error = '✗'
+      let g:ale_sign_warning = '⚠'
+      let g:ale_close_preview_on_insert = 1
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/instant-markdown-vim {
@@ -151,7 +143,7 @@
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/neocomplete-vim {
-      Plugin 'Shougo/neocomplete.vim'
+    Plugin 'Shougo/neocomplete.vim'
       let g:acp_enableAtStartup = 0 " Disable AutoComplPop.
       let g:neocomplete#enable_at_startup = 1 " Use neocomplete.
       let g:neocomplete#enable_smart_case = 1 " Use smartcase.
@@ -193,7 +185,7 @@
       " Enable omni completion.
       autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
       autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+     " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
       autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
       autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
@@ -258,7 +250,7 @@
       " Generate token using https://api.slack.com/custom-integrations/legacy-tokens
       " SECURITY: Write token in a local config file ~/.vimrc.local
       " let g:yaasita_slack_token = "xoxp-xxxxxxxxxx-xxxxxxxxxx-xxxxxxxxxx-xxxxxx"
-      Plugin 'yaasita/edit-slack.vim'
+      " Plugin 'yaasita/edit-slack.vim'
     " }
 
     " http://vimawesome.com/plugin/vim-peekaboo {
@@ -285,53 +277,53 @@
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/tagbar {
-      Plugin 'majutsushi/tagbar'
+      " Plugin 'majutsushi/tagbar'
       " TODO sudo apt-get install exuberant-ctags
       " http://ctags.sourceforge.net/
-      let g:tagbar_width=30
+      " let g:tagbar_width=30
       " let g:tagbar_autofocus=1
       " autocmd Filetype * nested :call tagbar#autoopen(0)
       " Angular html
-      let g:tagbar_type_html = {
-          \ 'csagstype' : 'html',
-          \ 'kinds'     : [
-              \ 'd:directive'
-          \ ]
-      \ }
+      " let g:tagbar_type_html = {
+      "     \ 'csagstype' : 'html',
+      "     \ 'kinds'     : [
+      "         \ 'd:directive'
+      "     \ ]
+      " \ }
       " Javascript es6
       " https://github.com/romainl/ctags-patterns-for-javascript
       " Debug using ctags -f - [filename]
-      let g:tagbar_type_javascript = {
-          \ 'csagstype' : 'javascript',
-          \ 'kinds'     : [
-            \ 'T:todos',
-            \ 'I:imports',
-            \ 'E:exports',
-            \ 'C:classes',
-            \ 'F:functions',
-            \ 'M:methods',
-            \ 'V:variables',
-            \ 'A:arrays',
-            \ 'O:objects',
-            \ 'G:generators',
-            \ 'P:properties',
-          \ ]
-      \ }
+      " let g:tagbar_type_javascript = {
+      "     \ 'csagstype' : 'javascript',
+      "     \ 'kinds'     : [
+      "       \ 'T:todos',
+      "       \ 'I:imports',
+      "       \ 'E:exports',
+      "       \ 'C:classes',
+      "       \ 'F:functions',
+      "       \ 'M:methods',
+      "       \ 'V:variables',
+      "       \ 'A:arrays',
+      "       \ 'O:objects',
+      "       \ 'G:generators',
+      "       \ 'P:properties',
+      "     \ ]
+      " \ }
       " Typescript
-      let g:tagbar_type_typescript = {
-        \ 'ctagstype': 'typescript',
-        \ 'kinds': [
-          \ 'c:classes',
-          \ 'n:modules',
-          \ 'f:functions',
-          \ 'v:variables',
-          \ 'v:varlambdas',
-          \ 'm:members',
-          \ 'i:interfaces',
-          \ 'e:enums',
-          \ 'I:imports',
-        \ ]
-      \ }
+      " let g:tagbar_type_typescript = {
+      "   \ 'ctagstype': 'typescript',
+      "   \ 'kinds': [
+      "     \ 'c:classes',
+      "     \ 'n:modules',
+      "     \ 'f:functions',
+      "     \ 'v:variables',
+      "     \ 'v:varlambdas',
+      "     \ 'm:members',
+      "     \ 'i:interfaces',
+      "     \ 'e:enums',
+      "     \ 'I:imports',
+      "   \ ]
+      " \ }
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/gist-vim {
@@ -369,6 +361,18 @@
     " Plugin 'myusuf3/numbers.vim'
     " http://vimawesome.com/plugin/nerdtree-git-plugin
     Plugin 'Xuyuanp/nerdtree-git-plugin'
+    let g:NERDTreeGitStatusIndicatorMapCustom = {
+                    \ 'Modified'  :'✔︎',
+                    \ 'Staged'    :'+',
+                    \ 'Untracked' :'?',
+                    \ 'Renamed'   :'➜',
+                    \ 'Unmerged'  :'═',
+                    \ 'Deleted'   :'✗',
+                    \ 'Dirty'     :'✗',
+                    \ 'Ignored'   :'✗',
+                    \ 'Clean'     :'✔︎',
+                    \ 'Unknown'   :'?',
+                    \ }
     " http://vimawesome.com/plugin/unite-vim
     Plugin 'Shougo/unite.vim'
     " http://vimawesome.com/plugin/neoyank-vim
@@ -394,6 +398,11 @@
     Plugin 'mileszs/ack.vim'
     " http://vimawesome.com/plugin/buffergator
     Plugin 'jeetsukumaran/vim-buffergator'
+    let g:buffergator_split_size = 30
+    let g:buffergator_vsplit_size = 30
+    let g:buffergator_viewport_split_policy = "R"
+    let g:buffergator_autoupdate = 1
+    let g:buffergator_sort_regime = "mru"
 
     " http://vimawesome.com/plugin/quickmenu {
       Plugin 'skywind3000/quickmenu.vim'
@@ -407,7 +416,7 @@
         call g:quickmenu#append('<F1> Help',         ':help',                       'Vim help')
         call g:quickmenu#append('<F2> Registers',    ':tabnew +/"\ <FN> ~/.vimrc',  'Open content of copy registers')
         call g:quickmenu#append('<F3> Gundo',        ':tabnew +/"\ <FN> ~/.vimrc',  'Open file change history tree')
-        call g:quickmenu#append('<F4> Tagbar',       ':tabnew +/"\ <FN> ~/.vimrc',  'Open result of ctags')
+        " call g:quickmenu#append('<F4> Tagbar',       ':tabnew +/"\ <FN> ~/.vimrc',  'Open result of ctags')
         call g:quickmenu#append('<F5> Git Tree',     ':tabnew +/"\ <FN> ~/.vimrc',  'Open Git tre graph view')
         call g:quickmenu#append('<F6> Buffergator',  ':tabnew +/"\ <FN> ~/.vimrc',  'Open Vim buffers')
         call g:quickmenu#append('<F7> QuickFix',     ':tabnew +/"\ <FN> ~/.vimrc',  'Quickfix special window')
@@ -434,7 +443,7 @@
         call g:quickmenu#append('<Leader>u Unite',        ':tabnew +/"\ <Leader>u ~/.vimrc',  'Unite')
         call g:quickmenu#append('<Leader>v VimShell',     ':tabnew +/"\ <Leader>v ~/.vimrc',  'VimShell')
         call g:quickmenu#append('<Leader>y tsuquyomi',    ':tabnew +/"\ <Leader>y ~/.vimrc',  'Typescript')
-        call g:quickmenu#append('<Leader>z Slack',        ':tabnew +/"\ <Leader>z ~/.vimrc',  'Slack')
+        " call g:quickmenu#append('<Leader>z Slack',        ':tabnew +/"\ <Leader>z ~/.vimrc',  'Slack')
 
         " section 3
         call g:quickmenu#append('# How To',          '')
@@ -483,7 +492,7 @@
       Plugin 'jistr/vim-nerdtree-tabs'
       let g:nerdtree_tabs_open_on_console_startup=1
       " let g:nerdtree_tabs_autofind=1
-      let g:nerdtree_tabs_open_on_new_tab=0
+      let g:nerdtree_tabs_open_on_new_tab=1
       let g:nerdtree_tabs_smart_startup_focus=2
     " } Config Plugin End
 
@@ -502,14 +511,15 @@
       set laststatus=2
       " TODO # Install desired patched font (for powerline)
       " git clone https://github.com/powerline/fonts
-      " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
-      " fc-cache -vf ~/.fonts/
+      "[A]" mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
+      "[A]" fc-cache -vf ~/.fonts/
+      "[B]" bash install.sh
       " let g:airline_powerline_fonts = 1
       let g:airline#extensions#tabline#enabled = 1
       let g:airline#extensions#obsession#enabled = 1
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/vim-devicons-holy-gound {
+    " https://vimawesome.com/plugin/vim-devicons {
       " Plugin 'ryanoasis/vim-devicons'
       " let g:webdevicons_conceal_nerdtree_brackets = 1
       " let g:webdevicons_enable_nerdtree = 1
@@ -710,11 +720,11 @@
       " http://vimawesome.com/plugin/fugitive-vim
       " http://vimawesome.com/plugin/gitv
       " http://vimawesome.com/plugin/vim-gitgutter
-      nnoremap <silent> <leader>gs :Gstatus<CR>
+      nnoremap <silent> <leader>gs :Git status<CR>
       nnoremap <silent> <leader>gd :Gdiff<CR>
-      nnoremap <silent> <leader>gc :Gcommit<CR>
-      nnoremap <silent> <leader>gb :Gblame<CR>
-      nnoremap <silent> <leader>gl :Glog<CR>
+      nnoremap <silent> <leader>gc :Git commit<CR>
+      nnoremap <silent> <leader>gb :Git blame<CR>
+      nnoremap <silent> <leader>gl :Gclog<CR>
       nnoremap <silent> <leader>gp :Git push<CR>
       nnoremap <silent> <leader>gr :Gread<CR>
       nnoremap <silent> <leader>gw :Gwrite<CR>
@@ -730,6 +740,7 @@
 
     " <Leader><Leader> Easy motion search {
       " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
+      nmap <leader>s <Plug>(easymotion-bd-W)
       nmap <leader>sa <Plug>(easymotion-bd-w)
       nmap <leader>sA <Plug>(easymotion-bd-W)
       nmap <leader>sl <Plug>(easymotion-bd-jk)
@@ -737,6 +748,7 @@
 
     " <Leader>v VimShell {
       " http://vimawesome.com/plugin/vimshell-vim
+      nmap <leader>v :VimShellPop<CR>
       nmap <leader>vs :VimShellPop<CR>
       nmap <leader>vt :VimShellTab<CR>
     " } Config ShortCut End
@@ -749,9 +761,9 @@
 
     " <Leader>b Buffergator {
       " http://vimawesome.com/plugin/buffergator
-      nmap <leader>bo :BuffergatorOpen<CR>
-      nmap <leader>bc :BuffergatorClose<CR>
-      nmap <leader>bt :BuffergatorToggle<CR>
+      nmap <leader>bb :BuffergatorToggle<CR>
+      nmap <leader>bt :BuffergatorTabsToggle<CR>
+      nmap <leader>bd :call DeleteHiddenBuffers()<CR>
     " }
 
     " <Leader>a Tabularize ShortCuts {
