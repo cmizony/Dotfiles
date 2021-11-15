@@ -31,7 +31,7 @@
 "   Update the list with following command:
 "   grep "DO" ~/.vimrc | grep -v "grep" | sed 's/[[:space:]]\+" TODO//' | sort
 "   Find merged local merged branches (you can pipe to remove them):
-"   comm -12  <(git branch --merged|awk '{print($1)}') <(git branch -r --merged|awk '{print($1)}'|awk -F \/ '{print($2)}')
+"   comm -12  <(git branch --merged|awk '{print($1)}') (git branch -r --merged|awk '{print($1)}'|awk -F \/ '{print($2)}')
 
 
 "  ___    __     ___             ____  _             _
@@ -47,132 +47,132 @@
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
-  filetype off
-  " set the runtime path to include Vundle and initialize
-  set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
-  " let Vundle manage Vundle, required
-  Plugin 'gmarik/Vundle.vim'
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
-  " --------------------
-  " Language {
-  " --------------------
-    " https://vimawesome.com/plugin/vim-prettier-who-speaks
-    Plugin 'prettier/vim-prettier'
-    let g:prettier#autoformat = 0
-    autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+" --------------------
+" Language {
+" --------------------
+" https://vimawesome.com/plugin/vim-prettier-who-speaks
+Plugin 'prettier/vim-prettier'
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
-    " http://vimawesome.com/plugin/vim-exchange
-    Plugin 'tommcdo/vim-exchange'
-    " http://vimawesome.com/plugin/typescript-vim
-    Plugin 'leafgarland/typescript-vim'
-    " http://vimawesome.com/plugin/emmet-vim
-    Plugin 'mattn/emmet-vim'
-    " http://vimawesome.com/plugin/vim-less-safe-and-sound
-    Plugin 'groenewege/vim-less'
-    " http://vimawesome.com/plugin/javascript-indent
-    " Plugin 'JavaScript-Indent'
-    " http://vimawesome.com/plugin/surround-vim
-    Plugin 'tpope/vim-surround'
+" http://vimawesome.com/plugin/vim-exchange
+Plugin 'tommcdo/vim-exchange'
+" http://vimawesome.com/plugin/typescript-vim
+Plugin 'leafgarland/typescript-vim'
+" http://vimawesome.com/plugin/emmet-vim
+Plugin 'mattn/emmet-vim'
+" http://vimawesome.com/plugin/vim-less-safe-and-sound
+Plugin 'groenewege/vim-less'
+" http://vimawesome.com/plugin/surround-vim
+Plugin 'tpope/vim-surround'
 
-    " http://vimawesome.com/plugin/vim-js-pretty-template {
-      Plugin 'quramy/vim-js-pretty-template'
-      " autocmd FileType javascript JsPreTmpl html
-      " autocmd FileType typescript JsPreTmpl html
-    " } Config Plugin End
+" http://vimawesome.com/plugin/vim-js-pretty-template {
+Plugin 'quramy/vim-js-pretty-template'
+" autocmd FileType javascript JsPreTmpl html
+" autocmd FileType typescript JsPreTmpl html
+" } Config Plugin End
 
-    " http://vimawesome.com/plugin/tsuquyomi {
-      Plugin 'quramy/tsuquyomi'
-      let g:tsuquyomi_disable_quickfix = 1
-      let g:tsuquyomi_completion_detail = 1
-      let g:tsuquyomi_single_quote_import = 1
-    " } Config Plugin End
+" http://vimawesome.com/plugin/tsuquyomi {
+Plugin 'quramy/tsuquyomi'
+let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_completion_detail = 1
+let g:tsuquyomi_single_quote_import = 1
+" } Config Plugin End
 
-    " http://vimawesome.com/plugin/javascript-libraries-syntax {
-      " Plugin 'othree/javascript-libraries-syntax.vim'
-      " let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter'
-    " } Config Plugin End
+" http://vimawesome.com/plugin/javascript-libraries-syntax {
+" Plugin 'othree/javascript-libraries-syntax.vim'
+" let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter'
+" } Config Plugin End
 
-    " https://vimawesome.com/plugin/ale-be-who-we-are
-      Plugin 'dense-analysis/ale'
-      let g:airline#extensions#ale#enabled = 1
-      let b:ale_linters = {'javascript': ['eslint']}
-      let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
-      let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
-      let g:ale_lint_on_text_changed = 'never'
-      let g:ale_lint_on_insert_leave = 0
-      let g:ale_lint_on_enter = 0
-      let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
-      let g:ale_sign_error = '✗'
-      let g:ale_sign_warning = '⚠'
-      let g:ale_close_preview_on_insert = 1
-    " } Config Plugin End
+" https://vimawesome.com/plugin/ale-be-who-we-are
+Plugin 'dense-analysis/ale'
+let b:ale_linters = {'javascript': ['eslint']}
+let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
+let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_enter = 0
+let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+" let g:ale_close_preview_on_insert = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_list_window_size = 5
+" } Config Plugin End
 
-    " http://vimawesome.com/plugin/instant-markdown-vim {
-      Plugin 'suan/vim-instant-markdown'
-      " TODO sudo npm -g install instant-markdown-d
-      " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
-      autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-    " } Config Plugin End
-  " }
-  " --------------------
-  " Completion {
-  " --------------------
-    " http://vimawesome.com/plugin/vim-autoclose-sparks-fly
-    Plugin 'Townk/vim-autoclose'
-    " http://vimawesome.com/plugin/neosnippet-snippets
-    Plugin 'Shougo/neosnippet-snippets'
+" http://vimawesome.com/plugin/instant-markdown-vim {
+Plugin 'suan/vim-instant-markdown'
+" TODO sudo npm -g install instant-markdown-d
+" TODO sudo apt-get install xdg-utils # Ubuntu installed by default
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+" } Config Plugin End
+" }
+" --------------------
+" Completion {
+" --------------------
+" http://vimawesome.com/plugin/vim-autoclose-sparks-fly
+Plugin 'Townk/vim-autoclose'
+" http://vimawesome.com/plugin/neosnippet-snippets
+Plugin 'Shougo/neosnippet-snippets'
 
-    " http://vimawesome.com/plugin/neosnippet-vim {
-      Plugin 'Shougo/neosnippet.vim'
-      imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-      smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-      xmap <C-k>     <Plug>(neosnippet_expand_target)
+" http://vimawesome.com/plugin/neosnippet-vim {
+Plugin 'Shougo/neosnippet.vim'
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-      " SuperTab like snippets behavior.
-      imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
       \ "\<Plug>(neosnippet_expand_or_jump)"
       \: pumvisible() ? "\<C-n>" : "\<TAB>"
-      smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
       \ "\<Plug>(neosnippet_expand_or_jump)"
       \: "\<TAB>"
-      " For conceal markers.
-      if has('conceal')
-        set conceallevel=2 concealcursor=niv
-      endif
-    " } Config Plugin End
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+" } Config Plugin End
 
-    " http://vimawesome.com/plugin/neocomplete-vim {
-    Plugin 'Shougo/neocomplete.vim'
-      let g:acp_enableAtStartup = 0 " Disable AutoComplPop.
-      let g:neocomplete#enable_at_startup = 1 " Use neocomplete.
-      let g:neocomplete#enable_smart_case = 1 " Use smartcase.
-      let g:neocomplete#sources#syntax#min_keyword_length = 3 " Set minimum syntax keyword length.
-      let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+" http://vimawesome.com/plugin/neocomplete-vim {
+Plugin 'Shougo/neocomplete.vim'
+let g:acp_enableAtStartup = 0 " Disable AutoComplPop.
+let g:neocomplete#enable_at_startup = 1 " Use neocomplete.
+let g:neocomplete#enable_smart_case = 1 " Use smartcase.
+let g:neocomplete#sources#syntax#min_keyword_length = 3 " Set minimum syntax keyword length.
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-      " Define dictionary.
-      let g:neocomplete#sources#dictionary#dictionaries = {
-          \ 'default' : '',
-          \ 'vimshell' : $HOME.'/.vimshell_hist',
-          \ 'scheme' : $HOME.'/.gosh_completions'
-              \ }
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+      \ 'default' : '',
+      \ 'vimshell' : $HOME.'/.vimshell_hist',
+      \ 'scheme' : $HOME.'/.gosh_completions'
+      \ }
 
-      " Define keyword.
-      if !exists('g:neocomplete#keyword_patterns')
-          let g:neocomplete#keyword_patterns = {}
-      endif
-      let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-      " Plugin key-mappings.
-      inoremap <expr><C-g>     neocomplete#undo_completion()
-      inoremap <expr><C-l>     neocomplete#complete_common_string()
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-      " Recommended key-mappings.
-      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-      function! s:my_cr_function()
-        return neocomplete#close_popup() . "\<CR>"
-        " For no inserting <CR> key.
-        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+" Recommended key-mappings.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR"
       endfunction
       " <TAB>: completion.
       inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -203,8 +203,6 @@
   " --------------------
     " http://vimawesome.com/plugin/vim-jsx
     Plugin 'mxw/vim-jsx'
-    " http://vimawesome.com/plugin/indent-guides
-    Plugin 'nathanaelkane/vim-indent-guides'
     " http://vimawesome.com/plugin/vim-css-color-the-story-of-us
     Plugin 'ap/vim-css-color'
     " http://vimawesome.com/plugin/solarized
@@ -213,7 +211,8 @@
     " http://vimawesome.com/plugin/indentline {
       Plugin 'Yggdroot/indentLine'
       let g:indentLine_char = '¦'
-      let g:indentLine_enabled = 0
+      " let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+      " let g:indentLine_enabled = 0
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-colorschemes-sweeter-than-fiction {
@@ -243,30 +242,13 @@
       set diffopt+=iwhite
     " } Config Plugin End
 
-    " https://github.com/yaasita/edit-slack.vim {
-      " TODO DL  https://github.com/yaasita/edit-slack/releases/download/v0.2.0/darwin-amd64-edit-slack
-      " mv ~/Downloads/darwin-amd64-edit-slack ~/.vim/bundle/edit-slack.vim/edit-slack
-      " chmod +x ~/.vim/bundle/edit-slack.vim/edit-slack
-      " Generate token using https://api.slack.com/custom-integrations/legacy-tokens
-      " SECURITY: Write token in a local config file ~/.vimrc.local
-      " let g:yaasita_slack_token = "xoxp-xxxxxxxxxx-xxxxxxxxxx-xxxxxxxxxx-xxxxxx"
-      " Plugin 'yaasita/edit-slack.vim'
-    " }
-
     " http://vimawesome.com/plugin/vim-peekaboo {
       Plugin 'junegunn/vim-peekaboo'
-      let g:peekaboo_prefix = '<Leader>'
+      " let g:peekaboo_prefix = '<Leader>'
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/vim-test-all-too-well
-    Plugin 'janko-m/vim-test'
     " http://vimawesome.com/plugin/vim-gitgutter
     Plugin 'airblade/vim-gitgutter'
-
-    " http://vimawesome.com/plugin/gitv {
-      Plugin 'gregsexton/gitv'
-      let g:Gitv_OpenHorizontal = 1
-    " } Config Plugin End
 
     " http://vimawesome.com/plugin/vimshell-vim {
       Plugin 'Shougo/vimshell.vim'
@@ -276,56 +258,6 @@
       let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/tagbar {
-      " Plugin 'majutsushi/tagbar'
-      " TODO sudo apt-get install exuberant-ctags
-      " http://ctags.sourceforge.net/
-      " let g:tagbar_width=30
-      " let g:tagbar_autofocus=1
-      " autocmd Filetype * nested :call tagbar#autoopen(0)
-      " Angular html
-      " let g:tagbar_type_html = {
-      "     \ 'csagstype' : 'html',
-      "     \ 'kinds'     : [
-      "         \ 'd:directive'
-      "     \ ]
-      " \ }
-      " Javascript es6
-      " https://github.com/romainl/ctags-patterns-for-javascript
-      " Debug using ctags -f - [filename]
-      " let g:tagbar_type_javascript = {
-      "     \ 'csagstype' : 'javascript',
-      "     \ 'kinds'     : [
-      "       \ 'T:todos',
-      "       \ 'I:imports',
-      "       \ 'E:exports',
-      "       \ 'C:classes',
-      "       \ 'F:functions',
-      "       \ 'M:methods',
-      "       \ 'V:variables',
-      "       \ 'A:arrays',
-      "       \ 'O:objects',
-      "       \ 'G:generators',
-      "       \ 'P:properties',
-      "     \ ]
-      " \ }
-      " Typescript
-      " let g:tagbar_type_typescript = {
-      "   \ 'ctagstype': 'typescript',
-      "   \ 'kinds': [
-      "     \ 'c:classes',
-      "     \ 'n:modules',
-      "     \ 'f:functions',
-      "     \ 'v:variables',
-      "     \ 'v:varlambdas',
-      "     \ 'm:members',
-      "     \ 'i:interfaces',
-      "     \ 'e:enums',
-      "     \ 'I:imports',
-      "   \ ]
-      " \ }
-    " } Config Plugin End
-
     " http://vimawesome.com/plugin/gist-vim {
       Plugin 'mattn/webapi-vim'
       Plugin 'mattn/gist-vim'
@@ -333,13 +265,6 @@
       let g:gist_post_private = 1
       let g:gist_show_privates = 1
       let g:gist_open_browser_after_post = 1
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/tern-for-vim {
-      Plugin 'marijnh/tern_for_vim'
-      " TODO cd ~/.vim/bundle/tern_for_vim && npm install
-      " http://ternjs.net/doc/manual.html
-      let tern_show_signature_in_pum=1
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-tmux-navigator {
@@ -413,15 +338,7 @@
 
         " section 1
         call g:quickmenu#append('# <FN> Shortcuts',  '')
-        call g:quickmenu#append('<F1> Help',         ':help',                       'Vim help')
-        call g:quickmenu#append('<F2> Registers',    ':tabnew +/"\ <FN> ~/.vimrc',  'Open content of copy registers')
-        call g:quickmenu#append('<F3> Gundo',        ':tabnew +/"\ <FN> ~/.vimrc',  'Open file change history tree')
-        " call g:quickmenu#append('<F4> Tagbar',       ':tabnew +/"\ <FN> ~/.vimrc',  'Open result of ctags')
-        call g:quickmenu#append('<F5> Git Tree',     ':tabnew +/"\ <FN> ~/.vimrc',  'Open Git tre graph view')
-        call g:quickmenu#append('<F6> Buffergator',  ':tabnew +/"\ <FN> ~/.vimrc',  'Open Vim buffers')
-        call g:quickmenu#append('<F7> QuickFix',     ':tabnew +/"\ <FN> ~/.vimrc',  'Quickfix special window')
-        call g:quickmenu#append('<F8> Startify',     ':tabnew +/"\ <FN> ~/.vimrc',  'Open startify page')
-        call g:quickmenu#append('<F9> Quickmenu',    ':tabnew +/"\ <FN> ~/.vimrc',  'Open this menu')
+        call g:quickmenu#append('<F1> Quickmenu',    ':tabnew +/"\ <FN> ~/.vimrc',  'Open this menu')
 
         " section 2
         call g:quickmenu#append('# <Leader> Prefix',      '')
@@ -439,7 +356,6 @@
         call g:quickmenu#append('<Leader>p Ctrl-P',       ':tabnew +/"\ <Leader>p ~/.vimrc',  'Ctrl-P')
         call g:quickmenu#append('<Leader>r Signature',    ':tabnew +/"\ <Leader>r ~/.vimrc',  'Signature')
         call g:quickmenu#append('<Leader>s Motion',       ':tabnew +/"\ <Leader>s ~/.vimrc',  'Easy motion')
-        call g:quickmenu#append('<Leader>t Tern',         ':tabnew +/"\ <Leader>t ~/.vimrc',  'Tern Javascript')
         call g:quickmenu#append('<Leader>u Unite',        ':tabnew +/"\ <Leader>u ~/.vimrc',  'Unite')
         call g:quickmenu#append('<Leader>v VimShell',     ':tabnew +/"\ <Leader>v ~/.vimrc',  'VimShell')
         call g:quickmenu#append('<Leader>y tsuquyomi',    ':tabnew +/"\ <Leader>y ~/.vimrc',  'Typescript')
@@ -718,7 +634,6 @@
 
     " <Leader>g Git {
       " http://vimawesome.com/plugin/fugitive-vim
-      " http://vimawesome.com/plugin/gitv
       " http://vimawesome.com/plugin/vim-gitgutter
       nnoremap <silent> <leader>gs :Git status<CR>
       nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -732,8 +647,6 @@
       " Mnemonic _i_nteractive
       nnoremap <silent> <leader>gi :Git add -p %<CR>
       nnoremap <silent> <leader>gg :SignifyToggle<CR>
-      " File git history
-      nnoremap <silent> <leader>gh :Gitv!<CR>
       " Git gutter signs
       nnoremap <silent> <leader>gg :GitGutterSignsToggle<CR>
     " } Config ShortCut End
@@ -902,14 +815,7 @@
     " }
 
     " <FN> Map function keys {
-      nmap <F2> <Leader>"
-      nnoremap <F3> :GundoToggle<CR>
-      nmap <F4> :TagbarToggle<CR>
-      nnoremap <F5> :Gitv<CR>
-      nnoremap <F6> :BuffergatorToggle<CR>
-      nnoremap <F7> :copen<CR>
-      nnoremap <F8> :Startify<CR>
-      noremap <silent><F9> :call CreateMenu()<cr>
+      noremap <silent><F1> :call CreateMenu()<cr>
     " } Config Function Keys End
   " }
 
