@@ -55,7 +55,10 @@ DEFAULT_USER=`whoami`
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z tmux bower npm cp)
+#
+# Install zsh-z TODO
+# git clone https://github.com/agkozak/zsh-z $ZSH_CUSTOM/plugins/zsh-z
+plugins=(git zsh-z tmux bower npm cp)
 
 # User configuration
 
