@@ -101,10 +101,10 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_enter = 0
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
 let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚠'
+let g:ale_sign_warning = '!'
 " let g:ale_close_preview_on_insert = 1
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_loclist = 1
+" let g:ale_set_quickfix = 1
 let g:ale_list_window_size = 5
 " } Config Plugin End
 
@@ -203,6 +203,12 @@ function! s:my_cr_function()
   " --------------------
     " http://vimawesome.com/plugin/vim-jsx
     Plugin 'mxw/vim-jsx'
+
+    " https://vimawesome.com/plugin/vim-jsx-pretty
+    " Both plugin for Typescript
+    Plugin 'HerringtonDarkholme/yats.vim'
+    Plugin 'maxmellon/vim-jsx-pretty'
+
     " http://vimawesome.com/plugin/vim-css-color-the-story-of-us
     Plugin 'ap/vim-css-color'
     " http://vimawesome.com/plugin/solarized
@@ -344,13 +350,13 @@ function! s:my_cr_function()
         call g:quickmenu#append('# <Leader> Prefix',      '')
         call g:quickmenu#append('<Leader>a Tabularize',   ':tabnew +/"\ <Leader>a ~/.vimrc',  'Tabularize')
         call g:quickmenu#append('<Leader>b Buffergator',  ':tabnew +/"\ <Leader>b ~/.vimrc',  'Buffergator')
-        call g:quickmenu#append('<Leader>c CopyPath',     ':tabnew +/"\ <Leader>c ~/.vimrc',  'CopyPath')
+        call g:quickmenu#append('<Leader>c Copy/ChangePath',     ':tabnew +/"\ <Leader>c ~/.vimrc',  'CopyPath')
         call g:quickmenu#append('<Leader>d Folding',      ':tabnew +/"\ <Leader>d ~/.vimrc',  'Code folding')
         call g:quickmenu#append('<Leader>e Edit help',    ':tabnew +/"\ <Leader>e ~/.vimrc',  'Edit Helpers')
         call g:quickmenu#append('<Leader>f FN keys',      ':tabnew +/"\ <Leader>f ~/.vimrc',  'Function Keys')
         call g:quickmenu#append('<Leader>g Git',          ':tabnew +/"\ <Leader>g ~/.vimrc',  'Git')
         call g:quickmenu#append('<Leader>i Indents',      ':tabnew +/"\ <Leader>i ~/.vimrc',  'Indents')
-        call g:quickmenu#append('<Leader>m Bookmarks',    ':tabnew +/"\ <Leader>m ~/.vimrc',  'Bookmarks')
+        call g:quickmenu#append('<Leader>k Bookmarks',    ':tabnew +/"\ <Leader>m ~/.vimrc',  'Bookmarks')
         call g:quickmenu#append('<Leader>n Nerd Tree',    ':tabnew +/"\ <Leader>n ~/.vimrc',  'Nerd tree')
         call g:quickmenu#append('<Leader>o Others',       ':tabnew +/"\ <Leader>o ~/.vimrc',  'Others')
         call g:quickmenu#append('<Leader>p Ctrl-P',       ':tabnew +/"\ <Leader>p ~/.vimrc',  'Ctrl-P')
@@ -370,7 +376,6 @@ function! s:my_cr_function()
         call g:quickmenu#append('Use Sessions',      'tabnew +/Plugin.*obsession.$ ~/.vimrc',         'Remember sessions')
         call g:quickmenu#append('Trim Space',        ':tabnew +/TrimWhiteSpace() ~/.vimrc',           'Function to Trim white space in current file')
         call g:quickmenu#append('Delete Buffers',    ':tabnew +/DeleteHiddenBuffers() ~/.vimrc',      'Function to delete hidden buffers')
-        call g:quickmenu#append('Dev Docs',          ':tabnew +/"\ DevDocs ~/.vimrc',                 'Get dev documentation')
         call g:quickmenu#append('Text Objects',      ':help text-objects',                            'Vim text objects doc')
         call g:quickmenu#append('Record',            ':help record',                                  'Vim record doc')
 
@@ -605,6 +610,7 @@ function! s:my_cr_function()
       nmap <Leader>pb :CtrlPBuffer<CR>
       nmap <Leader>px :CtrlPMixed<CR>
       nmap <Leader>pk :CtrlPBookmark<CR>
+      nmap <Leader>pc :CtrlPQuickfix<CR>
       nmap <Leader>pt :set invpaste paste?<CR>
     " } Config ShortCut End
 
@@ -617,19 +623,8 @@ function! s:my_cr_function()
       " Use tidy to indent html attribute on selected line (visual mode)
       nmap <silent> <Leader>ic :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
       vmap <silent> <Leader>ic :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
-    " } Config ShortCut End
-
-    " <Leader>t Tern Javascript {
-      " http://vimawesome.com/plugin/tern-for-vim
-      nmap <Leader>td :TernDoc<CR>
-      nmap <Leader>tb :TernDocBrowse<CR>
-      nmap <Leader>tt :TernType<CR>
-      nmap <Leader>td :TernDef<CR>
-      nmap <Leader>tpd :TernDefPreview<CR>
-      nmap <Leader>tsd :TernDefSplit<CR>
-      nmap <Leader>ttd :TernDefTab<CR>
-      nmap <Leader>tr :TernRefs<CR>
-      nmap <Leader>tR :TernRename<CR>
+      nmap <silent> <Leader>it :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
+      vmap <silent> <Leader>it :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
     " } Config ShortCut End
 
     " <Leader>g Git {
@@ -666,10 +661,11 @@ function! s:my_cr_function()
       nmap <leader>vt :VimShellTab<CR>
     " } Config ShortCut End
 
-    " <Leader>c CopyPath {
+    " <Leader>c Copy/ChangePath {
       " http://vimawesome.com/plugin/copypath-vim
       nmap <leader>cp :CopyPath<CR>
       nmap <leader>cf :CopyFileName<CR>
+      nmap <leader>cd :cd %:p:h<CR>:pwd<CR>
     " }
 
     " <Leader>b Buffergator {
@@ -726,18 +722,18 @@ function! s:my_cr_function()
       nmap <leader>rt :SignatureToggleSigns<CR>
     " }
 
-    " <Leader>m Bookmarks {
+    " <Leader>k Bookmarks {
       " http://vimawesome.com/plugin/vim-bookmarks
-      nmap <Leader>mt <Plug>BookmarkToggle
-      nmap <Leader>mi <Plug>BookmarkAnnotate
-      nmap <Leader>ma <Plug>BookmarkShowAll
-      nmap <Leader>mj <Plug>BookmarkNext
-      nmap <Leader>mk <Plug>BookmarkPrev
-      nmap <Leader>mc <Plug>BookmarkClear
-      nmap <Leader>mx <Plug>BookmarkClearAll
-      nmap <Leader>mkk <Plug>BookmarkMoveUp
-      nmap <Leader>mjj <Plug>BookmarkMoveDown
-      nmap <Leader>mg <Plug>BookmarkMoveToLine
+      nmap <Leader>kt <Plug>BookmarkToggle
+      nmap <Leader>ki <Plug>BookmarkAnnotate
+      nmap <Leader>ka <Plug>BookmarkShowAll
+      nmap <Leader>kj <Plug>BookmarkNext
+      nmap <Leader>kk <Plug>BookmarkPrev
+      nmap <Leader>kc <Plug>BookmarkClear
+      nmap <Leader>kx <Plug>BookmarkClearAll
+      nmap <Leader>kkk <Plug>BookmarkMoveUp
+      nmap <Leader>kjj <Plug>BookmarkMoveDown
+      nmap <Leader>kg <Plug>BookmarkMoveToLine
     " } Config Bookmarks End
 
     " <Leader>u Unite {
@@ -778,18 +774,10 @@ function! s:my_cr_function()
       " Last active tab
       let g:lasttab = 1
       nmap <Leader>ol :exe "tabn ".g:lasttab<CR>
+      nmap <Leader>t :exe "tabn ".g:lasttab<CR>
       au TabLeave * let g:lasttab = tabpagenr()
 
     " } Config ShortCut End
-
-    " <Leader>z Slack {
-      " Channels & gf to open :e to refresh :w to send
-      nmap <Leader>zc :e slack://ch<CR>
-      " Private group
-      nmap <Leader>zg :e slack://pg<CR>
-      " Users list
-      nmap <Leader>zu :e slack://dm<CR>
-    " } Config Slack End
 
     " <Leader>y Typescript {
       nmap <leader>yb :TsuquyomiGoBack<CR>
@@ -940,17 +928,17 @@ function! s:my_cr_function()
         source ~/.vimrc.local
     endif
 
-    " DevDocs keyworks on http://devdocs.io
-    " Use ':DD' without argument to lookup the word under the cursor, scoped with the current filetype:
-    "     :DD
-    " Use ':DD' with one argument to lookup the argument, scoped with the current filetype:
-    "     :DD Map
-    " Use ':DD' with two arguments to do the scoping yourself:
-    "    :DD scss @mixin
-    " Use ':DD' for keyword lookup with the built-in 'K':
-    "    setlocal keywordprg=:DD
-    let stub = "open 'http://devdocs.io/?q="
-    command! -nargs=* DD silent! call system(len(split(<q-args>, ' ')) == 0 ?
-                \ stub . &ft . ' ' . expand('<cword>') . "'" : len(split(<q-args>, ' ')) == 1 ?
-                \ stub . &ft . ' ' . <q-args> . "'" : stub . <q-args> . "'")
-  " }
+    " When using `dd` in the quickfix list, remove the item from the quickfix
+    " list.
+    function! RemoveQFItem()
+      let curqfidx = line('.') - 1
+      let qfall = getqflist()
+      call remove(qfall, curqfidx)
+      call setqflist(qfall, 'r')
+      execute curqfidx + 1 . "cfirst"
+      :copen
+    endfunction
+    :command! RemoveQFItem :call RemoveQFItem()
+    " Use map <buffer> to only map dd in the quickfix window.
+    " Requires +localmap
+    autocmd FileType qf map <buffer> dd :RemoveQFItem<cr>
