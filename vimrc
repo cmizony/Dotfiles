@@ -8,7 +8,7 @@
 "
 " 1. Easy navigation in .vimrc:
 "   Use <Leader>ig to view indentation guides
-"   Use <Leader>d0 or d1 to navigate between summary folds
+"   Use <Leader>z0 or z1 to navigate between summary folds
 "   Use <gx> to open plugin url links
 "   Use <F12> to get some help for some commands
 "
@@ -57,147 +57,151 @@ Plugin 'gmarik/Vundle.vim'
 " --------------------
 " Language {
 " --------------------
-" https://vimawesome.com/plugin/vim-prettier-who-speaks
-Plugin 'prettier/vim-prettier'
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+  " https://vimawesome.com/plugin/vim-prettier-who-speaks {
+    Plugin 'prettier/vim-prettier'
+    let g:prettier#autoformat = 0
+    autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+  " } Config Plugin End
 
-" http://vimawesome.com/plugin/vim-exchange
-Plugin 'tommcdo/vim-exchange'
-" http://vimawesome.com/plugin/typescript-vim
-Plugin 'leafgarland/typescript-vim'
-" http://vimawesome.com/plugin/emmet-vim
-Plugin 'mattn/emmet-vim'
-" http://vimawesome.com/plugin/vim-less-safe-and-sound
-Plugin 'groenewege/vim-less'
-" http://vimawesome.com/plugin/surround-vim
-Plugin 'tpope/vim-surround'
+  " http://vimawesome.com/plugin/vim-exchange
+    Plugin 'tommcdo/vim-exchange'
+  " http://vimawesome.com/plugin/typescript-vim
+    Plugin 'leafgarland/typescript-vim'
+  " http://vimawesome.com/plugin/emmet-vim
+    Plugin 'mattn/emmet-vim'
+  " http://vimawesome.com/plugin/vim-less-safe-and-sound
+    Plugin 'groenewege/vim-less'
+  " http://vimawesome.com/plugin/surround-vim
+    Plugin 'tpope/vim-surround'
 
-" http://vimawesome.com/plugin/vim-js-pretty-template {
-Plugin 'quramy/vim-js-pretty-template'
-" autocmd FileType javascript JsPreTmpl html
-" autocmd FileType typescript JsPreTmpl html
-" } Config Plugin End
+  " http://vimawesome.com/plugin/vim-js-pretty-template {
+    Plugin 'quramy/vim-js-pretty-template'
+    " autocmd FileType javascript JsPreTmpl html
+    " autocmd FileType typescript JsPreTmpl html
+  " } Config Plugin End
 
-" http://vimawesome.com/plugin/tsuquyomi {
-Plugin 'quramy/tsuquyomi'
-let g:tsuquyomi_disable_quickfix = 1
-let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_single_quote_import = 1
-" } Config Plugin End
+  " http://vimawesome.com/plugin/tsuquyomi {
+      Plugin 'quramy/tsuquyomi'
+      let g:tsuquyomi_disable_default_mappings = 1 
+      let g:tsuquyomi_completion_detail = 1
+      let g:tsuquyomi_single_quote_import = 1
+  " } Config Plugin End
 
-" http://vimawesome.com/plugin/javascript-libraries-syntax {
-" Plugin 'othree/javascript-libraries-syntax.vim'
-" let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter'
-" } Config Plugin End
+  " http://vimawesome.com/plugin/javascript-libraries-syntax {
+    " Plugin 'othree/javascript-libraries-syntax.vim'
+    " let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter'
+  " } Config Plugin End
 
-" https://vimawesome.com/plugin/ale-be-who-we-are
-Plugin 'dense-analysis/ale'
-let b:ale_linters = {'javascript': ['eslint']}
-let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
-let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
-let g:ale_lint_on_enter = 0
-let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '!'
-" let g:ale_close_preview_on_insert = 1
-let g:ale_set_loclist = 1
-" let g:ale_set_quickfix = 1
-let g:ale_list_window_size = 5
-" } Config Plugin End
+  " https://vimawesome.com/plugin/ale-be-who-we-are {
+    Plugin 'dense-analysis/ale'
+    let g:ale_set_highlights = 0
+    let b:ale_linters = {'javascript': ['eslint'], 'typescript': ['tslint']}
+    let g:ale_linter_aliases = {'jsx': ['css', 'javascript'], 'tsx': ['css', 'typscript']}
+    let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'tsx': ['stylelint', 'tslint']}
+    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_lint_on_insert_leave = 0
+    let g:ale_lint_on_enter = 0
+    let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+    let g:ale_sign_error = '✗'
+    let g:ale_sign_warning = '!'
+    " let g:ale_close_preview_on_insert = 1
+    let g:ale_set_loclist = 1
+    " let g:ale_set_quickfix = 1
+    let g:ale_list_window_size = 5
+  " } Config Plugin End
 
-" http://vimawesome.com/plugin/instant-markdown-vim {
-Plugin 'suan/vim-instant-markdown'
-" TODO sudo npm -g install instant-markdown-d
-" TODO sudo apt-get install xdg-utils # Ubuntu installed by default
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-" } Config Plugin End
+  " http://vimawesome.com/plugin/instant-markdown-vim {
+    Plugin 'suan/vim-instant-markdown'
+    " TODO sudo npm -g install instant-markdown-d
+    " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  " } Config Plugin End
 " }
+
 " --------------------
 " Completion {
 " --------------------
-" http://vimawesome.com/plugin/vim-autoclose-sparks-fly
-Plugin 'Townk/vim-autoclose'
-" http://vimawesome.com/plugin/neosnippet-snippets
-Plugin 'Shougo/neosnippet-snippets'
+  " http://vimawesome.com/plugin/vim-autoclose-sparks-fly
+  " Plugin 'Townk/vim-autoclose'
+  " http://vimawesome.com/plugin/neosnippet-snippets
+    Plugin 'Shougo/neosnippet-snippets'
 
-" http://vimawesome.com/plugin/neosnippet-vim {
-Plugin 'Shougo/neosnippet.vim'
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+  " http://vimawesome.com/plugin/neosnippet-vim {
+    Plugin 'Shougo/neosnippet.vim'
+      imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+      smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+      xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)"
-      \: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)"
-      \: "\<TAB>"
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-" } Config Plugin End
-
-" http://vimawesome.com/plugin/neocomplete-vim {
-Plugin 'Shougo/neocomplete.vim'
-let g:acp_enableAtStartup = 0 " Disable AutoComplPop.
-let g:neocomplete#enable_at_startup = 1 " Use neocomplete.
-let g:neocomplete#enable_smart_case = 1 " Use smartcase.
-let g:neocomplete#sources#syntax#min_keyword_length = 3 " Set minimum syntax keyword length.
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-      \ 'default' : '',
-      \ 'vimshell' : $HOME.'/.vimshell_hist',
-      \ 'scheme' : $HOME.'/.gosh_completions'
-      \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-" Recommended key-mappings.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplete#close_popup() . "\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? neocomplete#close_popup() : "\<CR"
-      endfunction
-      " <TAB>: completion.
-      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-      " <C-h>, <BS>: close popup and delete backword char.
-      inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-      inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-      inoremap <expr><C-y>  neocomplete#close_popup()
-      inoremap <expr><C-e>  neocomplete#cancel_popup()
-
-      " Enable omni completion.
-      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-     " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-      " Enable heavy omni completion.
-      if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
+      " SuperTab like snippets behavior.
+      imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: pumvisible() ? "\<C-n>" : "\<TAB>"
+      smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: "\<TAB>"
+      " For conceal markers.
+      if has('conceal')
+        set conceallevel=2 concealcursor=niv
       endif
-      "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-      "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-      "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+  " } Config Plugin End
+
+  " http://vimawesome.com/plugin/neocomplete-vim {
+    Plugin 'Shougo/neocomplete.vim'
+      let g:acp_enableAtStartup = 0 " Disable AutoComplPop.
+      let g:neocomplete#enable_at_startup = 1 " Use neocomplete.
+      let g:neocomplete#enable_smart_case = 1 " Use smartcase.
+      let g:neocomplete#sources#syntax#min_keyword_length = 3 " Set minimum syntax keyword length.
+      let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+      " Define dictionary.
+      let g:neocomplete#sources#dictionary#dictionaries = {
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
+
+      " Define keyword.
+      if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+      endif
+      let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+      " Plugin key-mappings.
+      inoremap <expr><C-g>     neocomplete#undo_completion()
+      inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+      " Recommended key-mappings.
+      inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+      function! s:my_cr_function()
+        return neocomplete#close_popup() . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? neocomplete#close_popup() : "\<CR"
+            endfunction
+            " <TAB>: completion.
+            inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+            " <C-h>, <BS>: close popup and delete backword char.
+            inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><C-y>  neocomplete#close_popup()
+            inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+            " Enable omni completion.
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+           " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+            " Enable heavy omni completion.
+            if !exists('g:neocomplete#sources#omni#input_patterns')
+              let g:neocomplete#sources#omni#input_patterns = {}
+            endif
+            "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+            "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+            "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
     " } Config Plugin End
   " }
+
   " --------------------
   " Code Display {
   " --------------------
@@ -351,21 +355,21 @@ function! s:my_cr_function()
         call g:quickmenu#append('<Leader>a Tabularize',   ':tabnew +/"\ <Leader>a ~/.vimrc',  'Tabularize')
         call g:quickmenu#append('<Leader>b Buffergator',  ':tabnew +/"\ <Leader>b ~/.vimrc',  'Buffergator')
         call g:quickmenu#append('<Leader>c Copy/ChangePath',     ':tabnew +/"\ <Leader>c ~/.vimrc',  'CopyPath')
-        call g:quickmenu#append('<Leader>d Folding',      ':tabnew +/"\ <Leader>d ~/.vimrc',  'Code folding')
+        call g:quickmenu#append('<Leader>z Folding',      ':tabnew +/"\ <Leader>z ~/.vimrc',  'Code folding')
         call g:quickmenu#append('<Leader>e Edit help',    ':tabnew +/"\ <Leader>e ~/.vimrc',  'Edit Helpers')
         call g:quickmenu#append('<Leader>f FN keys',      ':tabnew +/"\ <Leader>f ~/.vimrc',  'Function Keys')
         call g:quickmenu#append('<Leader>g Git',          ':tabnew +/"\ <Leader>g ~/.vimrc',  'Git')
         call g:quickmenu#append('<Leader>i Indents',      ':tabnew +/"\ <Leader>i ~/.vimrc',  'Indents')
-        call g:quickmenu#append('<Leader>k Bookmarks',    ':tabnew +/"\ <Leader>m ~/.vimrc',  'Bookmarks')
+        call g:quickmenu#append('<Leader>b Bookmarks',    ':tabnew +/"\ <Leader>m ~/.vimrc',  'Bookmarks')
         call g:quickmenu#append('<Leader>n Nerd Tree',    ':tabnew +/"\ <Leader>n ~/.vimrc',  'Nerd tree')
-        call g:quickmenu#append('<Leader>o Others',       ':tabnew +/"\ <Leader>o ~/.vimrc',  'Others')
+        call g:quickmenu#append('<Leader>o Open',       ':tabnew +/"\ <Leader>o ~/.vimrc',  'Open')
         call g:quickmenu#append('<Leader>p Ctrl-P',       ':tabnew +/"\ <Leader>p ~/.vimrc',  'Ctrl-P')
         call g:quickmenu#append('<Leader>r Signature',    ':tabnew +/"\ <Leader>r ~/.vimrc',  'Signature')
         call g:quickmenu#append('<Leader>s Motion',       ':tabnew +/"\ <Leader>s ~/.vimrc',  'Easy motion')
         call g:quickmenu#append('<Leader>u Unite',        ':tabnew +/"\ <Leader>u ~/.vimrc',  'Unite')
         call g:quickmenu#append('<Leader>v VimShell',     ':tabnew +/"\ <Leader>v ~/.vimrc',  'VimShell')
-        call g:quickmenu#append('<Leader>y tsuquyomi',    ':tabnew +/"\ <Leader>y ~/.vimrc',  'Typescript')
-        " call g:quickmenu#append('<Leader>z Slack',        ':tabnew +/"\ <Leader>z ~/.vimrc',  'Slack')
+        call g:quickmenu#append('<Leader>t tsuquyomi',    ':tabnew +/"\ <Leader>t ~/.vimrc',  'Typescript')
+        call g:quickmenu#append('<Leader>l Last',        ':tabnew +/"\ <Leader>l ~/.vimrc',  'Last')
 
         " section 3
         call g:quickmenu#append('# How To',          '')
@@ -644,6 +648,9 @@ function! s:my_cr_function()
       nnoremap <silent> <leader>gg :SignifyToggle<CR>
       " Git gutter signs
       nnoremap <silent> <leader>gg :GitGutterSignsToggle<CR>
+      " Find merge conflict markers
+      map <leader>gm /\v^[<\|=>]{7}( .*\|$)<CR>
+      " Display all lines with keyword under cursor and ask which one to jump to
     " } Config ShortCut End
 
     " <Leader><Leader> Easy motion search {
@@ -671,7 +678,7 @@ function! s:my_cr_function()
     " <Leader>b Buffergator {
       " http://vimawesome.com/plugin/buffergator
       nmap <leader>bb :BuffergatorToggle<CR>
-      nmap <leader>bt :BuffergatorTabsToggle<CR>
+      nmap <leader>bft :BuffergatorTabsToggle<CR>
       nmap <leader>bd :call DeleteHiddenBuffers()<CR>
     " }
 
@@ -696,17 +703,17 @@ function! s:my_cr_function()
 
     " <Leader>d Code folding options {
       " http://vim.wikia.com/wiki/Folding
-      nmap <leader>d0 :set foldlevel=0<CR>
-      nmap <leader>d1 :set foldlevel=1<CR>
-      nmap <leader>d2 :set foldlevel=2<CR>
-      nmap <leader>d3 :set foldlevel=3<CR>
-      nmap <leader>d4 :set foldlevel=4<CR>
-      nmap <leader>d5 :set foldlevel=5<CR>
-      nmap <leader>d6 :set foldlevel=6<CR>
-      nmap <leader>d7 :set foldlevel=7<CR>
-      nmap <leader>d8 :set foldlevel=8<CR>
-      nmap <leader>d9 :set foldlevel=9<CR>
-      nmap <leader>da :set foldlevel=100<CR>
+      nmap <leader>z0 :set foldlevel=0<CR>
+      nmap <leader>z1 :set foldlevel=1<CR>
+      nmap <leader>z2 :set foldlevel=2<CR>
+      nmap <leader>z3 :set foldlevel=3<CR>
+      nmap <leader>z4 :set foldlevel=4<CR>
+      nmap <leader>z5 :set foldlevel=5<CR>
+      nmap <leader>z6 :set foldlevel=6<CR>
+      nmap <leader>z7 :set foldlevel=7<CR>
+      nmap <leader>z8 :set foldlevel=8<CR>
+      nmap <leader>z9 :set foldlevel=9<CR>
+      nmap <leader>za :set foldlevel=100<CR>
     " } Config ShortCut End
 
     " <Leader>n Nerd tree {
@@ -722,18 +729,18 @@ function! s:my_cr_function()
       nmap <leader>rt :SignatureToggleSigns<CR>
     " }
 
-    " <Leader>k Bookmarks {
+    " <Leader>b Bookmarks {
       " http://vimawesome.com/plugin/vim-bookmarks
-      nmap <Leader>kt <Plug>BookmarkToggle
-      nmap <Leader>ki <Plug>BookmarkAnnotate
-      nmap <Leader>ka <Plug>BookmarkShowAll
-      nmap <Leader>kj <Plug>BookmarkNext
-      nmap <Leader>kk <Plug>BookmarkPrev
-      nmap <Leader>kc <Plug>BookmarkClear
-      nmap <Leader>kx <Plug>BookmarkClearAll
-      nmap <Leader>kkk <Plug>BookmarkMoveUp
-      nmap <Leader>kjj <Plug>BookmarkMoveDown
-      nmap <Leader>kg <Plug>BookmarkMoveToLine
+      nmap <Leader>bm <Plug>BookmarkToggle
+      nmap <Leader>bi <Plug>BookmarkAnnotate
+      nmap <Leader>ba <Plug>BookmarkShowAll
+      nmap <Leader>bj <Plug>BookmarkNext
+      nmap <Leader>bk <Plug>BookmarkPrev
+      nmap <Leader>bc <Plug>BookmarkClear
+      nmap <Leader>bx <Plug>BookmarkClearAll
+      nmap <Leader>bkk <Plug>BookmarkMoveUp
+      nmap <Leader>bjj <Plug>BookmarkMoveDown
+      nmap <Leader>bg <Plug>BookmarkMoveToLine
     " } Config Bookmarks End
 
     " <Leader>u Unite {
@@ -754,40 +761,48 @@ function! s:my_cr_function()
       nmap <Leader>uy :Unite -start-insert history/yank<CR>
     " } Config Unite End
 
-    " <Leader>o Others {
-      " Find merge conflict markers
-      map <leader>oc /\v^[<\|=>]{7}( .*\|$)<CR>
-      " Display all lines with keyword under cursor and ask which one to jump to
+    " <Leader>o Open {
       nmap <Leader>of [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
       " Toggle spell checking on and off with <leader>s
       nmap <silent> <leader>os :set spell!<CR>
       " Dispaly tip
-      nmap <leader>ot :Fortune<CR>
-      " Quick save
-      nmap <leader>ow :w!<cr>
-      " Toggle numbers
+      " Open Set hide line number
       nmap <Leader>on :set relativenumber! nonu<CR>
-      " Custom fn ShortCut
+      " Open Background Toggle
       noremap <leader>ob :call ToggleBG()<CR>
+      " Open zoom view
       nmap <leader>oz :ZoomToggle<CR>
+      " Open vim diff view
       nmap <leader>od :VimDiff<CR>
-      " Last active tab
-      let g:lasttab = 1
-      nmap <Leader>ol :exe "tabn ".g:lasttab<CR>
-      nmap <Leader>t :exe "tabn ".g:lasttab<CR>
-      au TabLeave * let g:lasttab = tabpagenr()
+      " Open Nerd Tree
+      nmap <leader>on :NERDTreeTabsToggle<CR>
+      nmap <leader>ob :BuffergatorToggle<CR>
+      nmap <Leader>om <Plug>BookmarkShowAll
+      nmap <leader>os :VimShellPop<CR>
+      nmap <leader>oh :call CreateMenu()<CR>
 
     " } Config ShortCut End
 
-    " <Leader>y Typescript {
-      nmap <leader>yb :TsuquyomiGoBack<CR>
-      nmap <leader>yd :TsuquyomiDefinition<CR>
-      nmap <leader>ye :TsuquyomiGeterr<CR>
-      nmap <leader>yh :TsuquyomiSignatureHelp<CR>
-      nmap <leader>yi :TsuquyomiImplementation<CR>
-      nmap <leader>yr :TsuquyomiReferences<CR>
-      nmap <leader>ys :TsuquyomiSearch<CR>
-      nmap <leader>yt :TsuquyomiTypeDefinition<CR>
+    " <Leader>l Last {
+      nmap <leader>lp ''<CR>
+      nmap <leader>le '.<CR>
+      nmap <leader>ld :TsuquyomiGoBack<CR>
+      nmap <leader>lb <c-^>
+      " Last active tab
+      let g:lasttab = 1
+      nmap <Leader>lt :exe "tabn ".g:lasttab<CR>
+      au TabLeave * let g:lasttab = tabpagenr()
+    " } Config ShortCut End
+
+    " <Leader>t Typescript {
+      nmap <leader>tb :TsuquyomiGoBack<CR>
+      nmap <leader>td :TsuquyomiDefinition<CR>
+      nmap <leader>te :TsuquyomiGeterr<CR>
+      nmap <leader>th :TsuquyomiSignatureHelp<CR>
+      nmap <leader>ti :TsuquyomiImplementation<CR>
+      nmap <leader>tr :TsuquyomiReferences<CR>
+      nmap <leader>ts :TsuquyomiSearch<CR>
+      nmap <leader>tt :TsuquyomiTypeDefinition<CR>
     " } Config ShortCut End
 
     " <Leader>f FN keys {
