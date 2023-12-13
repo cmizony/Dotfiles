@@ -8,27 +8,30 @@
 "
 " 1. Easy navigation in .vimrc:
 "   Use <Leader>ig to view indentation guides
-"   Use <Leader>d0 or d1 to navigate between summary folds
+"   Use <Leader>z0 or z1 to navigate between summary folds
 "   Use <gx> to open plugin url links
 "   Use <F12> to get some help for some commands
 "
 " 2 Summary list of external dependencies:
 "   # Install desired patched font (for devicons and powerline)
-"   git config --global user.email <email@example.com>
-"   git config --global user.name <username>
+"   git config --global github.user <username>
 "   git config --global alias.tree "log --oneline --decorate --all --graph" # $git tree
 "   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "   vim # :PluginInstall
 "   cd ~/.vim/bundle/tern_for_vim && npm install
-"   # Older version - Not needed:
-"   # cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
-"   # brew install ack
+"   cd ~/.vim/bundle/vimproc.vim && make
+"   cd ~/.vim/bundle/vimtips-fortune/fortunes && strfile vimtips
+"   mkdir -p ~/.vim/colors && cp ~/.vim/bundle/vim-colorschemes/colors/* ~/.vim/colors/
+"   sudo apt-get install exuberant-ctags fortune-mod cowsay tidy vim-gtk xdg-utils
+"   sudo npm -g install instant-markdown-d eslint vint jsonlint
+"   brew install ack
+"   npm install -g prettier
 "
 " 3. Other scripts
 "   Update the list with following command:
 "   grep "DO" ~/.vimrc | grep -v "grep" | sed 's/[[:space:]]\+" TODO//' | sort
 "   Find merged local merged branches (you can pipe to remove them):
-"   comm -12  <(git branch --merged|awk '{print($1)}') <(git branch -r --merged|awk '{print($1)}'|awk -F \/ '{print($2)}')
+"   comm -12  <(git branch --merged|awk '{print($1)}') (git branch -r --merged|awk '{print($1)}'|awk -F \/ '{print($2)}')
 
 
 "  ___    __     ___             ____  _             _
@@ -44,114 +47,106 @@
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
-  filetype off
-  " set the runtime path to include Vundle and initialize
-  set rtp+=~/.vim/bundle/Vundle.vim
-  call vundle#begin()
-  " let Vundle manage Vundle, required
-  Plugin 'gmarik/Vundle.vim'
+filetype off
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
-  " --------------------
-  " Language {
-  " --------------------
-    " http://vimawesome.com/plugin/vim-exchange
+" --------------------
+" Language {
+" --------------------
+  " https://vimawesome.com/plugin/vim-prettier-who-speaks {
+    Plugin 'prettier/vim-prettier'
+    let g:prettier#autoformat = 0
+    autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+  " } Config Plugin End
+
+  " http://vimawesome.com/plugin/vim-exchange
     Plugin 'tommcdo/vim-exchange'
-    " http://vimawesome.com/plugin/typescript-vim
+  " http://vimawesome.com/plugin/typescript-vim
     Plugin 'leafgarland/typescript-vim'
-    " http://vimawesome.com/plugin/emmet-vim
+  " http://vimawesome.com/plugin/emmet-vim
     Plugin 'mattn/emmet-vim'
-    " http://vimawesome.com/plugin/vim-less-safe-and-sound
+  " http://vimawesome.com/plugin/vim-less-safe-and-sound
     Plugin 'groenewege/vim-less'
-    " http://vimawesome.com/plugin/javascript-indent
-    Plugin 'JavaScript-Indent'
-    " http://vimawesome.com/plugin/surround-vim
+  " http://vimawesome.com/plugin/surround-vim
     Plugin 'tpope/vim-surround'
 
-    " http://vimawesome.com/plugin/vim-js-pretty-template {
-      Plugin 'quramy/vim-js-pretty-template'
-      " autocmd FileType javascript JsPreTmpl html
-      " autocmd FileType typescript JsPreTmpl html
-    " } Config Plugin End
+  " http://vimawesome.com/plugin/vim-js-pretty-template {
+    Plugin 'quramy/vim-js-pretty-template'
+    " autocmd FileType javascript JsPreTmpl html
+    " autocmd FileType typescript JsPreTmpl html
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/tsuquyomi {
+  " http://vimawesome.com/plugin/tsuquyomi {
       Plugin 'quramy/tsuquyomi'
-      let g:tsuquyomi_disable_quickfix = 1
+      let g:tsuquyomi_disable_default_mappings = 1 
       let g:tsuquyomi_completion_detail = 1
       let g:tsuquyomi_single_quote_import = 1
-    " } Config Plugin End
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/javascript-libraries-syntax {
-      Plugin 'othree/javascript-libraries-syntax.vim'
-      let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,jasmine,jquery'
-    " } Config Plugin End
+  " http://vimawesome.com/plugin/javascript-libraries-syntax {
+    " Plugin 'othree/javascript-libraries-syntax.vim'
+    " let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter'
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/syntastic {
-      Plugin 'scrooloose/syntastic'
-      scriptencoding utf-8
-      let g:syntastic_always_populate_loc_list = 1 " Always add any detected errors into the location list
-      " Don’t auto-open it when errors/warnings are detected, but auto-close when no
-      " more errors/warnings are detected.
-      let g:syntastic_auto_loc_list = 2
-      " Highlight syntax errors where possible
-      let g:syntastic_enable_highlighting = 1
-      " Show this many errors/warnings at a time in the location list
-      let g:syntastic_loc_list_height = 5
-      " Don’t run checkers when saving and quitting--only on saving
-      let g:syntastic_check_on_wq = 0
+  " https://vimawesome.com/plugin/ale-be-who-we-are {
+    Plugin 'dense-analysis/ale'
+    let g:ale_set_highlights = 0
+    let b:ale_linters = {'javascript': ['eslint'], 'typescript': ['tslint']}
+    let g:ale_linter_aliases = {'jsx': ['css', 'javascript'], 'tsx': ['css', 'typscript']}
+    let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'tsx': ['stylelint', 'tslint']}
+    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_lint_on_insert_leave = 0
+    let g:ale_lint_on_enter = 0
+    let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+    let g:ale_sign_error = '✗'
+    let g:ale_sign_warning = '!'
+    " let g:ale_close_preview_on_insert = 1
+    let g:ale_set_loclist = 1
+    " let g:ale_set_quickfix = 1
+    let g:ale_list_window_size = 5
+  " } Config Plugin End
 
-      let g:syntastic_error_symbol = '✗'
-      let g:syntastic_warning_symbol       = '⚠'
-      let g:syntastic_style_error_symbol   = '⚠'
-      let g:syntastic_style_warning_symbol = '⚠'
+  " http://vimawesome.com/plugin/instant-markdown-vim {
+    Plugin 'suan/vim-instant-markdown'
+    " TODO sudo npm -g install instant-markdown-d
+    " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+  " } Config Plugin End
+" }
 
-      let g:syntastic_javascript_checkers    = ['eslint']
-      let s:eslint_path                      = system('PATH=$(npm bin):$PATH && which eslint')
-      let g:syntastic_javascript_eslint_exec = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
-      let g:syntastic_json_checkers          = ['jsonlint']
-      let g:syntastic_ruby_checkers          = ['rubocop']
-      let g:syntastic_ruby_rubocop_args      = "--config .rubocop.yml"
-      let g:syntastic_scss_checkers          = ['scss_lint']
-      let g:syntastic_vim_checkers           = ['vint']
-      let g:syntastic_typescript_checkers    = ['tsuquyomi', 'tslint']
-      let g:syntastic_mode_map               = { 'passive_filetypes': ['html'] }
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/instant-markdown-vim {
-      Plugin 'suan/vim-instant-markdown'
-      " TODO sudo npm -g install instant-markdown-d
-      " TODO sudo apt-get install xdg-utils # Ubuntu installed by default
-      autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-    " } Config Plugin End
-  " }
-  " --------------------
-  " Completion {
-  " --------------------
-    " http://vimawesome.com/plugin/vim-autoclose-sparks-fly
-    Plugin 'Townk/vim-autoclose'
-    " http://vimawesome.com/plugin/neosnippet-snippets
+" --------------------
+" Completion {
+" --------------------
+  " http://vimawesome.com/plugin/vim-autoclose-sparks-fly
+  " Plugin 'Townk/vim-autoclose'
+  " http://vimawesome.com/plugin/neosnippet-snippets
     Plugin 'Shougo/neosnippet-snippets'
 
-    " http://vimawesome.com/plugin/neosnippet-vim {
-      Plugin 'Shougo/neosnippet.vim'
+  " http://vimawesome.com/plugin/neosnippet-vim {
+    Plugin 'Shougo/neosnippet.vim'
       imap <C-k>     <Plug>(neosnippet_expand_or_jump)
       smap <C-k>     <Plug>(neosnippet_expand_or_jump)
       xmap <C-k>     <Plug>(neosnippet_expand_target)
 
       " SuperTab like snippets behavior.
       imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)"
-      \: pumvisible() ? "\<C-n>" : "\<TAB>"
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: pumvisible() ? "\<C-n>" : "\<TAB>"
       smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)"
-      \: "\<TAB>"
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \: "\<TAB>"
       " For conceal markers.
       if has('conceal')
         set conceallevel=2 concealcursor=niv
       endif
-    " } Config Plugin End
+  " } Config Plugin End
 
-    " http://vimawesome.com/plugin/neocomplete-vim {
-      Plugin 'Shougo/neocomplete.vim'
+  " http://vimawesome.com/plugin/neocomplete-vim {
+    Plugin 'Shougo/neocomplete.vim'
       let g:acp_enableAtStartup = 0 " Disable AutoComplPop.
       let g:neocomplete#enable_at_startup = 1 " Use neocomplete.
       let g:neocomplete#enable_smart_case = 1 " Use smartcase.
@@ -160,14 +155,14 @@
 
       " Define dictionary.
       let g:neocomplete#sources#dictionary#dictionaries = {
-          \ 'default' : '',
-          \ 'vimshell' : $HOME.'/.vimshell_hist',
-          \ 'scheme' : $HOME.'/.gosh_completions'
-              \ }
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
 
       " Define keyword.
       if !exists('g:neocomplete#keyword_patterns')
-          let g:neocomplete#keyword_patterns = {}
+        let g:neocomplete#keyword_patterns = {}
       endif
       let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
@@ -180,39 +175,44 @@
       function! s:my_cr_function()
         return neocomplete#close_popup() . "\<CR>"
         " For no inserting <CR> key.
-        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-      endfunction
-      " <TAB>: completion.
-      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-      " <C-h>, <BS>: close popup and delete backword char.
-      inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-      inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-      inoremap <expr><C-y>  neocomplete#close_popup()
-      inoremap <expr><C-e>  neocomplete#cancel_popup()
+        "return pumvisible() ? neocomplete#close_popup() : "\<CR"
+            endfunction
+            " <TAB>: completion.
+            inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+            " <C-h>, <BS>: close popup and delete backword char.
+            inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><C-y>  neocomplete#close_popup()
+            inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-      " Enable omni completion.
-      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+            " Enable omni completion.
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+           " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-      " Enable heavy omni completion.
-      if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
-      endif
-      "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-      "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-      "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+            " Enable heavy omni completion.
+            if !exists('g:neocomplete#sources#omni#input_patterns')
+              let g:neocomplete#sources#omni#input_patterns = {}
+            endif
+            "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+            "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+            "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
     " } Config Plugin End
   " }
+
   " --------------------
   " Code Display {
   " --------------------
     " http://vimawesome.com/plugin/vim-jsx
     Plugin 'mxw/vim-jsx'
-    " http://vimawesome.com/plugin/indent-guides
-    Plugin 'nathanaelkane/vim-indent-guides'
+
+    " https://vimawesome.com/plugin/vim-jsx-pretty
+    " Both plugin for Typescript
+    Plugin 'HerringtonDarkholme/yats.vim'
+    Plugin 'maxmellon/vim-jsx-pretty'
+
     " http://vimawesome.com/plugin/vim-css-color-the-story-of-us
     Plugin 'ap/vim-css-color'
     " http://vimawesome.com/plugin/solarized
@@ -221,7 +221,8 @@
     " http://vimawesome.com/plugin/indentline {
       Plugin 'Yggdroot/indentLine'
       let g:indentLine_char = '¦'
-      let g:indentLine_enabled = 0
+      " let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+      " let g:indentLine_enabled = 0
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-colorschemes-sweeter-than-fiction {
@@ -251,30 +252,13 @@
       set diffopt+=iwhite
     " } Config Plugin End
 
-    " https://github.com/yaasita/edit-slack.vim {
-      " TODO DL  https://github.com/yaasita/edit-slack/releases/download/v0.2.0/darwin-amd64-edit-slack
-      " mv ~/Downloads/darwin-amd64-edit-slack ~/.vim/bundle/edit-slack.vim/edit-slack
-      " chmod +x ~/.vim/bundle/edit-slack.vim/edit-slack
-      " Generate token using https://api.slack.com/custom-integrations/legacy-tokens
-      " SECURITY: Write token in a local config file ~/.vimrc.local
-      " let g:yaasita_slack_token = "xoxp-xxxxxxxxxx-xxxxxxxxxx-xxxxxxxxxx-xxxxxx"
-      Plugin 'yaasita/edit-slack.vim'
-    " }
-
     " http://vimawesome.com/plugin/vim-peekaboo {
       Plugin 'junegunn/vim-peekaboo'
-      let g:peekaboo_prefix = '<Leader>'
+      " let g:peekaboo_prefix = '<Leader>'
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/vim-test-all-too-well
-    Plugin 'janko-m/vim-test'
     " http://vimawesome.com/plugin/vim-gitgutter
     Plugin 'airblade/vim-gitgutter'
-
-    " http://vimawesome.com/plugin/gitv {
-      Plugin 'gregsexton/gitv'
-      let g:Gitv_OpenHorizontal = 1
-    " } Config Plugin End
 
     " http://vimawesome.com/plugin/vimshell-vim {
       Plugin 'Shougo/vimshell.vim'
@@ -284,56 +268,6 @@
       let g:vimshell_prompt_pattern = '^\%(\f\|\\.\)\+> '
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/tagbar {
-      Plugin 'majutsushi/tagbar'
-      " TODO sudo apt-get install exuberant-ctags
-      " http://ctags.sourceforge.net/
-      let g:tagbar_width=30
-      " let g:tagbar_autofocus=1
-      " autocmd Filetype * nested :call tagbar#autoopen(0)
-      " Angular html
-      let g:tagbar_type_html = {
-          \ 'csagstype' : 'html',
-          \ 'kinds'     : [
-              \ 'd:directive'
-          \ ]
-      \ }
-      " Javascript es6
-      " https://github.com/romainl/ctags-patterns-for-javascript
-      " Debug using ctags -f - [filename]
-      let g:tagbar_type_javascript = {
-          \ 'csagstype' : 'javascript',
-          \ 'kinds'     : [
-            \ 'T:todos',
-            \ 'I:imports',
-            \ 'E:exports',
-            \ 'C:classes',
-            \ 'F:functions',
-            \ 'M:methods',
-            \ 'V:variables',
-            \ 'A:arrays',
-            \ 'O:objects',
-            \ 'G:generators',
-            \ 'P:properties',
-          \ ]
-      \ }
-      " Typescript
-      let g:tagbar_type_typescript = {
-        \ 'ctagstype': 'typescript',
-        \ 'kinds': [
-          \ 'c:classes',
-          \ 'n:modules',
-          \ 'f:functions',
-          \ 'v:variables',
-          \ 'v:varlambdas',
-          \ 'm:members',
-          \ 'i:interfaces',
-          \ 'e:enums',
-          \ 'I:imports',
-        \ ]
-      \ }
-    " } Config Plugin End
-
     " http://vimawesome.com/plugin/gist-vim {
       Plugin 'mattn/webapi-vim'
       Plugin 'mattn/gist-vim'
@@ -341,13 +275,6 @@
       let g:gist_post_private = 1
       let g:gist_show_privates = 1
       let g:gist_open_browser_after_post = 1
-    " } Config Plugin End
-
-    " http://vimawesome.com/plugin/tern-for-vim {
-      Plugin 'marijnh/tern_for_vim'
-      " TODO cd ~/.vim/bundle/tern_for_vim && npm install
-      " http://ternjs.net/doc/manual.html
-      let tern_show_signature_in_pum=1
     " } Config Plugin End
 
     " http://vimawesome.com/plugin/vim-tmux-navigator {
@@ -369,6 +296,18 @@
     " Plugin 'myusuf3/numbers.vim'
     " http://vimawesome.com/plugin/nerdtree-git-plugin
     Plugin 'Xuyuanp/nerdtree-git-plugin'
+    let g:NERDTreeGitStatusIndicatorMapCustom = {
+                    \ 'Modified'  :'✔︎',
+                    \ 'Staged'    :'+',
+                    \ 'Untracked' :'?',
+                    \ 'Renamed'   :'➜',
+                    \ 'Unmerged'  :'═',
+                    \ 'Deleted'   :'✗',
+                    \ 'Dirty'     :'✗',
+                    \ 'Ignored'   :'✗',
+                    \ 'Clean'     :'✔︎',
+                    \ 'Unknown'   :'?',
+                    \ }
     " http://vimawesome.com/plugin/unite-vim
     Plugin 'Shougo/unite.vim'
     " http://vimawesome.com/plugin/neoyank-vim
@@ -394,6 +333,11 @@
     Plugin 'mileszs/ack.vim'
     " http://vimawesome.com/plugin/buffergator
     Plugin 'jeetsukumaran/vim-buffergator'
+    let g:buffergator_split_size = 30
+    let g:buffergator_vsplit_size = 30
+    let g:buffergator_viewport_split_policy = "R"
+    let g:buffergator_autoupdate = 1
+    let g:buffergator_sort_regime = "mru"
 
     " http://vimawesome.com/plugin/quickmenu {
       Plugin 'skywind3000/quickmenu.vim'
@@ -404,37 +348,28 @@
 
         " section 1
         call g:quickmenu#append('# <FN> Shortcuts',  '')
-        call g:quickmenu#append('<F1> Help',         ':help',                       'Vim help')
-        call g:quickmenu#append('<F2> Registers',    ':tabnew +/"\ <FN> ~/.vimrc',  'Open content of copy registers')
-        call g:quickmenu#append('<F3> Gundo',        ':tabnew +/"\ <FN> ~/.vimrc',  'Open file change history tree')
-        call g:quickmenu#append('<F4> Tagbar',       ':tabnew +/"\ <FN> ~/.vimrc',  'Open result of ctags')
-        call g:quickmenu#append('<F5> Git Tree',     ':tabnew +/"\ <FN> ~/.vimrc',  'Open Git tre graph view')
-        call g:quickmenu#append('<F6> Buffergator',  ':tabnew +/"\ <FN> ~/.vimrc',  'Open Vim buffers')
-        call g:quickmenu#append('<F7> QuickFix',     ':tabnew +/"\ <FN> ~/.vimrc',  'Quickfix special window')
-        call g:quickmenu#append('<F8> Startify',     ':tabnew +/"\ <FN> ~/.vimrc',  'Open startify page')
-        call g:quickmenu#append('<F9> Quickmenu',    ':tabnew +/"\ <FN> ~/.vimrc',  'Open this menu')
+        call g:quickmenu#append('<F1> Quickmenu',    ':tabnew +/"\ <FN> ~/.vimrc',  'Open this menu')
 
         " section 2
         call g:quickmenu#append('# <Leader> Prefix',      '')
         call g:quickmenu#append('<Leader>a Tabularize',   ':tabnew +/"\ <Leader>a ~/.vimrc',  'Tabularize')
         call g:quickmenu#append('<Leader>b Buffergator',  ':tabnew +/"\ <Leader>b ~/.vimrc',  'Buffergator')
-        call g:quickmenu#append('<Leader>c CopyPath',     ':tabnew +/"\ <Leader>c ~/.vimrc',  'CopyPath')
-        call g:quickmenu#append('<Leader>d Folding',      ':tabnew +/"\ <Leader>d ~/.vimrc',  'Code folding')
+        call g:quickmenu#append('<Leader>c Copy/ChangePath',     ':tabnew +/"\ <Leader>c ~/.vimrc',  'CopyPath')
+        call g:quickmenu#append('<Leader>z Folding',      ':tabnew +/"\ <Leader>z ~/.vimrc',  'Code folding')
         call g:quickmenu#append('<Leader>e Edit help',    ':tabnew +/"\ <Leader>e ~/.vimrc',  'Edit Helpers')
         call g:quickmenu#append('<Leader>f FN keys',      ':tabnew +/"\ <Leader>f ~/.vimrc',  'Function Keys')
         call g:quickmenu#append('<Leader>g Git',          ':tabnew +/"\ <Leader>g ~/.vimrc',  'Git')
         call g:quickmenu#append('<Leader>i Indents',      ':tabnew +/"\ <Leader>i ~/.vimrc',  'Indents')
-        call g:quickmenu#append('<Leader>m Bookmarks',    ':tabnew +/"\ <Leader>m ~/.vimrc',  'Bookmarks')
+        call g:quickmenu#append('<Leader>b Bookmarks',    ':tabnew +/"\ <Leader>m ~/.vimrc',  'Bookmarks')
         call g:quickmenu#append('<Leader>n Nerd Tree',    ':tabnew +/"\ <Leader>n ~/.vimrc',  'Nerd tree')
-        call g:quickmenu#append('<Leader>o Others',       ':tabnew +/"\ <Leader>o ~/.vimrc',  'Others')
+        call g:quickmenu#append('<Leader>o Open',       ':tabnew +/"\ <Leader>o ~/.vimrc',  'Open')
         call g:quickmenu#append('<Leader>p Ctrl-P',       ':tabnew +/"\ <Leader>p ~/.vimrc',  'Ctrl-P')
         call g:quickmenu#append('<Leader>r Signature',    ':tabnew +/"\ <Leader>r ~/.vimrc',  'Signature')
         call g:quickmenu#append('<Leader>s Motion',       ':tabnew +/"\ <Leader>s ~/.vimrc',  'Easy motion')
-        call g:quickmenu#append('<Leader>t Tern',         ':tabnew +/"\ <Leader>t ~/.vimrc',  'Tern Javascript')
         call g:quickmenu#append('<Leader>u Unite',        ':tabnew +/"\ <Leader>u ~/.vimrc',  'Unite')
         call g:quickmenu#append('<Leader>v VimShell',     ':tabnew +/"\ <Leader>v ~/.vimrc',  'VimShell')
-        call g:quickmenu#append('<Leader>y tsuquyomi',    ':tabnew +/"\ <Leader>y ~/.vimrc',  'Typescript')
-        call g:quickmenu#append('<Leader>z Slack',        ':tabnew +/"\ <Leader>z ~/.vimrc',  'Slack')
+        call g:quickmenu#append('<Leader>t tsuquyomi',    ':tabnew +/"\ <Leader>t ~/.vimrc',  'Typescript')
+        call g:quickmenu#append('<Leader>l Last',        ':tabnew +/"\ <Leader>l ~/.vimrc',  'Last')
 
         " section 3
         call g:quickmenu#append('# How To',          '')
@@ -445,7 +380,6 @@
         call g:quickmenu#append('Use Sessions',      'tabnew +/Plugin.*obsession.$ ~/.vimrc',         'Remember sessions')
         call g:quickmenu#append('Trim Space',        ':tabnew +/TrimWhiteSpace() ~/.vimrc',           'Function to Trim white space in current file')
         call g:quickmenu#append('Delete Buffers',    ':tabnew +/DeleteHiddenBuffers() ~/.vimrc',      'Function to delete hidden buffers')
-        call g:quickmenu#append('Dev Docs',          ':tabnew +/"\ DevDocs ~/.vimrc',                 'Get dev documentation')
         call g:quickmenu#append('Text Objects',      ':help text-objects',                            'Vim text objects doc')
         call g:quickmenu#append('Record',            ':help record',                                  'Vim record doc')
 
@@ -483,7 +417,7 @@
       Plugin 'jistr/vim-nerdtree-tabs'
       let g:nerdtree_tabs_open_on_console_startup=1
       " let g:nerdtree_tabs_autofind=1
-      let g:nerdtree_tabs_open_on_new_tab=0
+      let g:nerdtree_tabs_open_on_new_tab=1
       let g:nerdtree_tabs_smart_startup_focus=2
     " } Config Plugin End
 
@@ -502,14 +436,15 @@
       set laststatus=2
       " TODO # Install desired patched font (for powerline)
       " git clone https://github.com/powerline/fonts
-      " mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
-      " fc-cache -vf ~/.fonts/
+      "[A]" mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
+      "[A]" fc-cache -vf ~/.fonts/
+      "[B]" bash install.sh
       " let g:airline_powerline_fonts = 1
       let g:airline#extensions#tabline#enabled = 1
       let g:airline#extensions#obsession#enabled = 1
     " } Config Plugin End
 
-    " http://vimawesome.com/plugin/vim-devicons-holy-gound {
+    " https://vimawesome.com/plugin/vim-devicons {
       " Plugin 'ryanoasis/vim-devicons'
       " let g:webdevicons_conceal_nerdtree_brackets = 1
       " let g:webdevicons_enable_nerdtree = 1
@@ -679,6 +614,7 @@
       nmap <Leader>pb :CtrlPBuffer<CR>
       nmap <Leader>px :CtrlPMixed<CR>
       nmap <Leader>pk :CtrlPBookmark<CR>
+      nmap <Leader>pc :CtrlPQuickfix<CR>
       nmap <Leader>pt :set invpaste paste?<CR>
     " } Config ShortCut End
 
@@ -691,30 +627,18 @@
       " Use tidy to indent html attribute on selected line (visual mode)
       nmap <silent> <Leader>ic :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
       vmap <silent> <Leader>ic :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
-    " } Config ShortCut End
-
-    " <Leader>t Tern Javascript {
-      " http://vimawesome.com/plugin/tern-for-vim
-      nmap <Leader>td :TernDoc<CR>
-      nmap <Leader>tb :TernDocBrowse<CR>
-      nmap <Leader>tt :TernType<CR>
-      nmap <Leader>td :TernDef<CR>
-      nmap <Leader>tpd :TernDefPreview<CR>
-      nmap <Leader>tsd :TernDefSplit<CR>
-      nmap <Leader>ttd :TernDefTab<CR>
-      nmap <Leader>tr :TernRefs<CR>
-      nmap <Leader>tR :TernRename<CR>
+      nmap <silent> <Leader>it :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
+      vmap <silent> <Leader>it :!tidy -q -i -xml --indent-attributes 1 --show-errors 0<CR>
     " } Config ShortCut End
 
     " <Leader>g Git {
       " http://vimawesome.com/plugin/fugitive-vim
-      " http://vimawesome.com/plugin/gitv
       " http://vimawesome.com/plugin/vim-gitgutter
-      nnoremap <silent> <leader>gs :Gstatus<CR>
+      nnoremap <silent> <leader>gs :Git status<CR>
       nnoremap <silent> <leader>gd :Gdiff<CR>
-      nnoremap <silent> <leader>gc :Gcommit<CR>
-      nnoremap <silent> <leader>gb :Gblame<CR>
-      nnoremap <silent> <leader>gl :Glog<CR>
+      nnoremap <silent> <leader>gc :Git commit<CR>
+      nnoremap <silent> <leader>gb :Git blame<CR>
+      nnoremap <silent> <leader>gl :Gclog<CR>
       nnoremap <silent> <leader>gp :Git push<CR>
       nnoremap <silent> <leader>gr :Gread<CR>
       nnoremap <silent> <leader>gw :Gwrite<CR>
@@ -722,14 +646,16 @@
       " Mnemonic _i_nteractive
       nnoremap <silent> <leader>gi :Git add -p %<CR>
       nnoremap <silent> <leader>gg :SignifyToggle<CR>
-      " File git history
-      nnoremap <silent> <leader>gh :Gitv!<CR>
       " Git gutter signs
       nnoremap <silent> <leader>gg :GitGutterSignsToggle<CR>
+      " Find merge conflict markers
+      map <leader>gm /\v^[<\|=>]{7}( .*\|$)<CR>
+      " Display all lines with keyword under cursor and ask which one to jump to
     " } Config ShortCut End
 
     " <Leader><Leader> Easy motion search {
       " http://vimawesome.com/plugin/vim-easymotion-state-of-grace
+      nmap <leader>s <Plug>(easymotion-bd-W)
       nmap <leader>sa <Plug>(easymotion-bd-w)
       nmap <leader>sA <Plug>(easymotion-bd-W)
       nmap <leader>sl <Plug>(easymotion-bd-jk)
@@ -737,21 +663,23 @@
 
     " <Leader>v VimShell {
       " http://vimawesome.com/plugin/vimshell-vim
+      nmap <leader>v :VimShellPop<CR>
       nmap <leader>vs :VimShellPop<CR>
       nmap <leader>vt :VimShellTab<CR>
     " } Config ShortCut End
 
-    " <Leader>c CopyPath {
+    " <Leader>c Copy/ChangePath {
       " http://vimawesome.com/plugin/copypath-vim
       nmap <leader>cp :CopyPath<CR>
       nmap <leader>cf :CopyFileName<CR>
+      nmap <leader>cd :cd %:p:h<CR>:pwd<CR>
     " }
 
     " <Leader>b Buffergator {
       " http://vimawesome.com/plugin/buffergator
-      nmap <leader>bo :BuffergatorOpen<CR>
-      nmap <leader>bc :BuffergatorClose<CR>
-      nmap <leader>bt :BuffergatorToggle<CR>
+      nmap <leader>bb :BuffergatorToggle<CR>
+      nmap <leader>bft :BuffergatorTabsToggle<CR>
+      nmap <leader>bd :call DeleteHiddenBuffers()<CR>
     " }
 
     " <Leader>a Tabularize ShortCuts {
@@ -775,17 +703,17 @@
 
     " <Leader>d Code folding options {
       " http://vim.wikia.com/wiki/Folding
-      nmap <leader>d0 :set foldlevel=0<CR>
-      nmap <leader>d1 :set foldlevel=1<CR>
-      nmap <leader>d2 :set foldlevel=2<CR>
-      nmap <leader>d3 :set foldlevel=3<CR>
-      nmap <leader>d4 :set foldlevel=4<CR>
-      nmap <leader>d5 :set foldlevel=5<CR>
-      nmap <leader>d6 :set foldlevel=6<CR>
-      nmap <leader>d7 :set foldlevel=7<CR>
-      nmap <leader>d8 :set foldlevel=8<CR>
-      nmap <leader>d9 :set foldlevel=9<CR>
-      nmap <leader>da :set foldlevel=100<CR>
+      nmap <leader>z0 :set foldlevel=0<CR>
+      nmap <leader>z1 :set foldlevel=1<CR>
+      nmap <leader>z2 :set foldlevel=2<CR>
+      nmap <leader>z3 :set foldlevel=3<CR>
+      nmap <leader>z4 :set foldlevel=4<CR>
+      nmap <leader>z5 :set foldlevel=5<CR>
+      nmap <leader>z6 :set foldlevel=6<CR>
+      nmap <leader>z7 :set foldlevel=7<CR>
+      nmap <leader>z8 :set foldlevel=8<CR>
+      nmap <leader>z9 :set foldlevel=9<CR>
+      nmap <leader>za :set foldlevel=100<CR>
     " } Config ShortCut End
 
     " <Leader>n Nerd tree {
@@ -801,18 +729,18 @@
       nmap <leader>rt :SignatureToggleSigns<CR>
     " }
 
-    " <Leader>m Bookmarks {
+    " <Leader>b Bookmarks {
       " http://vimawesome.com/plugin/vim-bookmarks
-      nmap <Leader>mt <Plug>BookmarkToggle
-      nmap <Leader>mi <Plug>BookmarkAnnotate
-      nmap <Leader>ma <Plug>BookmarkShowAll
-      nmap <Leader>mj <Plug>BookmarkNext
-      nmap <Leader>mk <Plug>BookmarkPrev
-      nmap <Leader>mc <Plug>BookmarkClear
-      nmap <Leader>mx <Plug>BookmarkClearAll
-      nmap <Leader>mkk <Plug>BookmarkMoveUp
-      nmap <Leader>mjj <Plug>BookmarkMoveDown
-      nmap <Leader>mg <Plug>BookmarkMoveToLine
+      nmap <Leader>bm <Plug>BookmarkToggle
+      nmap <Leader>bi <Plug>BookmarkAnnotate
+      nmap <Leader>ba <Plug>BookmarkShowAll
+      nmap <Leader>bj <Plug>BookmarkNext
+      nmap <Leader>bk <Plug>BookmarkPrev
+      nmap <Leader>bc <Plug>BookmarkClear
+      nmap <Leader>bx <Plug>BookmarkClearAll
+      nmap <Leader>bkk <Plug>BookmarkMoveUp
+      nmap <Leader>bjj <Plug>BookmarkMoveDown
+      nmap <Leader>bg <Plug>BookmarkMoveToLine
     " } Config Bookmarks End
 
     " <Leader>u Unite {
@@ -833,48 +761,48 @@
       nmap <Leader>uy :Unite -start-insert history/yank<CR>
     " } Config Unite End
 
-    " <Leader>o Others {
-      " Find merge conflict markers
-      map <leader>oc /\v^[<\|=>]{7}( .*\|$)<CR>
-      " Display all lines with keyword under cursor and ask which one to jump to
+    " <Leader>o Open {
       nmap <Leader>of [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
       " Toggle spell checking on and off with <leader>s
       nmap <silent> <leader>os :set spell!<CR>
       " Dispaly tip
-      nmap <leader>ot :Fortune<CR>
-      " Quick save
-      nmap <leader>ow :w!<cr>
-      " Toggle numbers
+      " Open Set hide line number
       nmap <Leader>on :set relativenumber! nonu<CR>
-      " Custom fn ShortCut
+      " Open Background Toggle
       noremap <leader>ob :call ToggleBG()<CR>
+      " Open zoom view
       nmap <leader>oz :ZoomToggle<CR>
+      " Open vim diff view
       nmap <leader>od :VimDiff<CR>
-      " Last active tab
-      let g:lasttab = 1
-      nmap <Leader>ol :exe "tabn ".g:lasttab<CR>
-      au TabLeave * let g:lasttab = tabpagenr()
+      " Open Nerd Tree
+      nmap <leader>on :NERDTreeTabsToggle<CR>
+      nmap <leader>ob :BuffergatorToggle<CR>
+      nmap <Leader>om <Plug>BookmarkShowAll
+      nmap <leader>os :VimShellPop<CR>
+      nmap <leader>oh :call CreateMenu()<CR>
 
     " } Config ShortCut End
 
-    " <Leader>z Slack {
-      " Channels & gf to open :e to refresh :w to send
-      nmap <Leader>zc :e slack://ch<CR>
-      " Private group
-      nmap <Leader>zg :e slack://pg<CR>
-      " Users list
-      nmap <Leader>zu :e slack://dm<CR>
-    " } Config Slack End
+    " <Leader>l Last {
+      nmap <leader>lp ''<CR>
+      nmap <leader>le '.<CR>
+      nmap <leader>ld :TsuquyomiGoBack<CR>
+      nmap <leader>lb <c-^>
+      " Last active tab
+      let g:lasttab = 1
+      nmap <Leader>lt :exe "tabn ".g:lasttab<CR>
+      au TabLeave * let g:lasttab = tabpagenr()
+    " } Config ShortCut End
 
-    " <Leader>y Typescript {
-      nmap <leader>yb :TsuquyomiGoBack<CR>
-      nmap <leader>yd :TsuquyomiDefinition<CR>
-      nmap <leader>ye :TsuquyomiGeterr<CR>
-      nmap <leader>yh :TsuquyomiSignatureHelp<CR>
-      nmap <leader>yi :TsuquyomiImplementation<CR>
-      nmap <leader>yr :TsuquyomiReferences<CR>
-      nmap <leader>ys :TsuquyomiSearch<CR>
-      nmap <leader>yt :TsuquyomiTypeDefinition<CR>
+    " <Leader>t Typescript {
+      nmap <leader>tb :TsuquyomiGoBack<CR>
+      nmap <leader>td :TsuquyomiDefinition<CR>
+      nmap <leader>te :TsuquyomiGeterr<CR>
+      nmap <leader>th :TsuquyomiSignatureHelp<CR>
+      nmap <leader>ti :TsuquyomiImplementation<CR>
+      nmap <leader>tr :TsuquyomiReferences<CR>
+      nmap <leader>ts :TsuquyomiSearch<CR>
+      nmap <leader>tt :TsuquyomiTypeDefinition<CR>
     " } Config ShortCut End
 
     " <Leader>f FN keys {
@@ -890,14 +818,7 @@
     " }
 
     " <FN> Map function keys {
-      nmap <F2> <Leader>"
-      nnoremap <F3> :GundoToggle<CR>
-      nmap <F4> :TagbarToggle<CR>
-      nnoremap <F5> :Gitv<CR>
-      nnoremap <F6> :BuffergatorToggle<CR>
-      nnoremap <F7> :copen<CR>
-      nnoremap <F8> :Startify<CR>
-      noremap <silent><F9> :call CreateMenu()<cr>
+      noremap <silent><F1> :call CreateMenu()<cr>
     " } Config Function Keys End
   " }
 
@@ -1022,17 +943,17 @@
         source ~/.vimrc.local
     endif
 
-    " DevDocs keyworks on http://devdocs.io
-    " Use ':DD' without argument to lookup the word under the cursor, scoped with the current filetype:
-    "     :DD
-    " Use ':DD' with one argument to lookup the argument, scoped with the current filetype:
-    "     :DD Map
-    " Use ':DD' with two arguments to do the scoping yourself:
-    "    :DD scss @mixin
-    " Use ':DD' for keyword lookup with the built-in 'K':
-    "    setlocal keywordprg=:DD
-    let stub = "open 'http://devdocs.io/?q="
-    command! -nargs=* DD silent! call system(len(split(<q-args>, ' ')) == 0 ?
-                \ stub . &ft . ' ' . expand('<cword>') . "'" : len(split(<q-args>, ' ')) == 1 ?
-                \ stub . &ft . ' ' . <q-args> . "'" : stub . <q-args> . "'")
-  " }
+    " When using `dd` in the quickfix list, remove the item from the quickfix
+    " list.
+    function! RemoveQFItem()
+      let curqfidx = line('.') - 1
+      let qfall = getqflist()
+      call remove(qfall, curqfidx)
+      call setqflist(qfall, 'r')
+      execute curqfidx + 1 . "cfirst"
+      :copen
+    endfunction
+    :command! RemoveQFItem :call RemoveQFItem()
+    " Use map <buffer> to only map dd in the quickfix window.
+    " Requires +localmap
+    autocmd FileType qf map <buffer> dd :RemoveQFItem<cr>
