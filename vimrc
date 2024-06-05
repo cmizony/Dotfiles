@@ -85,6 +85,7 @@ Plugin 'gmarik/Vundle.vim'
   " http://vimawesome.com/plugin/tsuquyomi {
     " Tsuquyomi works as a client for TSServer
       Plugin 'quramy/tsuquyomi'
+      let g:tsuquyomi_auto_open = 0
       let g:tsuquyomi_disable_default_mappings = 1
       let g:tsuquyomi_completion_detail = 0
       let g:tsuquyomi_single_quote_import = 1
@@ -93,13 +94,17 @@ Plugin 'gmarik/Vundle.vim'
   " https://vimawesome.com/plugin/ale-be-who-we-are {
     " ASYNCHRONOUS LINT ENGINE
     Plugin 'dense-analysis/ale'
+    let g:ale_virtualtext_cursor = 0
+    let g:ale_virtualtext_prefix = ""
+    let g:ale_hover_enabled = 0
     let g:ale_set_highlights = 0
     let b:ale_linters = {'javascript': ['eslint'], 'typescript': ['tslint']}
     let g:ale_linter_aliases = {'jsx': ['css', 'javascript'], 'tsx': ['css', 'typscript']}
     let g:ale_linters = {'jsx': ['stylelint', 'eslint'], 'tsx': ['stylelint', 'tslint']}
-    let g:ale_lint_on_text_changed = 'never'
+    let g:ale_lint_on_text_changed = "never"
     let g:ale_lint_on_insert_leave = 0
     let g:ale_lint_on_enter = 0
+    " let g:ale_lint_on_save = 0
     let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
     let g:ale_sign_error = '✗'
     let g:ale_sign_warning = '!'
@@ -329,16 +334,18 @@ Plugin 'gmarik/Vundle.vim'
 
     " http://vimawesome.com/plugin/vim-airline-sad-beautiful-tragic {
       Plugin 'bling/vim-airline'
+      Plugin 'vim-airline/vim-airline-themes'
       set laststatus=2
+      let g:airline_theme = 'solarized'
       " TODO # Install desired patched font (for powerline)
       " git clone https://github.com/powerline/fonts
       "[A]" mkdir -p ~/.fonts && mv desiredFonts ~/.fonts
       "[A]" fc-cache -vf ~/.fonts/
       "[B]" bash install.sh
-      " let g:airline_powerline_fonts = 1
+      let g:airline_powerline_fonts = 1
       let g:airline#extensions#tabline#enabled = 1
       let g:airline#extensions#tabline#show_buffers = 0
-      let g:airline#extensions#obsession#enabled = 1
+      let g:airline#extensions#obsession#enabled = 0
     " } Config Plugin End
     
   " }
@@ -445,7 +452,7 @@ Plugin 'gmarik/Vundle.vim'
     set autoread                   " When a file is changed from the outside
     set autoindent                 " text indenting
     set backspace=indent,eol,start " allow backspace in insert mode
-    set clipboard=unnamed          " Require vim-gtk to paste OS clipboard
+    set clipboard=unnamedplus,unnamed " Require vim-gtk to paste OS clipboard
     set lazyredraw                 " No redraw while executing macros (good performance config)
     set cursorline                 " Highlight current line
     set colorcolumn=100            " Set gray bar at 100 character
@@ -654,7 +661,7 @@ Plugin 'gmarik/Vundle.vim'
       " Open Set hide line number
       nmap <Leader>on :set relativenumber! nonu<CR>
       " Open Background Toggle
-      noremap <leader>ob :call ToggleBG()<CR>
+      noremap <leader>ob :call ToggleBackground()<CR>
       " Open zoom view
       nmap <leader>oz :ZoomToggle<CR>
       " Open vim diff view
@@ -680,6 +687,9 @@ Plugin 'gmarik/Vundle.vim'
     " } Config ShortCut End
 
     " <Leader>t Typescript {
+      nmap <leader>to :TsuquyomiStartServer<CR>
+      nmap <leader>tq :TsuquyomiStopServer<CR>
+
       nmap <leader>tb :TsuquyomiGoBack<CR>
       nmap <leader>td :TsuquyomiDefinition<CR>
       nmap <leader>te :TsuquyomiGeterr<CR>
@@ -690,6 +700,11 @@ Plugin 'gmarik/Vundle.vim'
       nmap <leader>tt :TsuquyomiTypeDefinition<CR>
     " } Config ShortCut End
 
+    " <Leader>f File checks {
+      nmap <leader>fl :ALELint<CR>
+      nmap <leader>fp :Prettier<CR>
+    " }
+    
     " <Leader>f FN keys {
       nmap <Leader>f1 <F1>
       nmap <Leader>f2 <F2>
@@ -740,7 +755,7 @@ Plugin 'gmarik/Vundle.vim'
     autocmd FileType text setlocal textwidth=100
     autocmd Filetype gitcommit setlocal spell textwidth=72
 
-    set background=dark         " Assume a dark background
+    set background=dark
 
     " Vim diff current windo
     function! s:VimDiff() abort
@@ -769,7 +784,7 @@ Plugin 'gmarik/Vundle.vim'
     command! ZoomToggle call s:ZoomToggle()
 
     " Allow to trigger background
-    function! ToggleBG()
+    function! ToggleBackground()
         let s:tbg = &background
         " Inversion
         if s:tbg == "dark"
